@@ -269,7 +269,7 @@ That file is owned by k4; put your overrides after it.
 | `SUPER + Tab` | Window switcher |
 | `SUPER + Shift + D` | Dual mode: the bar becomes a dock |
 | `SUPER + Shift + W` | Hyprland theme |
-| `SUPER + V` | Clipboard history |
+| `SUPER + SHIFT + V` | Clipboard history |
 | `SUPER + B` | File browser |
 | `SUPER + K` | Shortcut viewer |
 | `SUPER + L` | Lock screen |

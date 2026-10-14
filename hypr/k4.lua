@@ -52,7 +52,7 @@ hl.bind(mod .. " + Z",           hl.dsp.exec_cmd(k4 .. "settings"))
 -- barra sin lanzar un proceso en cada pulsación.
 hl.bind(mod .. " + Tab",         hl.dsp.global("k4:atalaya"))
 hl.bind(mod .. " + SHIFT + W",   hl.dsp.exec_cmd(k4 .. "theme"))
-hl.bind(mod .. " + V",           hl.dsp.exec_cmd(k4 .. "clipboard"))
+hl.bind(mod .. " + SHIFT + V",   hl.dsp.exec_cmd(k4 .. "clipboard"))
 hl.bind(mod .. " + B",           hl.dsp.exec_cmd(k4 .. "files"))
 hl.bind(mod .. " + K",           hl.dsp.exec_cmd(k4 .. "keys"))
 hl.bind(mod .. " + L",           hl.dsp.exec_cmd(k4 .. "lock"))
