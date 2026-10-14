@@ -195,7 +195,11 @@ FadeIn {
 
                             IconGlyph {
                                 anchors.centerIn: parent
-                                text: Wifi.activada ? Theme.ico.wifi : Theme.ico.wifiOff
+                                text: Wifi.activada
+                                    ? (Wifi.connectedNetwork
+                                        ? Wifi.strengthIcon(Wifi.connectedNetwork)
+                                        : Theme.ico.wifi)
+                                    : Theme.ico.wifiOff
                                 font.pixelSize: 15
                             }
 
@@ -436,6 +440,7 @@ FadeIn {
                         Layout.fillWidth: true
                         text: Media.hasPlayer && Media.activePlayer.trackTitle.length > 0
                             ? Media.activePlayer.trackTitle : Idioma.t("Nada en reproducción")
+                        color: Media.hasPlayer ? Theme.ink : Theme.muted
                         font.pixelSize: 12
                         font.weight: Font.DemiBold
                         elide: Text.ElideRight
@@ -443,7 +448,17 @@ FadeIn {
 
                     IslandLabel {
                         Layout.fillWidth: true
+                        visible: Media.hasPlayer
                         text: Media.hasPlayer ? Media.activePlayer.trackArtist : ""
+                        color: Theme.muted
+                        font.pixelSize: 10
+                        elide: Text.ElideRight
+                    }
+
+                    IslandLabel {
+                        Layout.fillWidth: true
+                        visible: !Media.hasPlayer
+                        text: Idioma.t("Abre un reproductor para verlo aquí")
                         color: Theme.muted
                         font.pixelSize: 10
                         elide: Text.ElideRight
@@ -462,6 +477,7 @@ FadeIn {
                     glyphSize: 16
                     glyphColor: Theme.muted
                     enabledAction: Media.hasPlayer && Media.activePlayer.canGoPrevious
+                    visible: Media.hasPlayer
                     onActivated: Media.activePlayer.previous()
                     Layout.alignment: Qt.AlignVCenter
                 }
@@ -470,6 +486,7 @@ FadeIn {
                     glyph: Media.isPlaying ? Theme.ico.pause : Theme.ico.play
                     glyphSize: 21
                     enabledAction: Media.hasPlayer && Media.activePlayer.canTogglePlaying
+                    visible: Media.hasPlayer
                     onActivated: Media.activePlayer.togglePlaying()
                     Layout.alignment: Qt.AlignVCenter
                 }
@@ -479,6 +496,7 @@ FadeIn {
                     glyphSize: 16
                     glyphColor: Theme.muted
                     enabledAction: Media.hasPlayer && Media.activePlayer.canGoNext
+                    visible: Media.hasPlayer
                     onActivated: Media.activePlayer.next()
                     Layout.alignment: Qt.AlignVCenter
                 }

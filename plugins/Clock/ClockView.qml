@@ -14,7 +14,7 @@ FadeIn {
     //  que reservar. Se mide aquí porque es aquí donde están los widgets con su
     //  fuente puesta: cuánto ocupa «🔔 claude · k4» no se sabe contando
     //  constantes, y contándolas era como se sabía —de ahí que las píldoras de
-    //  los agentes acabaran pintadas encima de la hora—.
+    //  los agents acabaran pintadas encima de la hora—.
     //
     //  Las tres y no solo la derecha: con las zonas encadenadas, lo que mida la
     //  fecha corre el reloj, y lo que mida el reloj corre los indicadores.

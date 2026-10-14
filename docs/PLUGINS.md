@@ -4,17 +4,17 @@ k4 loads plugins from two places: the repository's (`plugins/`) and the
 user's in **`~/.config/k4/plugins/<id>/`**. This guide is for the latter:
 you do not need to touch the repository to write one.
 
-The complete example for this guide lives in `ejemplos/hola/` and can be
+The complete example for this guide lives in `examples/hola/` and can be
 copied as is:
 
 ```sh
-cp -r ejemplos/hola ~/.config/k4/plugins/
+cp -r examples/hola ~/.config/k4/plugins/
 quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4 pluginEnable hola
 quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.hola toggle
 ```
 
 > **You may not need to read this.** k4 installs a skill for coding agents
-> (`agentes/skills/k4/`, linked by `./installer.sh`), so Claude Code, Codex and
+> (`agents/skills/k4/`, linked by `./installer.sh`), so Claude Code, Codex and
 > anything else that reads `~/.claude/skills/` or `~/.config/agents/skills/`
 > already know everything on this page. Asking for the plugin you want is a
 > legitimate way to get one — this guide is here for when you want to know
@@ -446,7 +446,7 @@ laptop to a stranger, and no plugin idea makes up for that.
 drop it, or the timer does not run.
 
 With those pieces your plugin has the SAME face as the bar without drawing
-a rectangle: `ejemplos/piezas/` is the showcase, copyable and runnable. And
+a rectangle: `examples/piezas/` is the showcase, copyable and runnable. And
 a warning that saves you an afternoon: if you put your list in a plain
 `Flickable` and its rows have hover or click, **the wheel will not work** —
 a MouseArea accepts the wheel whether it handles it or not — and no error
@@ -648,7 +648,7 @@ with several monitors, `K4.Isla.rectEn(name)` gives each screen's own, and
 a `K4.Ventana` picks its monitor with `pantalla`.
 With a transparent `K4.Ventana` above everything and that rect, anything
 can peek over the edge, fall off the bar or stroll across it — a waving
-hand, the pet climbing down. `ejemplos/efectos/` ships all three pieces
+hand, the pet climbing down. `examples/efectos/` ships all three pieces
 working, hand included.
 
 And since the bar no longer lives only at the top — the edge is chosen in

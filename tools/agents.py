@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Los límites de los CLI de agentes, en un solo sitio.
+"""Los límites de los CLI de agents, en un solo sitio.
 
 Claude Code y Codex te cortan por ventanas de tiempo —las cinco horas, la
 semana, y en Claude además un cupo aparte por modelo— y cada uno lo cuenta a
@@ -30,7 +30,7 @@ peor que no tenerlo. Con `--sin-red` no se pregunta nunca.
 
 Salida, un JSON por vuelta:
 
-    {"agentes": [{"id": "claude", "nombre": "Claude Code", "plan": "Max 5×",
+    {"agents": [{"id": "claude", "nombre": "Claude Code", "plan": "Max 5×",
                   "actualizado": 1785677652,
                   "limites": [{"id": "sesion", "nombre": "5 horas",
                                "pct": 6.0, "reinicia": 1785695999,
@@ -79,7 +79,7 @@ CLAUDE_USO_URL = "https://api.anthropic.com/api/oauth/usage"
 #  minuto como mucho.
 CLAUDE_CACHE = os.path.join(
     os.environ.get("XDG_STATE_HOME", os.path.expanduser("~/.local/state")),
-    "k4", "agentes-uso.json")
+    "k4", "agents-uso.json")
 CLAUDE_CACHE_SEGUNDOS = 60
 CLAUDE_ESPERA = 6
 
@@ -208,7 +208,7 @@ def uso_en_vivo():
     peticion = urllib.request.Request(CLAUDE_USO_URL, headers={
         "Authorization": "Bearer " + tok,
         "anthropic-beta": "oauth-2025-04-20",
-        "User-Agent": "k4-agentes/1.0",
+        "User-Agent": "k4-agents/1.0",
     })
     try:
         with urllib.request.urlopen(peticion, timeout=CLAUDE_ESPERA) as r:
@@ -391,7 +391,7 @@ AGENTES = [
 
 
 def mira(con_red=True):
-    """Todos los agentes instalados, con lo que sepamos de cada uno."""
+    """Todos los agents instalados, con lo que sepamos de cada uno."""
     salida = []
     for ident, nombre, binario, lector in AGENTES:
         #  Sin el programa no hay módulo: un agente que no está instalado no
@@ -411,7 +411,7 @@ def mira(con_red=True):
         datos["nombre"] = nombre
         salida.append(datos)
 
-    return {"agentes": salida}
+    return {"agents": salida}
 
 
 if __name__ == "__main__":

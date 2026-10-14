@@ -205,10 +205,10 @@ FadeIn {
                         RowLayout {
                             spacing: 7
 
-                            //  La puerta de los agentes, si está abierta. Es un
+                            //  La puerta de los agents, si está abierta. Es un
                             //  permiso: se ve o no se revisa nunca.
                             IconGlyph {
-                                visible: fila.modelData.agentes === true
+                                visible: fila.modelData.agents === true
                                 text: String.fromCodePoint(0xF0493)   // md-cog
                                 color: Theme.green
                                 font.pixelSize: 11
@@ -334,7 +334,7 @@ FadeIn {
 
             IslandLabel {
                 visible: !vista.plugin.sinClaves
-                text: Idioma.t("intro conecta · shift+intro ventana · ctrl+E edita · ctrl+F favorito · ctrl+G agentes · ctrl+I integración · supr borra")
+                text: Idioma.t("intro conecta · shift+intro ventana · ctrl+E edita · ctrl+F favorito · ctrl+G agents · ctrl+I integración · supr borra")
                 color: Theme.dim
                 font.pixelSize: 10
                 Layout.fillWidth: true

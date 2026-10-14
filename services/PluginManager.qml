@@ -199,14 +199,14 @@ Singleton {
     //  tres casos que resuelve la `url` de `_crear`, dichos en ruta en vez de
     //  en url — y por eso viven pegadas: si alguien toca una, toca la otra.
     //
-    //  `externos/` es un enlace a ~/.config/k4/plugins que mantiene
+    //  `external/` es un enlace a ~/.config/k4/plugins que mantiene
     //  tools/plugins.py; leer a través de él va bien y deja una sola forma de
     //  nombrar las cosas.
     function relDeCarpeta(m, ruta) {
         if (m._recarga)
             return String(ruta).replace(/\/[^/]*$/, "")
         if (ruta.indexOf("/") === 0)
-            return "externos/" + m.id
+            return "external/" + m.id
         return "plugins/" + String(ruta).replace(/\/[^/]*$/, "")
     }
 
@@ -224,14 +224,14 @@ Singleton {
         //  creación, cada target de IPC registrado dos veces y los toggles
         //  contestando desde el cadáver equivocado.
         //
-        //  Los de usuario entran por el enlace `externos/` —que apunta a
+        //  Los de usuario entran por el enlace `external/` —que apunta a
         //  ~/.config/k4/plugins y lo mantiene tools/plugins.py— justamente
         //  para poder resolverse con el mismo esquema que todo lo demás.
         //  Y una recarga llega ya con su ruta hecha —`recargas/<id>-<n>/…`,
         //  la carpeta nueva que da plugins.py— así que se resuelve tal cual.
         const url = m._recarga ? Qt.resolvedUrl("../" + ruta)
             : ruta.indexOf("/") === 0
-            ? Qt.resolvedUrl("../externos/" + m.id + "/"
+            ? Qt.resolvedUrl("../external/" + m.id + "/"
                              + ruta.split("/").pop())
             : Qt.resolvedUrl("../plugins/" + ruta)
 
@@ -252,12 +252,12 @@ Singleton {
             //  de saber. `K4.Paths.raiz` es la de k4, no la suya, así que un
             //  plugin de fuera no podía construir la ruta de un guion propio ni
             //  de un asset para pasárselo a un proceso — comprobado: ninguno de
-            //  los externos ejecuta nada suyo, y sospecho que es por esto.
+            //  los external ejecuta nada suyo, y sospecho que es por esto.
             //  Se saca de `Quickshell.shellPath` y NO de la `url` de arriba:
             //  lo que devuelve `Qt.resolvedUrl` aquí dentro es un `qs:@/qs/…`,
             //  el esquema interno de Quickshell, y eso a un `Process` no le
             //  sirve de nada. Se vio porque el guion del plugin no corría y el
-            //  plugin decía vivir en «qs:@/qs/externos/…».
+            //  plugin decía vivir en «qs:@/qs/external/…».
             obj = comp.createObject(null, {
                 habilitado: true,
                 carpeta: Quickshell.shellPath(relDeCarpeta(m, ruta))

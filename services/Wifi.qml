@@ -38,6 +38,22 @@ Singleton {
         }
         return Networking.wifiEnabled ? "Buscando Wi‑Fi…" : "Wi‑Fi apagada"
     }
+
+    // Red a la que se está conectado ahora mismo, si la hay. Sirve para poder
+    // pintar las barras de intensidad en vez de una señal genérica.
+    readonly property var connectedNetwork: {
+        const devices = Networking.devices.values
+        for (let i = 0; i < devices.length; ++i) {
+            const dev = devices[i]
+            if (dev.type !== DeviceType.Wifi || !dev.connected)
+                continue
+            const list = dev.networks.values
+            for (let j = 0; j < list.length; ++j)
+                if (list[j].connected)
+                    return list[j]
+        }
+        return null
+    }
     property var pskTarget: null        // red esperando contraseña
     property string pskInput: ""
     property string notice: ""

@@ -326,13 +326,13 @@ K4Plugin {
         const salida = []
 
         for (let i = 0; i < guardados.length; ++i) {
-            //  Los alias de agentes no son un sitio más al que ir: son la
+            //  Los alias de agents no son un sitio más al que ir: son la
             //  puerta de atrás de uno que ya está en la lista. Se ven como una
             //  marca en el suyo, no como una fila aparte.
             if (esAliasAgentes(guardados[i].alias))
                 continue
             const h = conExtras(guardados[i])
-            h.agentes = tieneAgentes(h.alias)
+            h.agents = tieneAgentes(h.alias)
             const paja = (h.alias + " " + h.host + " " + h.usuario + " "
                           + h.etiquetas.join(" ")).toLowerCase()
             if (q.length === 0 || paja.indexOf(q) >= 0)
@@ -627,19 +627,19 @@ K4Plugin {
         cerrar()
     }
 
-    //  ── la puerta de los agentes ──────────────────────────────────
+    //  ── la puerta de los agents ──────────────────────────────────
     //
     //  Un agente que corre en la terminal ya tiene tu shell, así que puede
     //  lanzar `ssh` él solo; lo que no puede es teclear una contraseña. Darle
     //  la tuya sería darle TODO, así que se le da otra cosa: una clave propia
-    //  (`~/.ssh/k4-agentes`), un alias propio (`casa-agentes`) y, en el
+    //  (`~/.ssh/k4-agents`), un alias propio (`casa-agents`) y, en el
     //  servidor, lo que tú quieras dejarle en su `authorized_keys`. Se revoca
     //  borrando una línea allí, sin tocar nada tuyo.
     //
     //  Lo que hace falta hacer ALLÍ —mandar la clave, o quitarla— se corre en
     //  la terminal, a la vista: pide tu contraseña y toca su fichero, y esas
     //  dos cosas no se hacen a escondidas.
-    readonly property string claveAgentes: K4.Sistema.entorno("HOME") + "/.ssh/k4-agentes"
+    readonly property string claveAgentes: K4.Sistema.entorno("HOME") + "/.ssh/k4-agents"
 
     //  El sello de la clave, que es lo que permite quitarla del servidor sin
     //  adivinar: se busca esa marca en su `authorized_keys` y se borra la
@@ -657,12 +657,12 @@ K4Plugin {
         }
     }
 
-    readonly property string marcaAgentes: "k4-agentes@" + nombreEquipo
+    readonly property string marcaAgentes: "k4-agents@" + nombreEquipo
 
-    function aliasAgentes(alias) { return String(alias || "") + "-agentes" }
+    function aliasAgentes(alias) { return String(alias || "") + "-agents" }
 
     function esAliasAgentes(alias) {
-        return String(alias || "").slice(-8) === "-agentes"
+        return String(alias || "").slice(-8) === "-agents"
     }
 
     function tieneAgentes(alias) {
@@ -729,7 +729,7 @@ K4Plugin {
     //  Un túnel es otro `ssh` corriendo por su cuenta (`ssh -N`), así que vive
     //  fuera de la terminal: no ocupa pestaña, no se ve, y por eso mismo se
     //  olvida. La píldora es el sitio de la casa para lo que corre por detrás
-    //  —ahí están los mandatos largos y los agentes—, así que ahí van: cada
+    //  —ahí están los mandatos largos y los agents—, así que ahí van: cada
     //  túnel el suyo, y pulsarlo lo mata.
     //
     //  Se levantan al conectar y se caen al salir. Podrían vivir solos, pero

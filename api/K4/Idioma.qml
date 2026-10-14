@@ -4,7 +4,7 @@ pragma Singleton
 //
 //  `t()` busca el texto en el diccionario de la barra y, si no está, lo
 //  devuelve tal cual. Eso es lo que hace que un plugin de fuera funcione sin
-//  traer traducciones: sus cadenas salen como las escribió su autor, y si
+//  traer translations: sus cadenas salen como las escribió su autor, y si
 //  algún día entran al diccionario, se traducen sin tocarlo.
 //
 //      K4.Etiqueta { text: K4.Idioma.t("Récord") }

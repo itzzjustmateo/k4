@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 """Put k4's skill where coding agents will find it.
 
-    python3 tools/agente.py            where it is, and whether it's linked
-    python3 tools/agente.py --install  link it
-    python3 tools/agente.py --remove   unlink it
+    python3 tools/agent.py            where it is, and whether it's linked
+    python3 tools/agent.py --install  link it
+    python3 tools/agent.py --remove   unlink it
 
 (`--instalar` y `--quitar` siguen valiendo: las banderas van en inglés porque
 son la puerta, pero nadie tiene que reaprenderse las que ya usaba.)
@@ -27,7 +27,7 @@ import pathlib
 import sys
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
-HABILIDAD = RAIZ / "agentes" / "skills" / "k4"
+HABILIDAD = RAIZ / "agents" / "skills" / "k4"
 
 #  Dónde busca cada uno. Se ponen todos los que existan en la máquina: que
 #  esté para Claude y no para Codex es un despiste raro de diagnosticar.
@@ -77,7 +77,7 @@ def instalar():
         print("  puesta: %s" % d)
         puestas += 1
     if puestas:
-        print("\nLos agentes que empiecen a partir de ahora sabrán que esto es"
+        print("\nLos agents que empiecen a partir de ahora sabrán que esto es"
               " k4\ny cómo escribirle un plugin.")
     return 0
 

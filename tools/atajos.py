@@ -74,7 +74,7 @@ RE_LOCAL_EXPR = re.compile(r'^\s*local\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+?)\s*
 #  columna en español dentro de una barra en inglés.
 #
 #  Y por eso cada frase de este fichero tiene que estar TAMBIÉN en
-#  traducciones/: son cadenas de interfaz aunque nazcan en un guion.
+#  translations/: son cadenas de interfaz aunque nazcan en un guion.
 #  ── una cadena que acaba en la BARRA ─────────────────────────────────
 #
 #  No hace nada: devuelve lo que le den. Está para MARCAR, porque estas
@@ -286,7 +286,7 @@ def describir(accion, vals):
     #  mandarla ya montada —«Cerrar la ventana · %1»— y no traducía nada: esa
     #  cadena compuesta no está en la tabla, solo lo está la frase. Y tampoco
     #  debería estarlo, porque el « · » es puntuación y no prosa: obligaría a
-    #  tener en traducciones/ una entrada por cada verbo Y por cada verbo con
+    #  tener en translations/ una entrada por cada verbo Y por cada verbo con
     #  detalle, el doble de cadenas para no decir nada nuevo.
     #
     #  Quien pinta las junta (`Atajos.hace`). Y si una frase necesita el hueco

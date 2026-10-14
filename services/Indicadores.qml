@@ -20,7 +20,7 @@ Singleton {
     readonly property int topeTexto: 160
 
     //  Y lo que se deja ocupar a la fila ENTERA antes de resumir el resto en
-    //  una cápsula «+N». Aunque ya no se pague doble, tres agentes trabajando
+    //  una cápsula «+N». Aunque ya no se pague doble, tres agents trabajando
     //  son tres nombres largos, y una píldora de medio monitor sigue sin ser
     //  una píldora. El «+N» no dice cuáles son —para eso está la notificación—:
     //  dice que hay más, que es lo que te hace mirar.

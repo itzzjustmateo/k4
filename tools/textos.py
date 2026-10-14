@@ -3,7 +3,7 @@
 
 Tres órdenes, y ninguna necesita saber QML:
 
-    textos.py plantilla     rehace traducciones/plantilla.json con todas las
+    textos.py plantilla     rehace translations/plantilla.json con todas las
                             cadenas que hay ahora en la interfaz
     textos.py estado        dice cuánto lleva traducido cada idioma
     textos.py envolver      envuelve en Idioma.t(...) las cadenas que aún están
@@ -42,7 +42,7 @@ import re
 import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TRADUCCIONES = os.path.join(RAIZ, "traducciones")
+TRADUCCIONES = os.path.join(RAIZ, "translations")
 # `core` queda fuera de momento: un par de piezas de ahí ya importaban
 # servicios, así que traducirlas es posible, pero el envoltorio automático
 # les tocaba los imports y las rompió una vez. Se hará a mano.

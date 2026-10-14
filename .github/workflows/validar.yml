@@ -3,7 +3,7 @@
 #  Son los mismos que pide el README antes de abrir un PR — aquí dejan de
 #  depender de que alguien se acuerde. Python de la biblioteca estándar, salvo
 #  las pruebas del editor, que necesitan ffmpeg de verdad; qmllint no está en
-#  el runner y guia.py salta esa comprobación (la compilación de ejemplos se
+#  el runner y guia.py salta esa comprobación (la compilación de examples se
 #  cubre en local, donde vive Quickshell).
 
 name: validar

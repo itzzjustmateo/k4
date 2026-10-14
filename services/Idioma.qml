@@ -11,7 +11,7 @@ pragma Singleton
 //    · se puede ir traduciendo fichero a fichero sin romper nada por el camino;
 //    · quien traduce lee frases con sentido, no etiquetas.
 //
-//  Un idioma es un JSON en traducciones/<código>.json con la forma
+//  Un idioma es un JSON en translations/<código>.json con la forma
 //  { "Oleada": "Wave", … } y un bloque `_meta` con el nombre y el crédito.
 //  Añadir uno es copiar la plantilla, traducir y mandar el fichero: nada de
 //  tocar código.
@@ -168,7 +168,7 @@ Singleton {
     //  cambiaría de idioma a la vista del usuario.
     FileView {
         id: fichero
-        path: Quickshell.shellPath("traducciones/" + idioma.codigo + ".json")
+        path: Quickshell.shellPath("translations/" + idioma.codigo + ".json")
         blockLoading: true
         onLoaded: idioma.aplicar(text())
         onLoadFailed: {

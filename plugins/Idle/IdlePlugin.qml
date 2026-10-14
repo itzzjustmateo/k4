@@ -30,7 +30,7 @@ K4Plugin {
 
     // Cada flanco ocupa lo suyo y la hora se queda quieta por el ancla que se
     // publica abajo, no por reservar lo mismo a los dos lados. La simetría
-    // hacía que cada píxel de indicador costase dos, y con dos o tres agentes
+    // hacía que cada píxel de indicador costase dos, y con dos o tres agents
     // la island se iba de ancho hasta dejar de parecerse a una island.
     // Grabando: el punto rojo y el mm:ss. Reservarlo es obligatorio, no
     // cosmético: los flancos tienen hueco fijo y lo que no se reserva se sale
@@ -84,7 +84,7 @@ K4Plugin {
 
     //  Cada flanco ocupa lo suyo y nada más, en vez de reservar los dos el del
     //  más ancho. Eso hacía que cada píxel de indicador costase dos y que con
-    //  tres agentes la island ocupase media pantalla, con la mitad vacía.
+    //  tres agents la island ocupase media pantalla, con la mitad vacía.
     //
     //  El precio es que la hora se corre un poco al aparecer o irse un
     //  indicador: la island va centrada, así que crece la mitad por cada lado.

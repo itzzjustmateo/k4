@@ -133,10 +133,10 @@ def revisar_permisos(doc, texto):
 def ordenes_ipc():
     """Todas las funciones que publica algún IpcHandler, por objetivo."""
     salida = {}
-    #  Los ejemplos cuentan: la guía enseña `k4.hola toggle` y eso tiene que
+    #  Los examples cuentan: la guía enseña `k4.hola toggle` y eso tiene que
     #  seguir existiendo, que es justo lo que se copia y se pega.
     for f in (list((RAIZ / "plugins").rglob("*.qml"))
-              + list((RAIZ / "ejemplos").rglob("*.qml"))
+              + list((RAIZ / "examples").rglob("*.qml"))
               + [RAIZ / "shell.qml"]):
         texto = f.read_text()
         for m in re.finditer(r'target:\s*"([\w.]+)"', texto):
@@ -198,7 +198,7 @@ def revisar_rutas(doc, texto):
             continue
         if not (RAIZ / cita).exists():
             fallos.append(f"{doc}: cita {cita}, que no existe")
-    for cita in set(re.findall(r"`(ejemplos/\w+|plugins/\w+|api/K4|tools)/?`",
+    for cita in set(re.findall(r"`(examples/\w+|plugins/\w+|api/K4|tools)/?`",
                                texto)):
         if not (RAIZ / cita).exists():
             fallos.append(f"{doc}: cita {cita}/, que no existe")
@@ -269,8 +269,8 @@ def revisar_atajos(doc, texto):
 RE_TIPADA = re.compile(r"function (\w+)\(([^)]*)\):\s*\w+")
 
 
-def revisar_ejemplos(doc, texto):
-    """Que los ejemplos en QML de la guía compilen de verdad."""
+def revisar_examples(doc, texto):
+    """Que los examples en QML de la guía compilen de verdad."""
     if not shutil.which("qmllint"):
         return []
     fallos = []
@@ -367,7 +367,7 @@ def main():
         fallos += revisar_rutas(doc, texto)
         fallos += revisar_numeros(doc, texto)
         fallos += revisar_atajos(doc, texto)
-        fallos += revisar_ejemplos(doc, texto)
+        fallos += revisar_examples(doc, texto)
 
     fallos += revisar_motivos()
 

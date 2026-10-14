@@ -222,7 +222,7 @@
    "enabledByDefault": true
   },
   {
-   "id": "agentes",
+   "id": "agents",
    "entry": "Agentes/AgentesPlugin.qml",
    "version": "1.0.0",
    "title": "Agentes",

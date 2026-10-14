@@ -114,7 +114,7 @@ it. Disabled means not instantiated.
 
 A plugin of your own goes in `~/.config/k4/plugins/<id>/` with a `plugin.json`
 manifest — nothing in this repository is touched. See `docs/PLUGINS.md`;
-`ejemplos/hola` and `ejemplos/snake` are complete, runnable examples.
+`examples/hola` and `examples/snake` are complete, runnable examples.
 
 A plugin contributed to the repository goes under `plugins/` with a `qmldir`
 listing every type in the folder (sibling types do not resolve without it) and

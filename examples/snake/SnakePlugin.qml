@@ -4,7 +4,7 @@
 //  estado en el plugin, el tick un Timer, el control las flechas —con el
 //  teclado en exclusiva solo mientras se juega— y el récord un K4.Guardado.
 //
-//      cp -r ejemplos/snake ~/.config/k4/plugins/
+//      cp -r examples/snake ~/.config/k4/plugins/
 //      quickshell ipc -p …/shell.qml call k4 pluginEnable snake
 //      quickshell ipc -p …/shell.qml call k4.snake toggle
 

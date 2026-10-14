@@ -1,6 +1,6 @@
 pragma Singleton
 
-//  Gasto en agentes de IA, convertido en combustible para la mazmorra.
+//  Gasto en agents de IA, convertido en combustible para la mazmorra.
 //
 //  La idea: que el juego de la island no pelee solo, sino al ritmo al que tú
 //  picas código con la IA. Cada token que gastas en Claude o Codex entra aquí

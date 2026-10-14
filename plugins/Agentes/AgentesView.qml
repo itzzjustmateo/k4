@@ -31,7 +31,7 @@ FadeIn {
 
     //  Verde hasta bien entrado, ámbar cuando queda menos de la mitad y rojo
     //  cuando ya conviene medir. Los cortes son los mismos para todos los
-    //  agentes: si cada uno tuviera el suyo, el color dejaría de significar.
+    //  agents: si cada uno tuviera el suyo, el color dejaría de significar.
     function tono(pct) {
         if (pct >= 85) return Theme.red
         if (pct >= 60) return Theme.yellow
@@ -170,7 +170,7 @@ FadeIn {
 
         // ── una tarjeta por agente ────────────────────────────────
         Repeater {
-            model: view.plugin.agentes
+            model: view.plugin.agents
 
             delegate: Rectangle {
                 id: tarjeta
@@ -328,12 +328,12 @@ FadeIn {
 
         // ── mientras no hay nada que enseñar ──────────────────────
         IslandLabel {
-            visible: !view.plugin.cargado || !view.plugin.agentes.length
+            visible: !view.plugin.cargado || !view.plugin.agents.length
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignVCenter
             text: !view.plugin.cargado
                 ? Idioma.t("Mirando…")
-                : Idioma.t("No hay ningún CLI de agentes instalado")
+                : Idioma.t("No hay ningún CLI de agents instalado")
             color: Theme.dim
             font.pixelSize: 11
             horizontalAlignment: Text.AlignHCenter

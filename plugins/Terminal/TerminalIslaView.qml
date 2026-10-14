@@ -401,7 +401,7 @@ Item {
                                    : null)
 
                     //  DÓNDE estás y QUÉ corre, las dos cosas. Antes era una o
-                    //  la otra, y con dos agentes en dos repos el título solo
+                    //  la otra, y con dos agents en dos repos el título solo
                     //  no distingue nada: lo que las separa es el directorio,
                     //  y lo que dice en qué anda cada una es el mandato.
                     readonly property string donde: modelData.cwd

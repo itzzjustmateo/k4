@@ -736,7 +736,7 @@ paso_codigo() {
 # It is linked, not copied: so updating k4 updates what it reads too.
 paso_agente() {
     titulo "For the agents"
-    if [ ! -d "$RAIZ/agentes/skills/k4" ]; then
+    if [ ! -d "$RAIZ/agents/skills/k4" ]; then
         aviso "I cannot find the skill; I skip it."
         return
     fi
@@ -744,7 +744,7 @@ paso_agente() {
         aviso "Without python3 I cannot link it."
         return
     fi
-    python3 "$RAIZ/tools/agente.py" --install 2>/dev/null | while read -r l; do
+    python3 "$RAIZ/tools/agent.py" --install 2>/dev/null | while read -r l; do
         nota "$l"
     done
     bien "Claude, Codex and company will know what this is and how to write a plugin for it"

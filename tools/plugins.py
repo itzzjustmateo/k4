@@ -603,7 +603,7 @@ def cargar_usuario(ids_repo, version_host):
     return fuera
 
 
-def enlazar_externos():
+def enlazar_external():
     """El puente por el que la barra carga los de usuario: un enlace dentro
     del árbol del shell.
 
@@ -616,7 +616,7 @@ def enlazar_externos():
     la barra entera.
     """
     DE_USUARIO.mkdir(parents=True, exist_ok=True)
-    enlace = RAIZ / "externos"
+    enlace = RAIZ / "external"
     try:
         if enlace.is_symlink():
             if enlace.readlink() != DE_USUARIO:
@@ -921,7 +921,7 @@ def actualizar(ident, sin_preguntar=False, commit=None):
     """Reinstalar desde donde vino, y a la carpeta correcta.
 
     Lo de la carpeta no es un detalle: antes solo se guardaba la URL, así que
-    actualizar un plugin que vive en una subcarpeta del repo —los ejemplos de
+    actualizar un plugin que vive en una subcarpeta del repo —los examples de
     k4, sin ir más lejos— volvía a adivinarla, y con más de un candidato ya no
     se podía. Ahora va apuntada.
 
@@ -965,11 +965,11 @@ def quitar(ident, sin_preguntar=False, con_estado=False):
 def instalados():
     """Los de fuera que hay, con su veredicto y de dónde vinieron."""
     ids_repo, version_host = _contexto()
-    externos = cargar_usuario(ids_repo, version_host)
-    if not externos:
+    external = cargar_usuario(ids_repo, version_host)
+    if not external:
         print("no hay plugins de usuario instalados.")
         return 0
-    for item in externos:
+    for item in external:
         estado = ("ok" if item.get("cargable")
                   else "NO CARGA: %s" % (item.get("dice")
                                          or item.get("motivo") or "?"))
@@ -999,7 +999,7 @@ def recargar(ident):
     una URL nueva para TODO lo que hay dentro. Cuesta un symlink por recarga
     y se limpian los anteriores del mismo plugin.
     """
-    enlazar_externos()
+    enlazar_external()
     datos, plugins = leer_catalogo()
     ids_repo = {item.get("id") for item in plugins}
     todos = list(plugins) + cargar_usuario(ids_repo,
@@ -1030,7 +1030,7 @@ def recargar(ident):
 
 
 def listar():
-    enlazar_externos()
+    enlazar_external()
     #  Las carpetas de recarga son de la sesión anterior: al arrancar sobran.
     for viejo in (RAIZ / "recargas").glob("*"):
         try:
@@ -1298,8 +1298,8 @@ def comprobar(url=None):
     cambiado el código debajo?» eran las dos indistinguibles.
     """
     ids_repo, version_host = _contexto()
-    externos = cargar_usuario(ids_repo, version_host)
-    if not externos:
+    external = cargar_usuario(ids_repo, version_host)
+    if not external:
         print("no hay plugins de usuario instalados.")
         return 0
     try:
@@ -1310,7 +1310,7 @@ def comprobar(url=None):
     publicado = {str(e.get("id")): e for e in datos.get("plugins") or []}
 
     novedades = 0
-    for item in externos:
+    for item in external:
         ident = item["id"]
         o = leer_origen(ident) or {}
         mio = str(o.get("commit") or "")
@@ -1368,11 +1368,11 @@ def main():
         if carpeta.is_dir():
             item["comandos"] = comandos_de_carpeta(carpeta)
 
-    externos = cargar_usuario(ids, version_host)
-    marcar_choques(list(plugins) + externos)
-    rotos = [e for e in externos if not e.get("cargable")]
+    external = cargar_usuario(ids, version_host)
+    marcar_choques(list(plugins) + external)
+    rotos = [e for e in external if not e.get("cargable")]
     print(f"{len(plugins)} plugins del repo verificados"
-          + (f" · {len(externos)} de usuario" if externos else "")
+          + (f" · {len(external)} de usuario" if external else "")
           + (f" ({len(rotos)} no cargables)" if rotos else "") + ".")
     for e in rotos:
         print(f"  - {e['id']}: {e.get('dice') or e.get('motivo')}")
@@ -1606,7 +1606,7 @@ def probar(ident, pantalla=""):
         except ValueError as e:
             print("Su plugin.json no se lee: %s" % e)
             return 1
-        entry = "externos/%s/%s" % (ident, m.get("entry", ""))
+        entry = "external/%s/%s" % (ident, m.get("entry", ""))
 
     if not (RAIZ / entry).exists():
         print("El entry no está donde dice el manifiesto: %s" % entry)

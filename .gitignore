@@ -9,7 +9,7 @@
 
 # Los .pyc de tools/, que aparecen al importar editar.py desde las pruebas.
 tools/__pycache__/
-externos
+external
 recargas
 
 #  El banco de pruebas de un plugin: lo genera y lo borra

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Vigía de gasto en agentes de IA.
+"""Vigía de gasto en agents de IA.
 
 Vigila lo que Claude Code y Codex dejan escrito en disco y va anunciando por
 la salida estándar cuántos tokens nuevos se han gastado. El juego de la island

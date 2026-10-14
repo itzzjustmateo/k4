@@ -225,7 +225,7 @@ Singleton {
     //  píldora. Aquí se guarda para que el clic vaya a esa y no a su hermana.
     //  Quien no apunte destino sigue como estaba, buscando por clase.
     //
-    //  La clave lleva el cuerpo porque dos agentes esperando son dos avisos
+    //  La clave lleva el cuerpo porque dos agents esperando son dos avisos
     //  distintos y cada uno es de su ventana.
     property var destinos: ({})
 
@@ -441,7 +441,7 @@ Singleton {
             if (String(n.appName || "").toLowerCase() !== quien)
                 continue
             //  Sin cuerpo se va todo lo de esa aplicación; con él, solo la que
-            //  lo lleva: dos agentes esperando son dos avisos distintos y
+            //  lo lleva: dos agents esperando son dos avisos distintos y
             //  atender a uno no atiende al otro.
             if (texto !== null && String(n.body || "") !== texto)
                 continue

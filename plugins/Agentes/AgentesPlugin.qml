@@ -1,11 +1,11 @@
-//  Cómo van los límites de los CLI de agentes.
+//  Cómo van los límites de los CLI de agents.
 //
 //  Claude Code y Codex cortan por ventanas —las cinco horas, la semana, y en
 //  Claude además un cupo aparte para Fable— y averiguar por dónde vas obliga
 //  a abrir cada herramienta y preguntárselo. Esto lo enseña de un vistazo.
 //
 //  El dato no se le pide a nadie: los dos programas ya guardan en disco lo que
-//  el servidor les contestó la última vez, y `tools/agentes.py` lo lee y lo
+//  el servidor les contestó la última vez, y `tools/agents.py` lo lee y lo
 //  deja en la misma forma para los dos. La contrapartida es que el dato es de
 //  la última vez que corrió la herramienta, así que cada tarjeta dice de
 //  cuándo es el suyo. Un porcentaje viejo enseñado como si fuera de ahora
@@ -23,7 +23,7 @@ import "../../services"
 K4Plugin {
     id: self
 
-    name: "agentes"
+    name: "agents"
     title: Idioma.t("Agentes")
     priority: 63
     active: habilitado && abierto
@@ -31,7 +31,7 @@ K4Plugin {
     property bool abierto: false
 
     //  Lo que devolvió el lector: una entrada por CLI instalado.
-    property var agentes: []
+    property var agents: []
     property bool cargado: false
 
     // ── el aviso ──────────────────────────────────────────────────
@@ -46,8 +46,8 @@ K4Plugin {
     //  El límite más apurado de todos, sea de quien sea.
     readonly property var apurado: {
         let peor = null
-        for (let i = 0; i < agentes.length; ++i) {
-            const a = agentes[i]
+        for (let i = 0; i < agents.length; ++i) {
+            const a = agents[i]
             const ls = a.limites || []
             for (let j = 0; j < ls.length; ++j)
                 if (!peor || (ls[j].pct || 0) > peor.pct)
@@ -70,15 +70,15 @@ K4Plugin {
     //  18 de cabecera, 6 de hueco y 24+4 por fila—; si allí cambian, aquí
     //  también, porque una tarjeta más alta que su hueco se ve cortada.
     islandHeight: {
-        if (!cargado || !agentes.length)
+        if (!cargado || !agents.length)
             return 132
 
         let alto = 51                       // márgenes, cabecera y su hueco
-        for (let i = 0; i < agentes.length; i++) {
-            const filas = Math.max(1, (agentes[i].limites || []).length)
+        for (let i = 0; i < agents.length; i++) {
+            const filas = Math.max(1, (agents[i].limites || []).length)
             alto += 40 + 28 * filas
         }
-        return alto + 8 * (agentes.length - 1)
+        return alto + 8 * (agents.length - 1)
     }
 
     //  El teclado entero mientras está abierto, y no `tecladoOpcional`.
@@ -142,21 +142,21 @@ K4Plugin {
     K4.Process {
         id: lector
         command: self.enVivo
-            ? ["python3", K4.Paths.guion("agentes.py")]
-            : ["python3", K4.Paths.guion("agentes.py"), "--sin-red"]
+            ? ["python3", K4.Paths.guion("agents.py")]
+            : ["python3", K4.Paths.guion("agents.py"), "--sin-red"]
 
         onSalida: function (texto) {
             try {
                 const datos = JSON.parse(texto)
-                self.agentes = datos.agentes || []
+                self.agents = datos.agents || []
             } catch (e) {
-                console.warn("agentes: respuesta ilegible —", e)
-                self.agentes = []
+                console.warn("agents: respuesta ilegible —", e)
+                self.agents = []
             }
             self.cargado = true
         }
 
-        onLineaError: function (linea) { console.warn("agentes:", linea) }
+        onLineaError: function (linea) { console.warn("agents:", linea) }
     }
 
     //  Mientras está a la vista se vuelve a mirar de vez en cuando: si estás
@@ -190,12 +190,12 @@ K4Plugin {
     function pintarAviso() {
         if (!aprieta) {
             if (_avisoPuesto) {
-                K4.Pildora.quitar("agentes.limite")
+                K4.Pildora.quitar("agents.limite")
                 _avisoPuesto = false
             }
             return
         }
-        K4.Pildora.registrar("agentes.limite", Math.round(apurado.pct) + "%",
+        K4.Pildora.registrar("agents.limite", Math.round(apurado.pct) + "%",
                              0xF06A9,
                              apurado.pct >= 95 ? Theme.red : Theme.yellow,
                              75, true)
@@ -208,7 +208,7 @@ K4Plugin {
     Connections {
         target: K4.Pildora
         function onInvocado(id) {
-            if (id === "agentes.limite" && !self.abierto)
+            if (id === "agents.limite" && !self.abierto)
                 self.toggle()
         }
     }
@@ -216,7 +216,7 @@ K4Plugin {
     // ── lo que el usuario decide ──────────────────────────────────
 
     property var guardado: K4.Guardado {
-        plugin: "agentes"
+        plugin: "agents"
         onCargado: function (d) {
             if (d.avisar !== undefined) self.avisar = d.avisar === true
             if (d.umbral !== undefined) self.umbral = Number(d.umbral) || 85
@@ -229,7 +229,7 @@ K4Plugin {
     }
 
     K4.Ajustes {
-        plugin: "agentes"
+        plugin: "agents"
         grupo: Idioma.t("Agentes")
         opciones: [
             { id: "enVivo", nombre: Idioma.t("Preguntar al servidor"),
@@ -261,7 +261,7 @@ K4Plugin {
     }
 
     K4.Ipc {
-        target: "k4.agentes"
+        target: "k4.agents"
         function toggle(): void { self.toggle() }
         function close(): void { self.close() }
         function refrescar(): void { self.refrescar() }
@@ -270,11 +270,11 @@ K4Plugin {
     //  Buscar «claude» o «límites» en el lanzador tiene que traer esto: es lo
     //  que uno escribe cuando la pregunta es «¿cuánto me queda?».
     K4.Lanzador {
-        plugin: "agentes"
+        plugin: "agents"
         onBuscando: function (texto) {
             const t = texto.toLowerCase()
             const pega = t.length >= 2
-                && ["agentes", "claude", "codex", "limites", "límites", "cupo",
+                && ["agents", "claude", "codex", "limites", "límites", "cupo",
                     "gasto", "ia"].some(p => p.indexOf(t) === 0)
             resultados = pega
                 ? [{ id: "abrir", titulo: Idioma.t("Agentes"),

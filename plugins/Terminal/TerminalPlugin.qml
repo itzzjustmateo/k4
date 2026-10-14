@@ -638,10 +638,10 @@ K4Plugin {
     //  `llevaba` son los segundos que el mandato acumulaba cuando la terminal
     //  se decidió a contarlo: el reloj de la píldora arranca ahí y no en cero,
     //  o enseñaría menos tiempo del que de verdad lleva trabajando.
-    //  Los agentes de consola son otra cosa que un mandato largo: no están
+    //  Los agents de consola son otra cosa que un mandato largo: no están
     //  «tardando», están pensando, y uno los deja correr a propósito. Se les
     //  da su propio glifo para distinguirlos de un vistazo.
-    readonly property var agentes: ["claude", "codex", "aider", "gemini", "opencode", "goose"]
+    readonly property var agents: ["claude", "codex", "aider", "gemini", "opencode", "goose"]
 
     //  El programa a secas: sin la ruta por delante y sin sus argumentos.
     //  `/usr/bin/python3 tools/goteo.py` es «python3», que es lo que se lee
@@ -652,7 +652,7 @@ K4Plugin {
     }
 
     function esAgente(mandato) {
-        return agentes.indexOf(programaDe(mandato)) >= 0
+        return agents.indexOf(programaDe(mandato)) >= 0
     }
 
     //  Con qué se dibuja lo que corre: glifo y color. Está aparte porque lo
@@ -867,7 +867,7 @@ K4Plugin {
         if (mirando)
             return
         //  Con quién te llama, no un «Terminal» a secas: el sentido de esto es
-        //  saber CUÁL de tus agentes ha acabado su turno. El título que pide
+        //  saber CUÁL de tus agents ha acabado su turno. El título que pide
         //  la aplicación es lo que mejor lo dice; el mandato, si no lo hay.
         const donde = indiceDe(numero)
         const quien = (donde >= 0 && vivas[donde].titulo)

@@ -189,11 +189,11 @@ With it, it starts by running `--new` and editing something that already
 works.
 
 ```sh
-python3 tools/agente.py             # where it is, and whether it's linked
-python3 tools/agente.py --install   # link it (./installer.sh does this for you)
+python3 tools/agent.py             # where it is, and whether it's linked
+python3 tools/agent.py --install   # link it (./installer.sh does this for you)
 ```
 
-The skill is [`agentes/skills/k4/`](agentes/skills/k4/) — a page on writing a
+The skill is [`agents/skills/k4/`](agents/skills/k4/) — a page on writing a
 plugin and a page on driving the bar. It is linked, not copied, so it stays
 current when k4 updates.
 
@@ -375,7 +375,7 @@ api/K4/         public plugin API
 services/       persistent domain services and singletons
 widgets/        data-driven reusable widgets
 plugins/        one directory per built-in plugin
-agentes/        the skill coding agents read
+agents/        the skill coding agents read
 docs/           API, plugin and game guides
 tools/          helper scripts and validators
 hypr/           generated Hyprland integration
@@ -408,5 +408,5 @@ More: [docs/API.md](docs/API.md) · [docs/PLUGINS.md](docs/PLUGINS.md) ·
 
 ---
 
-MIT. Spanish UI with translation files in [`traducciones/`](traducciones/) —
+MIT. Spanish UI with translation files in [`translations/`](translations/) —
 English and Russian included.

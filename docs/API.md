@@ -72,7 +72,7 @@ The bar's look, ready to assemble — every piece takes the palette from
 | `K4.Rodillo` | Scrollable column whose wheel works over hoverable rows |
 | `K4.FocoInicial` | Grabs keyboard focus when a view opens |
 
-`ejemplos/piezas/` is the runnable showcase of all of them.
+`examples/piezas/` is the runnable showcase of all of them.
 
 ## Plugin state that survives: `K4.Guardado`
 
@@ -386,7 +386,7 @@ K4.Lanzador {
   for the duration of a scene — a dodge, a paddle, stepping aside — and it
   springs back on timeout, `soltar(id)`, or disable.
 
-`ejemplos/efectos/` has every piece working, hand included.
+`examples/efectos/` has every piece working, hand included.
 
 ## Personal data: `K4.Huella`
 

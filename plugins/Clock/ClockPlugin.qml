@@ -36,7 +36,7 @@ K4Plugin {
     //  hacía falta un tope para que la island no se comiera la pantalla. Y al
     //  tocar ese tope no pasaba nada bueno: la fila de la derecha iba anclada al
     //  borde derecho, crecía hacia dentro y acababa pintada ENCIMA de la hora.
-    //  Con dos agentes trabajando se veía casi siempre.
+    //  Con dos agents trabajando se veía casi siempre.
     //
     //  Encadenadas —fecha, hora, indicadores, cada una colgada de la anterior—
     //  el solape deja de ser posible: lo que no quepa se sale por la derecha y

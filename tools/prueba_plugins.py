@@ -278,7 +278,7 @@ def _reg(**e):
 
 def prueba_registro_entrada_correcta():
     igual("una entrada bien puesta no da fallos",
-          _reg(commit="a" * 40, carpeta="ejemplos/x"), [])
+          _reg(commit="a" * 40, carpeta="examples/x"), [])
 
 
 def prueba_registro_commit_entero_o_ninguno():
@@ -303,7 +303,7 @@ def prueba_registro_carpeta_no_se_escapa():
     #  apuntaría fuera de él.
     igual("nada de ..", len(_reg(carpeta="../fuera")), 1)
     igual("ni absoluta", len(_reg(carpeta="/etc")), 1)
-    igual("una normal pasa", _reg(carpeta="ejemplos/x"), [])
+    igual("una normal pasa", _reg(carpeta="examples/x"), [])
 
 
 def prueba_registro_sin_ids_repetidos():
@@ -443,7 +443,7 @@ def prueba_ancla_actualizar_conserva_la_subcarpeta():
     #  El fallo que había: solo se guardaba la URL, así que actualizar un
     #  plugin que vive en una subcarpeta del repo tenía que volver a
     #  adivinarla. Con dos candidatos ya no podía.
-    repo, viejo, nuevo = repo_con_dos_commits("dentro", dentro="ejemplos/dentro")
+    repo, viejo, nuevo = repo_con_dos_commits("dentro", dentro="examples/dentro")
     (repo / "otro").mkdir()
     (repo / "otro" / "plugin.json").write_text(
         json.dumps(manifiesto_base("otro")))
@@ -453,9 +453,9 @@ def prueba_ancla_actualizar_conserva_la_subcarpeta():
 
     with DestinoAparte("dentro") as destino:
         igual("instala diciendo la carpeta",
-              plugins.instalar(str(repo), True, "ejemplos/dentro"), 0)
+              plugins.instalar(str(repo), True, "examples/dentro"), 0)
         o = json.loads((destino / "dentro" / plugins.ORIGEN).read_text())
-        igual("la carpeta queda apuntada", o["carpeta"], "ejemplos/dentro")
+        igual("la carpeta queda apuntada", o["carpeta"], "examples/dentro")
         igual("y actualizar la encuentra sola",
               plugins.actualizar("dentro", True), 0)
 
@@ -740,11 +740,11 @@ def prueba_publicar_lee_el_formulario_en_ingles():
 
 
 def prueba_publicar_lee_el_formulario():
-    d, malos = publicar.envio(formulario(carpeta="ejemplos/x"))
+    d, malos = publicar.envio(formulario(carpeta="examples/x"))
     igual("sin quejas", malos, [])
     igual("el repo", d["repo"], "https://github.com/quien/que")
     igual("el commit", d["commit"], "a" * 40)
-    igual("la carpeta", d["carpeta"], "ejemplos/x")
+    igual("la carpeta", d["carpeta"], "examples/x")
 
 
 def prueba_publicar_carpeta_vacia_es_vacia():
