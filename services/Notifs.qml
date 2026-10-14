@@ -169,7 +169,8 @@ Singleton {
         // herramientas de consola: llevan al emulador donde corren
         "claude code": terminal,
         "claude": terminal,
-        "codex": terminal
+        "codex": terminal,
+        "opencode": terminal
     })
 
     //  Con qué comparar la clase de una ventana, de lo más fiable a lo más

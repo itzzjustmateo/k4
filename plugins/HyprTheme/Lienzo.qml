@@ -1,6 +1,6 @@
 //  El lienzo: el fondo de escritorio, dibujado por la propia barra.
 //
-//  Hasta ahora el fondo lo ponía swaybg y la barra solo le pasaba una ruta. Eso
+//  Hasta ahora el fondo lo ponía awww-daemon y la barra solo le pasaba una ruta. Eso
 //  deja fuera tres cosas a la vez: no hay transiciones —el propio módulo lo
 //  admitía en su pie, «instala awww para tenerlas»—, no hay vídeo, y la barra
 //  no sabe qué está enseñando, así que no puede sacarle los colores. Pintándolo
@@ -11,12 +11,12 @@
 //  `MediaPlayer` en QtMultimedia, que ya es dependencia declarada desde que el
 //  editor de vídeo necesita su descodificador.
 //
-//  ── swaybg NO se retira: se queda de SUELO ───────────────────────
+//  ── awww-daemon NO se retira: se queda de SUELO ───────────────────────
 //
 //  Lo que dibuja la barra vive mientras vive la barra, y entre que entras a la
 //  sesión y arranca quickshell hay un rato en el que no hay nadie. Si en ese
 //  rato el fondo es un rectángulo negro, hemos empeorado algo que funcionaba. Y
-//  si un día la barra se cae, lo mismo. Así que a swaybg se le sigue dando el
+//  si un día la barra se cae, lo mismo. Así que a awww-daemon se le sigue dando el
 //  fotograma quieto —para un vídeo, su póster— y el lienzo pinta encima: al
 //  entrar ves la foto, y cuando la barra llega se pone en marcha.
 //
@@ -287,27 +287,27 @@ K4.PorPantalla {
             ? lienzo.plugin.fondoDe(cual) : ""
 
         //  Solo existe si hay algo que pintar. Sin fondo asignado no se crea la
-        //  superficie: entonces se ve el suelo de swaybg, que es exactamente lo
+        //  superficie: entonces se ve el suelo de awww-daemon, que es exactamente lo
         //  que había antes de todo esto.
         //
-        //  ── y una FOTO la pinta swaybg, no esto ──────────────────
+        //  ── y una FOTO la pinta awww-daemon, no esto ──────────────────
         //
         //  Con un fondo quieto esta capa dibuja exactamente lo que el suelo ya
         //  está dibujando debajo. Medido sobre el proceso: **80 MiB de VRAM** y
         //  unos 18 MB de RSS por no aportar nada —la barra era el mayor
         //  consumidor de vídeo de la máquina, por delante del navegador—. Así
         //  que con una foto la barra se aparta y se ve el suelo; se queda solo
-        //  con lo que swaybg no sabe hacer, que es el vídeo, el GIF y las
+        //  con lo que awww-daemon no sabe hacer, que es el vídeo, el GIF y las
         //  transiciones.
         //
         //  La GRACIA de después no es un adorno. Al acabar el fundido hay que
-        //  esperar a que swaybg tenga la imagen NUEVA, y ponerlo no es
+        //  esperar a que awww-daemon tenga la imagen NUEVA, y ponerlo no es
         //  instantáneo: `ponerSuelo` amortigua 300 ms, mata al viejo, espera
         //  200 más y levanta el nuevo. Soltando la capa al terminar la
         //  transición se ve un parpadeo del fondo viejo, o del vacío.
         //
         //  Y se arma también al arrancar, por lo mismo: entre que entras a la
-        //  sesión y swaybg está puesto hay un hueco, y taparlo es justo para lo
+        //  sesión y awww-daemon está puesto hay un hueco, y taparlo es justo para lo
         //  que el suelo existe.
         readonly property bool loPintaElSuelo: lienzo.tipoDe(ruta) === "quieto"
             && !tela.cambiando && !gracia.running

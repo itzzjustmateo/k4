@@ -11,12 +11,12 @@ including the parts that look built in, is a plugin.
 <img src="screenshots/bar.png" width="100%" alt="The k4 bar at rest, collapsed at the top edge of the screen">
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/k4ditano/k4/main/instalar | sh
+curl -fsSL https://raw.githubusercontent.com/k4ditano/k4/main/installer.sh | sh
 ```
 
 Arch Linux and Hyprland. Installs what is missing, writes the Hyprland
 integration, starts the bar, and keeps a checkout at
-`~/.config/quickshell/k4`. Run `./instalar --dry-run` first if you would rather
+`~/.config/quickshell/k4`. Run `./installer.sh --dry-run` first if you would rather
 see what it would do.
 
 > ### Want your own widget? Ask your agent.
@@ -175,7 +175,7 @@ running code for what is on disk, without restarting anything.
 > **"Make me a k4 plugin that shows the train times to work."**
 
 That works, and it is the point. k4 installs a skill for coding agents —
-`./instalar` links it into `~/.claude/skills/` and `~/.config/agents/skills/`
+`./installer.sh` links it into `~/.claude/skills/` and `~/.config/agents/skills/`
 — so Claude Code, Codex and anything else that reads those already know:
 
 - that this machine runs k4, and that everything in the bar is a plugin;
@@ -190,7 +190,7 @@ works.
 
 ```sh
 python3 tools/agente.py             # where it is, and whether it's linked
-python3 tools/agente.py --install   # link it (./instalar does this for you)
+python3 tools/agente.py --install   # link it (./installer.sh does this for you)
 ```
 
 The skill is [`agentes/skills/k4/`](agentes/skills/k4/) — a page on writing a
@@ -322,7 +322,7 @@ The installer is the source of truth and reads
 | `qt6-multimedia`, `qt6-multimedia-ffmpeg` | Video/audio preview |
 | `grim`, `slurp`, `satty` | Capture, region selection, annotation |
 | `wf-recorder` | Screen recording |
-| `swaybg` | Wallpaper backend |
+| `awww` | Wallpaper backend |
 | `ffmpeg`, `imagemagick` | Editing, probing, thumbnails |
 | `zenity`, `wl-clipboard`, `fd` | Dialogs, clipboard, search |
 | `pactl`, `wpctl`, `nmcli`, `bluez` | Audio, network, Bluetooth |
@@ -341,7 +341,7 @@ Codex integration.
 The Spanish flags this started with — `--seco`, `--si`, `--opcionales`,
 `--sin-paquetes`, `--sin-reiniciar` — still work and are not going away.
 
-**Update with the same script**: `~/.config/quickshell/k4/instalar`. It pulls
+**Update with the same script**: `~/.config/quickshell/k4/installer.sh`. It pulls
 with `--ff-only`, refreshes packages and shortcuts and offers to restart the
 bar. With uncommitted changes in the checkout it leaves the code alone and
 tells you so — nobody loses work to an update.

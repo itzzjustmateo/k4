@@ -8,7 +8,7 @@ pragma Singleton
 //  y con razón— así que lo compartido baja aquí y lo usan los dos sin conocerse.
 //
 //  Aquí está el CATÁLOGO y cómo se ve. Aplicar un fondo sigue siendo del
-//  plugin, que es quien habla con `awww`/`swww`/`swaybg` y quien sabe de
+//  plugin, que es quien habla con `awww`/`swww` y quien sabe de
 //  transiciones: eso es hacer, no mirar, y se moverá cuando toque.
 //
 //  Un servicio no puede usar `K4.Process` ni `K4.Sistema` —esa es la API de

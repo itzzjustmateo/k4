@@ -39,7 +39,7 @@ Si te pierdes acercándote, **Inicio** vuelve a encuadrarlo todo.
 
 ## El atajo
 
-**SUPER+Tab**, que lo instala `./instalar` desde `hypr/k4.lua` (o `hypr/k4.conf`
+**SUPER+Tab**, que lo instala `./installer.sh` desde `hypr/k4.lua` (o `hypr/k4.conf`
 con la configuración clásica). Ahí releva al selector `windows`, que sigue
 instalado y se abre desde el centro de aplicaciones.
 

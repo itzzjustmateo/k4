@@ -78,5 +78,5 @@ not reachable.
 ## Settings, shortcuts, translations
 
 - Settings live in the panel; plugins contribute their own rows through the API rather than editing a central file.
-- Shortcuts are installed by `./instalar` into the Hyprland config and are listed in the bar's own searchable viewer.
+- Shortcuts are installed by `./installer.sh` into the Hyprland config and are listed in the bar's own searchable viewer.
 - The UI is Spanish with translation files in `traducciones/`. `python3 tools/textos.py` reports coverage and can wrap new literals. A string only gets translated if it goes through `Idioma.t("...")`.

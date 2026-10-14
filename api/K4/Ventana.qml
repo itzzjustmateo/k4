@@ -95,8 +95,8 @@ PanelWindow {
     //
     //     Y va en `Bottom`, no en `Background`, aunque «fondo» suene a lo
     //     segundo. `Background` es donde viven los demonios de fondo de
-    //     pantalla —swaybg, swww— y dentro de una misma capa manda el orden de
-    //     creación: al cambiar de fondo se relanza swaybg, su superficie nueva
+    //     pantalla —awww-daemon, swww— y dentro de una misma capa manda el orden de
+    //     creación: al cambiar de fondo se relanza awww-daemon, su superficie nueva
     //     queda por ENCIMA y lo que pintes deja de verse sin que nada avise.
     //     Medido: `hyprctl layers` daba `0. k4-fondo` y `1. wallpaper`, y el
     //     lienzo estaba dibujando perfectamente debajo de su propio suelo.

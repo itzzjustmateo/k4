@@ -12,7 +12,7 @@
 //
 //  Lo de HACER, del `motor` que le pasen: aplicar, quitar, traer uno de fuera,
 //  las transiciones. Hoy ese motor es el plugin del tema, que es quien habla
-//  con awww/swww/swaybg. Se recibe como objeto y no se importa su carpeta: un
+//  con awww/swww. Se recibe como objeto y no se importa su carpeta: un
 //  plugin no depende de otro, y si está apagado esto se queda en modo mirar sin
 //  romperse.
 
@@ -420,7 +420,7 @@ ColumnLayout {
         IslandLabel {
             Layout.fillWidth: true
             text: !parent.hay
-                ? Idioma.t("Instala awww, swww o swaybg para aplicar fondos")
+                ? Idioma.t("Instala awww o swww para aplicar fondos")
                 : (parent.puesto
                    ? Idioma.t("Fondo aplicado y guardado automáticamente")
                    : Idioma.t("Selecciona una imagen para cambiar el fondo"))

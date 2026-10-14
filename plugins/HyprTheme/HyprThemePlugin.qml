@@ -25,7 +25,7 @@ K4Plugin {
     //  fondo— y era un sitio más donde configurar cosas. Todo eso vive ahora en
     //  la ventana de Ajustes, en sus secciones, con los mismos widgets. Aquí se
     //  queda lo que nadie más sabe hacer: escribir el Lua de Hyprland, hablar
-    //  con awww/swww/swaybg y pintar el suelo.
+    //  con awww/swww y pintar el suelo.
     //
     //  Es el mismo camino que hicieron la tienda de plugins y los propios
     //  ajustes: lo que se abre y se usa es una aplicación, y lo que sabe hacer
@@ -428,7 +428,7 @@ K4Plugin {
             sacarPaleta()
         dirty = s.dirty === true
 
-        //  El suelo se repone al cargar: swaybg no sobrevive a un reinicio de
+        //  El suelo se repone al cargar: awww-daemon no sobrevive a un reinicio de
         //  sesión y lo que hay debajo tiene que ser lo que se eligió.
         ponerSuelo()
 
@@ -440,9 +440,9 @@ K4Plugin {
     }
 
     // ── fondo de pantalla ─────────────────────────────────────────
-    // El proyecto swww se renombró a awww, así que se acepta cualquiera de los
-    // dos; swaybg es el plan C: sin transiciones y hay que relanzarlo.
-    property string wallTool: ""       // "awww" | "swww" | "swaybg" | ""
+    // The swww project was renamed to awww, so either name is accepted; awww-daemon
+    // is the only backend now used for static floors. (No awww-daemon.)
+    property string wallTool: ""       // "awww" | "swww" | ""
 
     //  Lo que ha encontrado el rastreo, y lo que has traído tú.
     //
@@ -637,20 +637,20 @@ K4Plugin {
 
     //  ── el suelo ─────────────────────────────────────────────────
     //
-    //  swaybg se queda debajo con el fotograma quieto de cada pantalla. Lo que
+    //  awww-daemon se queda debajo con el fotograma quieto de cada pantalla. Lo que
     //  dibuja la barra vive mientras vive la barra, y entre entrar a la sesión y
     //  que arranque quickshell hay un rato sin nadie; si ahí el fondo es negro,
     //  hemos empeorado algo que funcionaba. Para un vídeo o un GIF, el suelo es
     //  su póster (ver `posterDe`).
     //
-    //  Una sola llamada con todas las pantallas: swaybg admite repetir `-o/-i`,
+    //  Una sola llamada con todas las pantallas: awww-daemon admite repetir `-o/-i`,
     //  y matarlo y levantarlo dos veces —una por monitor— deja al segundo sin la
     //  primera imagen, porque el nuevo proceso se queda los dos salidas.
     //  Las pantallas que hay, preguntadas al lienzo y no a `fondos`.
     //
     //  Recorriendo las claves de `fondos` solo salen las que tienen elección
     //  PROPIA, y a las demás se les quedaba sin poner el suelo: con dos
-    //  monitores y un fondo elegido en uno, swaybg arrancaba con `-o HDMI-A-1`
+    //  monitores y un fondo elegido en uno, awww-daemon arrancaba con `-o HDMI-A-1`
     //  a secas y el otro se quedaba sin fondo en cuanto la barra no estuviera.
     //  Quien sabe cuántas pantallas hay es el lienzo, que es una por cada una.
     function pantallasConocidas() {
@@ -664,10 +664,10 @@ K4Plugin {
     }
 
     //  El suelo no corre prisa —es para cuando la barra NO esté— así que se
-    //  amortigua. Sin esto, dos cambios de fondo seguidos dejaban DOS swaybg
+    //  amortigua. Sin esto, dos cambios de fondo seguidos dejaban DOS awww-daemon
     //  vivos: el `pkill` del segundo salía antes de que el primero llegara a
     //  existir, y el escritorio acababa con dos demonios peleándose por la
-    //  misma capa. Medido: `pgrep -c -x swaybg` daba 2.
+    //  misma capa. Medido: `pgrep -c -x awww-daemon` daba 2.
     property Timer esperaSuelo: Timer {
         interval: 300
         onTriggered: self.ponerSueloYa()
@@ -676,29 +676,32 @@ K4Plugin {
     function ponerSuelo() { esperaSuelo.restart() }
 
     function ponerSueloYa() {
-        const trozos = []
+        //  El suelo (el fotograma quieto que se ve antes de que arranque la barra
+        //  o si se cae) lo pinta awww/swww igual que cualquier otro fondo, ahora
+        //  sobre awww-daemon en lugar de swaybg.
+        const ordenes = []
         const pantallas = pantallasConocidas()
         for (let i = 0; i < pantallas.length; ++i) {
             const suelo = sueloDe(fondoDe(pantallas[i]))
             if (suelo.length > 0)
-                trozos.push("-o " + JSON.stringify(pantallas[i])
-                            + " -i " + JSON.stringify(suelo) + " -m fill")
+                ordenes.push(wallTool + " img " + JSON.stringify(suelo)
+                            + " --outputs " + JSON.stringify(pantallas[i])
+                            + " --resize crop --transition-type none")
         }
         //  Y si el lienzo todavía no existe —al arrancar—, el de siempre para
         //  todas, que es exactamente lo que hacía esto antes.
-        if (trozos.length === 0 && wallpaper.length > 0)
-            trozos.push("-i " + JSON.stringify(sueloDe(wallpaper)) + " -m fill")
-        if (trozos.length === 0)
+        if (ordenes.length === 0 && wallpaper.length > 0)
+            ordenes.push(wallTool + " img " + JSON.stringify(sueloDe(wallpaper))
+                        + " --resize crop --transition-type none")
+        if (ordenes.length === 0)
             return
 
-        //  `pkill -x`, nunca `-f`: con `-f` el patrón casa también con la línea
-        //  de esta misma orden y se mata a sí misma antes de llegar a swaybg.
-        //
-        //  Y con una espera corta antes de levantar el nuevo: matar no es
-        //  instantáneo, y arrancar mientras el viejo agoniza deja los dos.
+        //  awww-daemon puede no estar levantado: se arranca una vez y se reintenta.
+        //  `pgrep` evita esperar cuando ya está vivo.
         K4.Sistema.lanzar(["sh", "-c",
-            "pkill -x swaybg 2>/dev/null; sleep 0.2; swaybg " + trozos.join(" ")
-            + " >/dev/null 2>&1 &"])
+            "(pgrep -x " + wallTool + "-daemon >/dev/null 2>&1) || "
+            + "(" + wallTool + "-daemon >/dev/null 2>&1 & sleep 1); "
+            + ordenes.join("; ") + " >/dev/null 2>&1"])
     }
 
     //  Qué imagen quieta representa a un fondo. Para una foto, ella misma; para
@@ -862,20 +865,13 @@ K4Plugin {
         if (path.length === 0 || wallTool.length === 0)
             return false
 
-        if (wallTool === "swaybg") {
-            // swaybg no sabe recargar: se mata y se levanta otro.
-            K4.Sistema.lanzar(["sh", "-c",
-                "pkill -x swaybg 2>/dev/null || true; swaybg -i "
-                + JSON.stringify(path) + " -m fill >/dev/null 2>&1 &"])
-        } else {
-            // awww y swww aceptan la misma orden. Si el daemon aún no está
-            // levantado, se arranca y se reintenta la imagen.
-            K4.Sistema.lanzar(["sh", "-c",
-                wallTool + " img " + JSON.stringify(path)
-                + " --transition-type grow --transition-fps 60 >/dev/null 2>&1"
-                + " || { " + wallTool + "-daemon >/dev/null 2>&1 & sleep 1; "
-                + wallTool + " img " + JSON.stringify(path) + " >/dev/null 2>&1; }"])
-        }
+        // awww y swww aceptan la misma orden. Si el daemon aún no está
+        // levantado, se arranca y se reintenta la imagen.
+        K4.Sistema.lanzar(["sh", "-c",
+            wallTool + " img " + JSON.stringify(path)
+            + " --transition-type grow --transition-fps 60 >/dev/null 2>&1"
+            + " || { " + wallTool + "-daemon >/dev/null 2>&1 & sleep 1; "
+            + wallTool + " img " + JSON.stringify(path) + " >/dev/null 2>&1; }"])
         return true
     }
 
@@ -948,7 +944,7 @@ K4Plugin {
     K4.Process {
         id: toolScan
         command: ["sh", "-c",
-            "command -v awww || command -v swww || command -v swaybg || true"]
+            "command -v awww || command -v swww || true"]
         running: true
 
         onSalida: function (texto) {

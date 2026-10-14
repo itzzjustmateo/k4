@@ -1,6 +1,6 @@
 //  ¿Hay k4 nuevo?
 //
-//  El actualizador es `./instalar` y lleva ahí desde el principio —hace el
+//  El actualizador es `./installer.sh` y lleva ahí desde el principio —hace el
 //  `git pull`, repasa los paquetes y los atajos y ofrece reiniciar la barra—,
 //  pero la barra no lo mencionaba nunca: te enterabas de que había versión
 //  nueva si se te ocurría lanzarlo a mano. Esto es la mitad que faltaba: mirar,
@@ -12,7 +12,7 @@
 //     ahora no se enseñaba en ninguna parte—;
 //   · cuántos commits te lleva `origin`, que es la novedad de verdad;
 //   · y si tienes cambios sin guardar. Esto último no es un detalle: con el
-//     árbol sucio `./instalar` NO toca el código a propósito —perder trabajo de
+//     árbol sucio `./installer.sh` NO toca el código a propósito —perder trabajo de
 //     alguien por «actualizar» es exactamente lo que no puede pasar— así que
 //     enseñar «hay novedad» sin decir eso es mandar a alguien a pulsar un botón
 //     que no va a hacer nada, y encima sin explicar por qué.
@@ -67,13 +67,13 @@ QtObject {
 
     //  Y actualizar es lanzar el instalador donde se pueda ver.
     //
-    //  En una terminal y no en un proceso callado a propósito: `./instalar`
+    //  En una terminal y no en un proceso callado a propósito: `./installer.sh`
     //  pregunta —si reinicia la barra, si instala lo que falta— y puede pedir la
     //  contraseña al gestor de paquetes. Con k4term además sale DENTRO de la
     //  island, así que actualizar la barra se ve en la propia barra.
     function actualizar() {
         K4.Terminal.ejecutar("cd " + JSON.stringify(K4.Paths.raiz)
-                             + " && ./instalar;" + K4.Terminal.cierre)
+                             + " && ./installer.sh;" + K4.Terminal.cierre)
     }
 
     property K4.Process ojeada: K4.Process {

@@ -505,7 +505,7 @@ K4.Ventana {
                         //  y se pulsa.
                         //
                         //  Con cambios sin guardar no se ofrece el botón:
-                        //  `./instalar` no toca el código con el árbol sucio
+                        //  `./installer.sh` no toca el código con el árbol sucio
                         //  —a propósito— así que sería un botón que no hace lo
                         //  que dice. Se dice lo que pasa y decide quien lea,
                         //  que el trabajo sin guardar es suyo.
