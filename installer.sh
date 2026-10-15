@@ -765,54 +765,71 @@ paso_reiniciar() {
         return 0
     fi
 
-    if command -v hyprctl >/dev/null 2>&1 && [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
-        hyprctl reload >/dev/null 2>&1 && bien "Hyprland configuration reloaded."
-    fi
-
     command -v quickshell >/dev/null 2>&1 || {
         aviso "quickshell is not installed yet; I cannot start the bar."
         return 0
     }
 
-    if pgrep -x quickshell >/dev/null 2>&1; then
-        preguntar "Restart the bar so it picks up the changes?" || {
-            nota "OK. Start it whenever you want: $RAIZ/arrancar"
-            return 0
-        }
-        # `pkill -x`, never `pkill -f`: with -f the pattern also matches this
-        # script's own command line and kills it. It has happened twice and the
-        # symptom is a double island.
-        pkill -x quickshell || true
-        _i=0
-        while pgrep -x quickshell >/dev/null 2>&1 && [ "$_i" -lt 50 ]; do
-            sleep 0.2; _i=$((_i + 1))
-        done
-        #  Si alguno sigue en pie, forzar. Nadie quiere dos islands por el
-        #  mismo precio, y un quickshell colgado no obedece a la paciencia.
-        if pgrep -x quickshell >/dev/null 2>&1; then
-            pkill -9 -x quickshell || true
-            sleep 0.5
-        fi
-    fi
-
-    "$RAIZ/arrancar" --no-duplicate -d >/dev/null 2>&1 &
+    #  Primero nos aseguramos de no dejar ninguna viva antes de tocar.
+    pkill -9 -x quickshell 2>/dev/null || true
     _i=0
-    while [ "$_i" -lt 25 ]; do
-        pgrep -x quickshell >/dev/null 2>&1 && break
+    while pgrep -x quickshell >/dev/null 2>&1 && [ "$_i" -lt 25 ]; do
         sleep 0.2; _i=$((_i + 1))
     done
 
+    #  Hyprland puede tener en su configuración un `exec-once` que lanza la
+    #  barra al recargar. Si eso la ha levantado, no lanzamos otra, que el
+    #  motivo de todo este paso es poner UNA sola.
+    _lanzada_por_hypr=0
+    if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+        sleep 0.6
+        if pgrep -x quickshell >/dev/null 2>&1; then
+            _lanzada_por_hypr=1
+        fi
+    fi
+
+    if [ "$_lanzada_por_hypr" -eq 0 ]; then
+        "$RAIZ/arrancar" --no-duplicate -d >/dev/null 2>&1 &
+        _i=0
+        while [ "$_i" -lt 25 ]; do
+            pgrep -x quickshell >/dev/null 2>&1 && break
+            sleep 0.2; _i=$((_i + 1))
+        done
+    fi
+
+    #  Si hubiera quedado alguna extra por algún resquicio, dejarlas caer antes
+    #  de contar.
     _n=$(pgrep -c -x quickshell 2>/dev/null || printf '0')
-    case "$_n" in
-        1) bien "The bar is running." ;;
-        0) mal "The bar did not start. See what it says: $RAIZ/arrancar" ;;
-        *) mal "There are $_n quickshell running: that is the double island."
-           nota "Stop it all with \"pkill -x quickshell\" and start one." ;;
-    esac
+    if [ "$_n" -gt 1 ]; then
+        pkill -9 -x quickshell 2>/dev/null || true
+        sleep 1
+        "$RAIZ/arrancar" --no-duplicate -d >/dev/null 2>&1 &
+        _i=0
+        while [ "$_i" -lt 25 ]; do
+            pgrep -x quickshell >/dev/null 2>&1 && break
+            sleep 0.2; _i=$((_i + 1))
+        done
+        _n=$(pgrep -c -x quickshell 2>/dev/null || printf '0')
+    fi
+
+    if command -v hyprctl >/dev/null 2>&1 && [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+        hyprctl reload >/dev/null 2>&1 && bien "Hyprland configuration reloaded."
+    fi
+
+    if [ "$_n" -eq 1 ]; then
+        bien "The bar is running."
+    elif [ "$_n" -eq 0 ]; then
+        mal "The bar did not start. See what it says: $RAIZ/arrancar"
+    else
+        mal "There are $_n quickshell running: that is the double island."
+        nota "Stop it all with \"pkill -x quickshell\" and start one."
+    fi
+    _n=$(pgrep -c -x quickshell 2>/dev/null || printf '0')
+
 }
 
 # ─── Here we go ──────────────────────────────────────────────────────────────
-printf '\n%sk4%s · installer\n' "$NEGRITA" "$FIN"
+printf '\n%sk5%s · installer\n' "$NEGRITA" "$FIN"
 
 # No repository under us (curl | sh): first of all get it, and this does not
 # return: `clonar_y_seguir` ends in an `exec` of the already-cloned installer.
