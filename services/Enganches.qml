@@ -67,6 +67,7 @@ Singleton {
                      grupo: fuente.grupo,
                      opciones: fuente.opciones || [],
                      fuente: fuente }])
+        _recalcularGruposAjustes()
     }
 
     //  Esta sí barre las dos: es para cuando el plugin se va.
@@ -84,13 +85,6 @@ Singleton {
     property var gruposAjustes: []
 
     function _recalcularGruposAjustes() {
-        const salida = []
-        for (let i = 0; i < ajustes.length; ++i) {
-            const a = ajustes[i]
-            if (!a.opciones || a.opciones.length === 0)
-                continue
-            salida.push({
-                grupo: a.grupo || a.plugin,
         const salida = []
         for (let i = 0; i < ajustes.length; ++i) {
             const a = ajustes[i]
@@ -122,7 +116,9 @@ Singleton {
                 })
             })
         }
-        return salida
+        gruposAjustes = salida
+    }
+
     function valorAjuste(id) {
         const p = _partes(id)
         if (!p)
