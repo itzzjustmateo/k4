@@ -4,7 +4,7 @@
 //  dentro. Todo lo demás —procesos, timers, IpcHandler— va como hijo directo,
 //  vive mientras vive la barra y no depende de que la vista esté montada.
 //
-//      K4Plugin {
+//      K5Plugin {
 //          name: "hyprtheme"
 //          priority: 60
 //          habilitado: true

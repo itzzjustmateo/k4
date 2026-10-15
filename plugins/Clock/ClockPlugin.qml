@@ -8,7 +8,7 @@ import QtQuick
 import "../../core"
 import "../../services"
 
-K4Plugin {
+K5Plugin {
     id: self
 
     name: "clock"

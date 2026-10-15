@@ -9,7 +9,7 @@ import K5 as K5
 import "../../core"
 import "../../services"
 
-K4Plugin {
+K5Plugin {
     id: self
 
     name: "clipboard"

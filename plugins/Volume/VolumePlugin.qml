@@ -5,7 +5,7 @@ import QtQuick
 import "../../core"
 import "../../services"
 
-K4Plugin {
+K5Plugin {
     name: "volume"
     title: Idioma.t("Volumen")
     priority: 40
