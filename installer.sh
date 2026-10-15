@@ -777,6 +777,13 @@ paso_reiniciar() {
         sleep 0.2; _i=$((_i + 1))
     done
 
+    #  Primero dejamos que Hyprland recargue y lance (si es que lo hace)
+    #  por `exec-once`, y se ve mas tarde si hay que arrancar una.
+    if command -v hyprctl >/dev/null 2>&1 && [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+        hyprctl reload >/dev/null 2>&1 && bien "Hyprland configuration reloaded."
+    fi
+    sleep 1
+
     #  Hyprland puede tener en su configuración un `exec-once` que lanza la
     #  barra al recargar. Si eso la ha levantado, no lanzamos otra, que el
     #  motivo de todo este paso es poner UNA sola.
@@ -810,10 +817,6 @@ paso_reiniciar() {
             sleep 0.2; _i=$((_i + 1))
         done
         _n=$(pgrep -c -x quickshell 2>/dev/null || printf '0')
-    fi
-
-    if command -v hyprctl >/dev/null 2>&1 && [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
-        hyprctl reload >/dev/null 2>&1 && bien "Hyprland configuration reloaded."
     fi
 
     if [ "$_n" -eq 1 ]; then
