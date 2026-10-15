@@ -69,3 +69,4 @@ nvidia-smi	nvidia-utils	optional	NVIDIA GPU temperature and usage
 claude	-	optional	Usage limits in the Agentes plugin
 codex	-	optional	The assistant in the Ask plugin, and its limits in Agentes
 opencode	opencode	optional	The terminal assistant used by the Terminal plugin
+cliphist	cliphist	optional	Clear and keep the system clipboard history

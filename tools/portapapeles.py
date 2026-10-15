@@ -273,6 +273,20 @@ def limpiar():
             pass
 
     guarda(quedan)
+
+    #  Lo de `quedan` es nuestro historial, pero el portapapeles del sistema
+    #  sigue teniendo la última copia. Se asegura de que QUEDA vacío:
+    #  wl-clipboard para lo que haya ahora mismo, y cliphist para su propio
+    #  historial si el usuario lo usa a la vez.
+    try:
+        subprocess.run(["wl-copy", "--clear"], check=False, timeout=3)
+    except Exception:
+        pass
+    if shutil.which("cliphist"):
+        try:
+            subprocess.run(["cliphist", "wipe"], check=False, timeout=3)
+        except Exception:
+            pass
     print("nuevo", flush=True)
 
 
