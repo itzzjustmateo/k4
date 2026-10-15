@@ -6,9 +6,9 @@
 //  misma cara que la barra sin dibujar ni un rectángulo a mano.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Plugin {
+K5.Plugin {
     id: self
 
     name: "piezas"
@@ -28,8 +28,8 @@ K4.Plugin {
 
     view: Component { PiezasView { plugin: self } }
 
-    K4.Ipc {
-        target: "k4.piezas"
+    K5.Ipc {
+        target: "k5.piezas"
         function toggle(): void { self.abierto = !self.abierto }
         function close(): void { self.abierto = false }
         function estado(): string {

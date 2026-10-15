@@ -1,4 +1,4 @@
-#  Everything k4 needs from the system.
+#  Everything k5 needs from the system.
 #
 #  This table is the single source of truth: `instalar` reads it to diagnose and
 #  install, and the "Requirements" table in the README comes from it. If you add
@@ -21,7 +21,7 @@
 #  ── The engine ──────────────────────────────────────────────────────────────
 pkg:quickshell	quickshell	base	The runtime the bar runs on
 pkg:hyprland	hyprland	base	Compositor: shortcuts, windows, workspaces and theme
-git	git	base	Install and update k4
+git	git	base	Install and update k5
 python	python	base	All the helpers in tools/
 
 #  Qt: quickshell already pulls in qt6-declarative and qt6-wayland, but not

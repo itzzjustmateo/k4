@@ -5,7 +5,7 @@ pragma Singleton
 //
 //  Un registro y no una lista de importaciones cruzadas, por lo de siempre:
 //  Ajustes no puede conocer a un plugin que todavía no existe, y menos a uno
-//  que vive en ~/.config/k4/plugins. Aquí cada uno se apunta al nacer y se
+//  que vive en ~/.config/k5/plugins. Aquí cada uno se apunta al nacer y se
 //  borra al morir.
 //
 //  Lo de «al morir» no es un detalle: los plugins se destruyen de verdad
@@ -23,7 +23,7 @@ Singleton {
     // ── ajustes aportados ─────────────────────────────────────────
     //
     //  Cada entrada: { plugin, grupo, opciones: [...], fuente }
-    //  `fuente` es el objeto K4.Ajustes, que es quien sabe los valores.
+    //  `fuente` es el objeto K5.Ajustes, que es quien sabe los valores.
     property var ajustes: []
 
     //  El prefijo que hace que Ajustes sepa a quién preguntar. Va con el id
@@ -53,7 +53,7 @@ Singleton {
 
     //  Solo reemplaza SU entrada de ajustes. Antes barría con `quitarDe`, que
     //  es la escoba de «este plugin ha muerto» y se lleva también su enganche
-    //  del lanzador — y como K4.Ajustes se vuelve a registrar cada vez que
+    //  del lanzador — y como K5.Ajustes se vuelve a registrar cada vez que
     //  cambian sus `opciones`, un plugin con las dos cosas perdía la del
     //  lanzador al primer cambio, sin un solo error por ningún lado. No se
     //  notó antes porque hasta ahora ningún plugin tenía las dos.

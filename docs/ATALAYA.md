@@ -39,16 +39,16 @@ Si te pierdes acercándote, **Inicio** vuelve a encuadrarlo todo.
 
 ## El atajo
 
-**SUPER+Tab**, que lo instala `./installer.sh` desde `hypr/k4.lua` (o `hypr/k4.conf`
+**SUPER+Tab**, que lo instala `./installer.sh` desde `hypr/k5.lua` (o `hypr/k5.conf`
 con la configuración clásica). Ahí releva al selector `windows`, que sigue
 instalado y se abre desde el centro de aplicaciones.
 
-Se declara como un `K4.Atajo` con el nombre `atalaya`, y se ata por `global` y
+Se declara como un `K5.Atajo` con el nombre `atalaya`, y se ata por `global` y
 no por `exec_cmd`: el compositor se lo entrega a la barra sin lanzar un proceso
 en cada pulsación.
 
 ```lua
-hl.bind(mod .. " + Tab", hl.dsp.global("k4:atalaya"))
+hl.bind(mod .. " + Tab", hl.dsp.global("k5:atalaya"))
 ```
 
 ### Y una trampa de Hyprland
@@ -130,9 +130,9 @@ cuadro.
 ## IPC
 
 ```sh
-qs=~/.config/quickshell/k4/shell.qml
-quickshell ipc -p $qs call k4.atalaya alternar
-quickshell ipc -p $qs call k4.atalaya estado
+qs=~/.config/quickshell/k5/shell.qml
+quickshell ipc -p $qs call k5.atalaya alternar
+quickshell ipc -p $qs call k5.atalaya estado
 ```
 
 `cerrar` funciona aunque la ventana tenga el teclado en exclusiva, que es la

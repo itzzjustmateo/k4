@@ -4,13 +4,13 @@
 //  Lua en el Hyprland vivo — `hyprctl keyword` no sirve aquí: con el parser
 //  nuevo responde "keyword can't work with non-legacy parsers".
 //
-//  Para que sobreviva al reinicio, k4 es dueño de config/k4-theme.lua y lo
+//  Para que sobreviva al reinicio, k5 es dueño de config/k5-theme.lua y lo
 //  añade al final de hyprland.lua. Al ir el último, sus valores ganan sin
 //  tocar ni una línea de la configuración de CachyOS: borras el archivo y la
 //  línea `require`, y todo vuelve a estar como estaba.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -52,10 +52,10 @@ K4Plugin {
     //  está haciendo lo que le hemos pedido.
     onHoverTimedOut: if (!eligiendo) close()
 
-    readonly property string hyprDir: K4.Sistema.entorno("HOME") + "/.config/hypr"
-    readonly property string themeFile: hyprDir + "/config/k4-theme.lua"
+    readonly property string hyprDir: K5.Sistema.entorno("HOME") + "/.config/hypr"
+    readonly property string themeFile: hyprDir + "/config/k5-theme.lua"
     readonly property string entryFile: hyprDir + "/hyprland.lua"
-    readonly property string stateFile: K4.Sistema.entorno("HOME") + "/.local/state/k4/hyprtheme.json"
+    readonly property string stateFile: K5.Sistema.entorno("HOME") + "/.local/state/k5/hyprtheme.json"
 
     // ── ajustes ───────────────────────────────────────────────────
     property string preset: "cachyos"
@@ -155,14 +155,14 @@ K4Plugin {
     //  que mandar, y manda el de la pantalla donde vive la island: es el que
     //  estás mirando cuando la barra se tiñe.
     function fondoDeReferencia() {
-        const p = K4.Isla.pantalla
+        const p = K5.Isla.pantalla
         const propio = p && p.length > 0 ? fondoDe(p) : ""
         return propio.length > 0 ? propio : wallpaper
     }
 
     property var paletaSacada: []
 
-    K4.Process {
+    K5.Process {
         id: sacaColores
         environment: ({ "LC_ALL": "C" })
 
@@ -258,7 +258,7 @@ K4Plugin {
         //  Y la barra. La fuerza va baja a propósito: la island es negra y tiene
         //  que seguir siéndolo — esto es un ambiente, no una capa de pintura. El
         //  tope de la casa es 0,45 y aquí sobra con la mitad.
-        K4.Tema.tintar("hyprtheme", base, 0.22, 0)
+        K5.Tema.tintar("hyprtheme", base, 0.22, 0)
     }
 
     readonly property var presets: [
@@ -278,7 +278,7 @@ K4Plugin {
             //  Elegir un preset es elegir a mano: quien lo hace no quiere que
             //  el siguiente fondo se lo pise.
             paletaAuto = false
-            K4.Tema.destintar("hyprtheme")
+            K5.Tema.destintar("hyprtheme")
             preset = id
             accentFrom = presets[i].from
             accentTo = presets[i].to
@@ -337,7 +337,7 @@ K4Plugin {
     // ── persistir ─────────────────────────────────────────────────
     function persist() {
         themeView.setText(
-            '-- Generado por k4 · módulo HyprTheme.\n'
+            '-- Generado por k5 · módulo HyprTheme.\n'
             + '-- No lo edites a mano: se reescribe cada vez que guardas desde la barra.\n'
             + '-- Para revertirlo: borra este archivo y su línea require de hyprland.lua.\n\n'
             + luaBody())
@@ -350,16 +350,16 @@ K4Plugin {
     // propósito: lo que se aplica después es lo que manda.
     function ensureRequire() {
         const current = entryView.text()
-        if (current.length === 0 || current.indexOf("config.k4-theme") !== -1)
+        if (current.length === 0 || current.indexOf("config.k5-theme") !== -1)
             return
 
         entryView.setText(current.replace(/\s*$/, "")
-            + '\n\n-- k4: tema gestionado desde la barra (debe ir el último)\n'
-            + 'require("config.k4-theme")\n')
+            + '\n\n-- k5: tema gestionado desde la barra (debe ir el último)\n'
+            + 'require("config.k5-theme")\n')
     }
 
     function isPersisted() {
-        return entryView.text().indexOf("config.k4-theme") !== -1
+        return entryView.text().indexOf("config.k5-theme") !== -1
     }
 
     // ── estado propio, para reabrir con los mismos valores ────────
@@ -487,7 +487,7 @@ K4Plugin {
     //  hace falta: un fondo se reconoce mirándolo.
     property bool eligiendo: false
 
-    K4.Process {
+    K5.Process {
         id: selectorFondo
         //  Mientras el diálogo esté abierto la island se aparta: va en una capa
         //  por encima de todo y el selector le saldría por debajo, donde no se
@@ -548,18 +548,18 @@ K4Plugin {
     }
 
     readonly property var wallDirs: [
-        K4.Sistema.entorno("HOME") + "/Imágenes",
-        K4.Sistema.entorno("HOME") + "/Pictures",
-        K4.Sistema.entorno("HOME") + "/Vídeos",
-        K4.Sistema.entorno("HOME") + "/Videos",
-        K4.Sistema.entorno("HOME") + "/Descargas",
+        K5.Sistema.entorno("HOME") + "/Imágenes",
+        K5.Sistema.entorno("HOME") + "/Pictures",
+        K5.Sistema.entorno("HOME") + "/Vídeos",
+        K5.Sistema.entorno("HOME") + "/Videos",
+        K5.Sistema.entorno("HOME") + "/Descargas",
         "/usr/share/wallpapers",
         "/usr/share/backgrounds"
     ]
 
     //  Y lo que NO cuenta como fondo aunque esté en esas carpetas.
     //
-    //  «Capturas» es donde el propio k4 guarda las fotos y las grabaciones de
+    //  «Capturas» es donde el propio k5 guarda las fotos y las grabaciones de
     //  pantalla, así que la rejilla se llenaba de capturas de la barra: en esta
     //  máquina, de 120 imágenes encontradas la inmensa mayoría eran pantallazos
     //  de terminales. Un selector de fondos que enseña tus capturas es un
@@ -591,7 +591,7 @@ K4Plugin {
     //  Uno por fichero serían treinta ffmpeg compitiendo por la CPU justo cuando
     //  acabas de abrir la pantalla y quieres verla. En fila, y el que ya existe
     //  ni se toca.
-    K4.Process {
+    K5.Process {
         id: cocinaPosters
         onTerminado: self.posterSello += 1
     }
@@ -698,7 +698,7 @@ K4Plugin {
 
         //  awww-daemon puede no estar levantado: se arranca una vez y se reintenta.
         //  `pgrep` evita esperar cuando ya está vivo.
-        K4.Sistema.lanzar(["sh", "-c",
+        K5.Sistema.lanzar(["sh", "-c",
             "(pgrep -x " + wallTool + "-daemon >/dev/null 2>&1) || "
             + "(" + wallTool + "-daemon >/dev/null 2>&1 & sleep 1); "
             + ordenes.join("; ") + " >/dev/null 2>&1"])
@@ -708,7 +708,7 @@ K4Plugin {
     //  lo que se mueve, su póster cacheado — y si todavía no existe se manda
     //  hacer y de momento no se pone suelo, que es mejor que poner uno vacío.
     readonly property string cachePosters:
-        K4.Sistema.entorno("HOME") + "/.cache/k4/fondos"
+        K5.Sistema.entorno("HOME") + "/.cache/k5/fondos"
 
     function esQuieto(ruta) {
         return !/\.(mp4|webm|mkv|mov|m4v|avi|gif|webp|apng)$/i.test(String(ruta))
@@ -779,7 +779,7 @@ K4Plugin {
         onTriggered: self.cocinarEscalados()
     }
 
-    K4.Process {
+    K5.Process {
         id: cocinaEscalados
         onSalida: function (texto) {
             const d = Object.assign({}, self.escalados)
@@ -853,7 +853,7 @@ K4Plugin {
 
         //  Al segundo y no al primer fotograma: muchos vídeos empiezan en negro,
         //  y un póster negro es lo mismo que no tener póster.
-        K4.Sistema.lanzar(["sh", "-c",
+        K5.Sistema.lanzar(["sh", "-c",
             "mkdir -p " + JSON.stringify(cachePosters)
             + "; [ -f " + JSON.stringify(destino) + " ] || ffmpeg -v error -y"
             + " -ss 1 -i " + JSON.stringify(ruta) + " -frames:v 1 "
@@ -867,7 +867,7 @@ K4Plugin {
 
         // awww y swww aceptan la misma orden. Si el daemon aún no está
         // levantado, se arranca y se reintenta la imagen.
-        K4.Sistema.lanzar(["sh", "-c",
+        K5.Sistema.lanzar(["sh", "-c",
             wallTool + " img " + JSON.stringify(path)
             + " --transition-type grow --transition-fps 60 >/dev/null 2>&1"
             + " || { " + wallTool + "-daemon >/dev/null 2>&1 & sleep 1; "
@@ -928,20 +928,20 @@ K4Plugin {
 
 
     // ── archivos ──────────────────────────────────────────────────
-    K4.Fichero { id: themeView; path: self.themeFile }
-    K4.Fichero { id: entryView; path: self.entryFile; blockLoading: true }
-    K4.Fichero { id: stateView; path: self.stateFile; blockLoading: true }
+    K5.Fichero { id: themeView; path: self.themeFile }
+    K5.Fichero { id: entryView; path: self.entryFile; blockLoading: true }
+    K5.Fichero { id: stateView; path: self.stateFile; blockLoading: true }
 
-    K4.Process { id: evalProcess }
+    K5.Process { id: evalProcess }
 
-    K4.Process {
-        // el estado vive en ~/.local/state/k4, que puede no existir aún
-        command: ["mkdir", "-p", K4.Paths.estado]
+    K5.Process {
+        // el estado vive en ~/.local/state/k5, que puede no existir aún
+        command: ["mkdir", "-p", K5.Paths.estado]
         running: true
         onTerminado: self.loadState()
     }
 
-    K4.Process {
+    K5.Process {
         id: toolScan
         command: ["sh", "-c",
             "command -v awww || command -v swww || true"]
@@ -955,7 +955,7 @@ K4Plugin {
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: wallScan
 
         onSalida: function (texto) {
@@ -971,8 +971,8 @@ K4Plugin {
     //  esté abierto el módulo o no.
     Lienzo { id: lienzo; plugin: self }
 
-    K4.Ipc {
-        target: "k4.theme"
+    K5.Ipc {
+        target: "k5.theme"
         //  Se conserva el verbo porque puede estar atado en Hyprland: abre
         //  Ajustes, que es donde vive ahora lo que esto configuraba.
         function toggle(): void { PluginManager.abrirAplicacion("settings") }
@@ -1001,7 +1001,7 @@ K4Plugin {
                 if (self.paletaAuto)
                     self.sacarPaleta()
                 else
-                    K4.Tema.destintar("hyprtheme")
+                    K5.Tema.destintar("hyprtheme")
                 self.saveState()
             }
             return JSON.stringify({ auto: self.paletaAuto,

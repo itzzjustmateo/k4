@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Herramienta de traducción de k4.
+"""Herramienta de traducción de k5.
 
 Tres órdenes, y ninguna necesita saber QML:
 

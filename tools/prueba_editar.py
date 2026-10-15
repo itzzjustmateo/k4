@@ -23,7 +23,7 @@ fallos = []
 #  que las pruebas necesitan que existan. Se los crea ella y en su propio sitio:
 #  depender de que haya un PNG en /tmp haría que pasaran aquí y fallaran en
 #  cualquier otra máquina, que es la peor clase de prueba.
-BORRADOR = tempfile.mkdtemp(prefix="k4-prueba-")
+BORRADOR = tempfile.mkdtemp(prefix="k5-prueba-")
 
 
 def fichero(nombre):
@@ -1014,16 +1014,16 @@ def prueba_audio_no_pinta_nada():
 
 # ── el fichero del proyecto ───────────────────────────────────────
 def prueba_carpeta_adjunta_de_los_dos_nombres():
-    """`.k4v` es el nombre de hoy y `.k4.json` el de ayer: los dos proyectos
+    """`.k4v` es el nombre de hoy y `.k5.json` el de ayer: los dos proyectos
     tienen que apuntar a la MISMA carpeta adjunta, o los recortes y las formas
     de un montaje viejo se buscarían donde no están."""
-    igual("del nombre nuevo", editar.carpeta_de("/tmp/v.k4v"), "/tmp/v.k4")
-    igual("y del viejo", editar.carpeta_de("/tmp/v.k4.json"), "/tmp/v.k4")
+    igual("del nombre nuevo", editar.carpeta_de("/tmp/v.k4v"), "/tmp/v.k5")
+    igual("y del viejo", editar.carpeta_de("/tmp/v.k5.json"), "/tmp/v.k5")
 
 
 def prueba_el_proyecto_viejo_se_renombra_al_abrirlo():
     import json as _json
-    viejo = os.path.join(BORRADOR, "migra.k4.json")
+    viejo = os.path.join(BORRADOR, "migra.k5.json")
     nuevo = os.path.join(BORRADOR, "migra.k4v")
     for f in (viejo, nuevo):
         if os.path.exists(f):
@@ -1038,7 +1038,7 @@ def prueba_el_proyecto_viejo_se_renombra_al_abrirlo():
 
 def prueba_migrar_no_pisa_un_proyecto_ya_migrado():
     import json as _json
-    viejo = os.path.join(BORRADOR, "dos.k4.json")
+    viejo = os.path.join(BORRADOR, "dos.k5.json")
     nuevo = os.path.join(BORRADOR, "dos.k4v")
     _json.dump({"marca": "viejo"}, open(viejo, "w"))
     _json.dump({"marca": "nuevo"}, open(nuevo, "w"))
@@ -1789,7 +1789,7 @@ def prueba_forma_entra_por_la_tuberia_de_imagen():
     mismos efectos, mismas claves. Se siembra el fichero en la carpeta para
     que la caché acierte y la prueba no dependa de magick."""
     import tempfile
-    carpeta = tempfile.mkdtemp(prefix="k4-forma-")
+    carpeta = tempfile.mkdtemp(prefix="k5-forma-")
     f = capa(tipo="forma", modo="flecha", color="#ff453a", ruta=None)
     del f["ruta"]
     open(os.path.join(carpeta, editar.nombre_forma(f)), "wb").close()

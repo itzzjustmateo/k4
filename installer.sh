@@ -1,5 +1,5 @@
 #!/bin/sh
-#  Install and update k4. Same script for both: it pulls, updates packages and
+#  Install and update k5. Same script for both: it pulls, updates packages and
 #  shortcuts, and offers to restart the bar.
 #
 #      ./installer.sh                 everything: packages (incl. optional),
@@ -25,7 +25,7 @@
 #  this script runs BEFORE any dependencies exist, so it cannot depend on any.
 #  No bash, no python, no jq. Only what any system ships with.
 #
-#  What k4 needs is not written here: it lives in `dependencias.tsv`, the single
+#  What k5 needs is not written here: it lives in `dependencias.tsv`, the single
 #  source of truth, which the README also reads.
 
 set -eu
@@ -103,7 +103,7 @@ else
     RAIZ=''
 fi
 
-DESTINO=${K4_DESTINO:-$HOME/.config/quickshell/k4}
+DESTINO=${K4_DESTINO:-$HOME/.config/quickshell/k5}
 TABLA="${RAIZ:-$DESTINO}/dependencias.tsv"
 
 # ─── Package manager ─────────────────────────────────────────────────────────
@@ -367,8 +367,8 @@ paso_paquetes() {
 }
 
 # ─── Step: Hyprland ──────────────────────────────────────────────────────────
-# k4 owns ONE file and adds ONE line to yours. Same deal as the theme module
-# does with config/k4-theme.lua, and for the same reason: reverting is deleting
+# k5 owns ONE file and adds ONE line to yours. Same deal as the theme module
+# does with config/k5-theme.lua, and for the same reason: reverting is deleting
 # two things, not guessing what changed.
 HYPR=${HYPR_DIR:-$HOME/.config/hypr}
 
@@ -405,18 +405,18 @@ paso_hyprland() {
     # Lua config (CachyOS/noctalia) or the classic one?
     if [ -f "$HYPR/hyprland.lua" ]; then
         FORMA=lua
-        PLANTILLA="$RAIZ/hypr/k4.lua"
-        CFG="$HYPR/config/k4.lua"
+        PLANTILLA="$RAIZ/hypr/k5.lua"
+        CFG="$HYPR/config/k5.lua"
         ENTRADA="$HYPR/hyprland.lua"
-        ENGANCHE='require("config.k4")'
-        MARCA='require("config.k4")'
+        ENGANCHE='require("config.k5")'
+        MARCA='require("config.k5")'
     elif [ -f "$HYPR/hyprland.conf" ]; then
         FORMA=conf
-        PLANTILLA="$RAIZ/hypr/k4.conf"
-        CFG="$HYPR/k4.conf"
+        PLANTILLA="$RAIZ/hypr/k5.conf"
+        CFG="$HYPR/k5.conf"
         ENTRADA="$HYPR/hyprland.conf"
         ENGANCHE="source = $CFG"
-        MARCA="k4.conf"
+        MARCA="k5.conf"
     else
         aviso "Neither hyprland.lua nor hyprland.conf in $HYPR."
         nota "I do not know where to put the shortcuts. Create it and rerun."
@@ -425,7 +425,7 @@ paso_hyprland() {
 
     [ -f "$PLANTILLA" ] || morir "Missing template $PLANTILLA."
 
-    # 1 · k4's file. Always rewritten: it is ours.
+    # 1 · k5's file. Always rewritten: it is ours.
     mkdir -p "$(dirname "$CFG")"
     sed "s|@RAIZ@|$RAIZ|g" "$PLANTILLA" > "$CFG"
     bien "Written $CFG ($FORMA)."
@@ -434,7 +434,7 @@ paso_hyprland() {
     #     leave two lines.
     if grep -qF "$MARCA" "$ENTRADA" 2>/dev/null; then
         bien "Already hooked in $(basename "$ENTRADA")."
-    elif [ "$FORMA" = lua ] && grep -qF 'require("config.k4-theme")' "$ENTRADA"; then
+    elif [ "$FORMA" = lua ] && grep -qF 'require("config.k5-theme")' "$ENTRADA"; then
         # The theme has to come last so its settings win, so the shortcuts slip
         # in right before it instead of going at the end.
         # We enter above the comment that accompanies the theme, not between the
@@ -443,9 +443,9 @@ paso_hyprland() {
         awk -v linea="$ENGANCHE" '
             function suelta() { for (i = 1; i <= n; i++) print buf[i]; n = 0 }
             /^[[:space:]]*(--.*)?$/ { buf[++n] = $0; next }
-            /require\("config\.k4-theme"\)/ && !hecho {
+            /require\("config\.k5-theme"\)/ && !hecho {
                 print "";
-                print "-- k4: shortcuts and startup of the bar";
+                print "-- k5: shortcuts and startup of the bar";
                 print linea;
                 hecho = 1;
                 suelta(); print; next
@@ -458,9 +458,9 @@ paso_hyprland() {
         {
             printf '\n'
             if [ "$FORMA" = lua ]; then
-                printf -- '-- k4: shortcuts and startup of the bar\n'
+                printf -- '-- k5: shortcuts and startup of the bar\n'
             else
-                printf '# k4: shortcuts and startup of the bar\n'
+                printf '# k5: shortcuts and startup of the bar\n'
             fi
             printf '%s\n' "$ENGANCHE"
         } >> "$ENTRADA"
@@ -473,7 +473,7 @@ paso_hyprland() {
 }
 
 # ─── What you already had set up ─────────────────────────────────────────────
-# Recognizing a k4 line is not grepping for "call k4": almost nobody writes the
+# Recognizing a k5 line is not grepping for "call k5": almost nobody writes the
 # whole command on every shortcut; it is saved in a variable and concatenated.
 # In a normal configuration the text only shows up in the three definitions and
 # in none of the twenty-odd shortcut lines. So first we find out what those
@@ -492,17 +492,17 @@ ficheros_hypr() {
 patron_k4() {
     _vars=$(
         ficheros_hypr | while IFS= read -r _f; do
-            grep -hE '=[^=]*call k4' "$_f" 2>/dev/null || true
+            grep -hE '=[^=]*call k5' "$_f" 2>/dev/null || true
         done \
         | sed -E 's/^[[:space:]]*(local[[:space:]]+)?//' \
         | sed -E 's/[[:space:]]*=.*//' \
         | grep -E '^\$?[A-Za-z_][A-Za-z0-9_]*$' | sort -u
     )
-    #  The GLOBAL shortcuts k4 installs, one by one and not with a wildcard
-    #  `k4:*`: a plugin from outside also publishes its own — the crack, to name
+    #  The GLOBAL shortcuts k5 installs, one by one and not with a wildcard
+    #  `k5:*`: a plugin from outside also publishes its own — the crack, to name
     #  just one — and each user binds those by hand. Sweeping them with a broad
-    #  pattern would delete bindings k4 did not put in and cannot restore.
-    _pat='call k4|k4:clic|k4:clicDerecho|k4:dual|k4:atalaya'
+    #  pattern would delete bindings k5 did not put in and cannot restore.
+    _pat='call k5|k5:clic|k5:clicDerecho|k5:dual|k5:atalaya'
     for _v in $_vars; do
         # The `$` of hyprland.conf variables has to be escaped for the ERE.
         _pat="$_pat|$(printf '%s' "$_v" | sed 's/\$/\\$/')"
@@ -512,7 +512,7 @@ patron_k4() {
 
 # Before warning, the old lines the installer can identify without ambiguity are
 # removed. A copy is saved next to each file: if someone had their own action that
-# looks like k4, they can recover it from there. Comment lines are never touched.
+# looks like k5, they can recover it from there. Comment lines are never touched.
 migrar_duplicados() {
     PAT_K4=$(patron_k4)
     [ -n "$PAT_K4" ] || return 0
@@ -525,12 +525,12 @@ migrar_duplicados() {
         [ -n "$_f" ] || continue
         _tmp=$(mktemp) || continue
 
-        # The pattern includes the variables pointing to "call k4", so it also
+        # The pattern includes the variables pointing to "call k5", so it also
         # covers the bind lines that concatenate k4Call. All comments and
-        # everything that is not a complete k4 line are kept.
+        # everything that is not a complete k5 line are kept.
         awk -v patron="$PAT_K4" -v raiz="$RAIZ" -v destino="$DESTINO" '
             /^[[:space:]]*(--|#)/ { print; next }
-            (index($0, raiz "/arrancar") || index($0, destino "/arrancar") || $0 ~ /k4\/arrancar/) { quitadas++; next }
+            (index($0, raiz "/arrancar") || index($0, destino "/arrancar") || $0 ~ /k5\/arrancar/) { quitadas++; next }
             $0 ~ patron { quitadas++; next }
             { print }
             END { if (quitadas) printf "%d\n", quitadas > "/dev/stderr" }
@@ -550,14 +550,14 @@ migrar_duplicados() {
             continue
         fi
 
-        _copia="$_f.k4.bak"
+        _copia="$_f.k5.bak"
         if [ -e "$_copia" ]; then
-            _copia="$_f.k4.bak.$(date +%Y%m%d-%H%M%S)"
+            _copia="$_f.k5.bak.$(date +%Y%m%d-%H%M%S)"
         fi
         cp -p "$_f" "$_copia"
         mv "$_tmp" "$_f"
         _cambios=$((_cambios + 1))
-        bien "Migrated $_quitadas old k4 lines in $(basename "$_f")."
+        bien "Migrated $_quitadas old k5 lines in $(basename "$_f")."
         nota "Backup: $_copia"
     done <<EOF
 $_ficheros
@@ -575,7 +575,7 @@ revisar_duplicados() {
     _viejos=$(ficheros_hypr | while IFS= read -r _f; do
         awk -v f="$_f" -v patron="$PAT_K4" -v raiz="$RAIZ" -v destino="$DESTINO" '
             /^[[:space:]]*(--|#)/ { next }
-            (index($0, raiz "/arrancar") || index($0, destino "/arrancar") || $0 ~ /k4\/arrancar/ || $0 ~ patron) {
+            (index($0, raiz "/arrancar") || index($0, destino "/arrancar") || $0 ~ /k5\/arrancar/ || $0 ~ patron) {
                 printf "%s:%d:%s\n", f, NR, $0
             }
         ' "$_f" 2>/dev/null || true
@@ -587,7 +587,7 @@ revisar_duplicados() {
 
     if [ -n "$_atajos" ]; then
         printf '\n'
-        aviso "You have hand-written k4 shortcuts. They are now redundant: remove"
+        aviso "You have hand-written k5 shortcuts. They are now redundant: remove"
         nota  "them or they will fire twice. Review those lines before deleting."
         pintar_lineas "$_atajos"
     fi
@@ -631,7 +631,7 @@ pintar_lineas() {
         }'
 }
 
-# Keys k4 wants that you already use for something else. Just a warning: whoever
+# Keys k5 wants that you already use for something else. Just a warning: whoever
 # is defined last wins, and that is not decided by the installer.
 revisar_colisiones() {
     _tmp=$(mktemp -d) || return 0
@@ -642,7 +642,7 @@ revisar_colisiones() {
     : > "$_tmp/suyas"
     ficheros_hypr > "$_tmp/ficheros"
     while IFS= read -r _f; do
-        # Only lines that are NOT k4's count: the user's were already warned about.
+        # Only lines that are NOT k5's count: the user's were already warned about.
         grep -vE "$PAT_K4" "$_f" > "$_tmp/limpio" 2>/dev/null || true
         case "$_f" in
             *.lua)  teclas_lua  "$_tmp/limpio" >> "$_tmp/suyas" ;;
@@ -660,20 +660,20 @@ revisar_colisiones() {
     printf '%s\n' "$_choque" | while IFS= read -r t; do
         [ -n "$t" ] && nota "$t"
     done
-    nota "The last one defined wins, and k4's enter with \"$ENGANCHE\"."
+    nota "The last one defined wins, and k5's enter with \"$ENGANCHE\"."
     nota "If you prefer yours, bind them again AFTER that line."
 }
 
 # ─── Step: the code ──────────────────────────────────────────────────────────
-ORIGEN=${K4_ORIGEN:-https://github.com/k4ditano/k4.git}
+ORIGEN=${K4_ORIGEN:-https://github.com/k4ditano/k5.git}
 
 # First install through a pipe: there is no repository here yet.
 clonar_y_seguir() {
     titulo "Code"
-    command -v git >/dev/null 2>&1 || morir "I need git to clone k4."
+    command -v git >/dev/null 2>&1 || morir "I need git to clone k5."
 
     if [ -e "$DESTINO" ]; then
-        morir "$DESTINO already exists. If it is a k4 install, run it from there:
+        morir "$DESTINO already exists. If it is a k5 install, run it from there:
     $DESTINO/installer.sh"
     fi
 
@@ -729,14 +729,14 @@ paso_codigo() {
 }
 
 # ─── Step: the skill for agents ──────────────────────────────────────────────
-# An agent working on this machine does not know there is a bar called k4, nor
+# An agent working on this machine does not know there is a bar called k5, nor
 # that everything in it is plugins. You can tell it every time, or leave it
 # written once where it reads it on its own.
 #
-# It is linked, not copied: so updating k4 updates what it reads too.
+# It is linked, not copied: so updating k5 updates what it reads too.
 paso_agente() {
     titulo "For the agents"
-    if [ ! -d "$RAIZ/agents/skills/k4" ]; then
+    if [ ! -d "$RAIZ/agents/skills/k5" ]; then
         aviso "I cannot find the skill; I skip it."
         return
     fi

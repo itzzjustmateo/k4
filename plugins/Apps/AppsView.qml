@@ -2,7 +2,7 @@
 
 import QtQuick
 import QtQuick.Layouts
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -103,7 +103,7 @@ FadeIn {
         }
 
         // ── la rejilla ────────────────────────────────────────────
-        K4.Rodillo {
+        K5.Rodillo {
             visible: !view.plugin.modoActualizaciones
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -172,7 +172,7 @@ FadeIn {
                             anchors.centerIn: parent
                             spacing: 6
 
-                            K4.IconoPlugin {
+                            K5.IconoPlugin {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 imagen: celda.modelData.imagen
                                 glifo: celda.modelData.glifo
@@ -235,14 +235,14 @@ FadeIn {
                 IslandLabel {
                     Layout.fillWidth: true
                     elide: Text.ElideRight
-                    text: K4.Idioma.t("Elige qué actualizar")
+                    text: K5.Idioma.t("Elige qué actualizar")
                     font.pixelSize: 13
                     font.weight: Font.DemiBold
                     color: Theme.ink
                 }
 
                 IslandLabel {
-                    text: K4.Idioma.f(K4.Idioma.t("%1 de %2 marcadas"),
+                    text: K5.Idioma.f(K5.Idioma.t("%1 de %2 marcadas"),
                                       String(Paquetes.marcadas),
                                       String(Paquetes.pendientes))
                     color: Theme.muted
@@ -251,7 +251,7 @@ FadeIn {
             }
         }
 
-        K4.Rodillo {
+        K5.Rodillo {
             visible: view.plugin.modoActualizaciones
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -386,13 +386,13 @@ FadeIn {
 
                     IslandLabel {
                         text: Paquetes.comprobando
-                            ? K4.Idioma.t("Buscando actualizaciones…")
+                            ? K5.Idioma.t("Buscando actualizaciones…")
                             : Paquetes.pendientesRepo < 0
-                            ? K4.Idioma.t("Actualizaciones sin comprobar")
+                            ? K5.Idioma.t("Actualizaciones sin comprobar")
                             : Paquetes.pendientes === 0
-                            ? K4.Idioma.t("El sistema está al día")
-                            : K4.Idioma.f(
-                                K4.Idioma.t("%1 actualizaciones (%2)"),
+                            ? K5.Idioma.t("El sistema está al día")
+                            : K5.Idioma.f(
+                                K5.Idioma.t("%1 actualizaciones (%2)"),
                                 String(Paquetes.pendientes),
                                 Math.max(0, Paquetes.pendientesRepo)
                                     + " repos · "
@@ -446,9 +446,9 @@ FadeIn {
                         id: actualizarTexto
                         anchors.centerIn: parent
                         text: Paquetes.marcadas < Paquetes.pendientes
-                            ? K4.Idioma.f(K4.Idioma.t("Actualizar %1"),
+                            ? K5.Idioma.f(K5.Idioma.t("Actualizar %1"),
                                           String(Paquetes.marcadas))
-                            : K4.Idioma.t("Actualizar")
+                            : K5.Idioma.t("Actualizar")
                         font.pixelSize: 11
                         font.weight: Font.DemiBold
                         color: Paquetes.marcadas === 0 ? Theme.dim : Theme.ink

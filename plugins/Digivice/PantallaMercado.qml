@@ -25,7 +25,7 @@
 //  A recorre, B compra.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -125,7 +125,7 @@ Item {
         anchors.leftMargin: 5
         spacing: 8
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.verticalCenter: parent.verticalCenter
             text: Idioma.t("Mercado")
             font.pixelSize: 12
@@ -148,7 +148,7 @@ Item {
         //  de la caída: una animación que arranca y para por binding se queda
         //  congelada donde la pillen, y el «−10» se quedaba puesto para
         //  siempre en la cabecera.
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: gasto
             anchors.verticalCenter: parent.verticalCenter
             text: "−" + self._pagado
@@ -193,7 +193,7 @@ Item {
                 border.width: 1
                 border.color: hueco.activo ? "#e8b45a" : "#26301f"
 
-                K4.Glifo {
+                K5.Glifo {
                     anchors.centerIn: parent
                     anchors.verticalCenterOffset: -4
                     text: hueco.modelData.glifo
@@ -203,7 +203,7 @@ Item {
 
                 //  Cuántos llevas ya, en la esquina: sin esto se compra a
                 //  ciegas y se acaba con seis cintas de correr.
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 1
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -251,7 +251,7 @@ Item {
         x: parent.width * 0.22 - width / 2
         anchors.bottom: mostrador.top
 
-        K4.Glifo {
+        K5.Glifo {
             id: piezaGrande
             anchors.horizontalCenter: parent.horizontalCenter
             y: parent.height - height - 2
@@ -273,7 +273,7 @@ Item {
         //  la pantalla: colgada de `escaparate.x/y` desde fuera salía por
         //  donde no era, porque esas coordenadas se resuelven por anclas y no
         //  están puestas todavía cuando se evalúa el binding.
-        K4.Glifo {
+        K5.Glifo {
             visible: self._caidaOp > 0
             text: self._cayendo
             font.pixelSize: 24
@@ -317,7 +317,7 @@ Item {
         anchors.rightMargin: 5
         spacing: 0
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             text: self.elegido ? Idioma.t(self.elegido.nombre) : ""
             font.pixelSize: 12
@@ -326,7 +326,7 @@ Item {
             elide: Text.ElideRight
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             text: self.elegido ? Idioma.t(self.elegido.nota) : ""
             font.pixelSize: 10
@@ -345,7 +345,7 @@ Item {
                 tam: 12
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.verticalCenter: parent.verticalCenter
                 text: self.alcanza
                     ? Idioma.t("B lo compra")

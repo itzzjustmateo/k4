@@ -9,7 +9,7 @@
 //  mientras es el módulo activo, y grabar dura minutos con la island cerrada.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -215,7 +215,7 @@ K4Plugin {
     //  plugin dura lo que dura la barra.
     function pedirVideoDelDisco() { selectorVideoDisco.running = true }
 
-    K4.Process {
+    K5.Process {
         id: selectorVideoDisco
         //  Mientras el diálogo esté abierto, la island se aparta: va en una capa
         //  por encima de todo y el selector le sale por debajo, donde no se ve
@@ -258,7 +258,7 @@ K4Plugin {
         selectorImagen.running = true
     }
 
-    K4.Process {
+    K5.Process {
         id: selectorImagen
         //  Mientras el diálogo esté abierto, la island se aparta: va en una capa
         //  por encima de todo y el selector le sale por debajo, donde no se ve
@@ -289,7 +289,7 @@ K4Plugin {
         selectorAudio.running = true
     }
 
-    K4.Process {
+    K5.Process {
         id: selectorAudio
         //  Mientras el diálogo esté abierto, la island se aparta: va en una capa
         //  por encima de todo y el selector le sale por debajo, donde no se ve
@@ -316,7 +316,7 @@ K4Plugin {
         selectorPip.running = true
     }
 
-    K4.Process {
+    K5.Process {
         id: selectorPip
         //  Mientras el diálogo esté abierto, la island se aparta: va en una capa
         //  por encima de todo y el selector le sale por debajo, donde no se ve
@@ -360,9 +360,9 @@ K4Plugin {
     //  existe mientras el módulo tiene la island, y encuadrar una región es
     //  justamente cuando la island no está.
     //
-    //  Ojo: la propiedad por defecto de K4.Cargador es `component`, así que el
+    //  Ojo: la propiedad por defecto de K5.Cargador es `component`, así que el
     //  hijo suelto ES lo que se carga. Es lo que se quiere aquí.
-    K4.Cargador {
+    K5.Cargador {
         // Se carga también mientras solo hay que tapar —antes de que exista el
         // fotograma y un momento después de disparar—: ahí está transparente y
         // lo único que hace es que ningún clic caiga en la ventana de debajo.
@@ -377,7 +377,7 @@ K4Plugin {
     //  se libera justamente al abrir la ventana.
     property bool grande: false
 
-    K4.Cargador {
+    K5.Cargador {
         active: self.grande
         EditorGrande { plugin: self }
     }
@@ -426,7 +426,7 @@ K4Plugin {
             //  código en español y esto es una notificación que lee el
             //  usuario. Con la barra en inglés salía el título traducido y el
             //  porqué debajo en español.
-            K4.Sistema.lanzar(["notify-send", "-a", "k4", "-u", "critical",
+            K5.Sistema.lanzar(["notify-send", "-a", "k5", "-u", "critical",
                                      Idioma.t("No se pudo grabar"),
                                      Idioma.porque(motivo, detalle)])
         }
@@ -440,7 +440,7 @@ K4Plugin {
         function onFotoFallida(motivo, detalle) {
             // Un fallo de verdad sí merece aviso del sistema: puede pasar con
             // la island cerrada y sin nadie mirando la barra.
-            K4.Sistema.lanzar(["notify-send", "-a", "k4", "-u", "critical",
+            K5.Sistema.lanzar(["notify-send", "-a", "k5", "-u", "critical",
                                      Idioma.t("No se pudo capturar"),
                                      Idioma.porque(motivo, detalle)])
         }
@@ -465,19 +465,19 @@ K4Plugin {
             self.grande = false
             self.modo = "menu"
             self.open = false
-            K4.Sistema.lanzar(["notify-send", "-a", "k4",
+            K5.Sistema.lanzar(["notify-send", "-a", "k5",
                                      Idioma.t("Vídeo listo"),
                                      ruta.split("/").pop()])
         }
 
         function onFallo(motivo, detalle) {
-            K4.Sistema.lanzar(["notify-send", "-a", "k4", "-u", "critical",
+            K5.Sistema.lanzar(["notify-send", "-a", "k5", "-u", "critical",
                                      Idioma.t("No se pudo editar"),
                                      Idioma.porque(motivo, detalle)])
         }
 
         function onMiniaturaGuardada(ruta) {
-            K4.Sistema.lanzar(["notify-send", "-a", "k4",
+            K5.Sistema.lanzar(["notify-send", "-a", "k5",
                                      Idioma.t("Miniatura guardada"),
                                      ruta.split("/").pop()])
         }
@@ -512,13 +512,13 @@ K4Plugin {
     //
     //  Si esto no llegara a funcionar no se pierde el zoom: tools/editar.py sabe
     //  deducir los momentos del propio rastro, por los reposos del cursor.
-    K4.Atajo {
+    K5.Atajo {
         name: "clic"
         description: "Marca un clic izquierdo en el rastro de la grabación"
         onPressed: Captura.marcarClic(1)
     }
 
-    K4.Atajo {
+    K5.Atajo {
         name: "clicDerecho"
         description: "Marca un clic derecho en el rastro de la grabación"
         onPressed: Captura.marcarClic(3)
@@ -535,8 +535,8 @@ K4Plugin {
         }
     }
 
-    K4.Ipc {
-        target: "k4.captura"
+    K5.Ipc {
+        target: "k5.captura"
 
         function menu(): void { self.toggle() }
         function close(): void { self.close() }
@@ -563,9 +563,9 @@ K4Plugin {
     //  El editor tiene su propio canal.
     //
     //  No es cosmético: llegar al editor ya no pasa por haber grabado, y
-    //  colgarlo de `k4.captura` diría lo contrario a quien lea los atajos.
-    K4.Ipc {
-        target: "k4.editor"
+    //  colgarlo de `k5.captura` diría lo contrario a quien lea los atajos.
+    K5.Ipc {
+        target: "k5.editor"
 
         // Elegir un vídeo del disco y editarlo.
         function abrir(): void { self.pedirVideo() }

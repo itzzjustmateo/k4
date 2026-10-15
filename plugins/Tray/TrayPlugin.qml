@@ -6,7 +6,7 @@
 //  desentonaría al lado de la píldora.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -20,7 +20,7 @@ K4Plugin {
     //  El teclado entero mientras está abierto: «opcional» es OnDemand y
     //  el compositor solo lo da si PINCHAS la superficie, así que abierto
     //  desde el centro de aplicaciones o por atajo no llegaba ni el ESC.
-    //  Ver `tecladoOpcional` en api/K4/Plugin.qml.
+    //  Ver `tecladoOpcional` en api/K5/Plugin.qml.
     grabKeyboard: open
 
     property bool open: false
@@ -63,8 +63,8 @@ K4Plugin {
         }
     }
 
-    K4.Ipc {
-        target: "k4.tray"
+    K5.Ipc {
+        target: "k5.tray"
         function toggle(): void { self.toggle() }
         function close(): void { self.close() }
     }

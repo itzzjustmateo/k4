@@ -1,11 +1,11 @@
 //  El zumbador del aparato.
 //
-//  Un sitio y no catorce: los `K4.Sonido` se declaran aquí una vez y el
+//  Un sitio y no catorce: los `K5.Sonido` se declaran aquí una vez y el
 //  resto del plugin pide `Sonidos.sonar("golpe")`. Si estuvieran repartidos,
 //  cada componente cargaría los suyos y el mismo pitido existiría tres veces
 //  en memoria.
 //
-//  Son WAV a propósito: K4.Sonido los carga con SoundEffect, que los tiene en
+//  Son WAV a propósito: K5.Sonido los carga con SoundEffect, que los tiene en
 //  memoria y los dispara sin latencia. Los formatos comprimidos pasan por
 //  MediaPlayer, que abre el fichero al reproducir y llega tarde — en el golpe
 //  de un combate eso se nota.
@@ -15,7 +15,7 @@
 //  la fidelidad y no usar nada de nadie apuntan al mismo sitio.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
 Item {
     id: self
@@ -32,7 +32,7 @@ Item {
 
     property var _banco: ({})
 
-    //  Cuántos han cargado de verdad. `K4.Sonido.listo` es la única forma de
+    //  Cuántos han cargado de verdad. `K5.Sonido.listo` es la única forma de
     //  saberlo: un WAV que no se encuentra no da error, simplemente no suena.
     function diagnostico() {
         let ok = 0, mal = []
@@ -71,7 +71,7 @@ Item {
             id: celda
             required property string modelData
 
-            property var pieza: K4.Sonido {
+            property var pieza: K5.Sonido {
                 fuente: Qt.resolvedUrl("sonidos/" + celda.modelData + ".wav")
                 volumen: 0.45
             }

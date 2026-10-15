@@ -1,6 +1,6 @@
 //  Una ventana sobre el plano.
 //
-//  No es una foto: `K4.Miniatura` es una copia VIVA de ese toplevel, así que
+//  No es una foto: `K5.Miniatura` es una copia VIVA de ese toplevel, así que
 //  lo que se ve dentro es lo que está pasando ahí ahora — un vídeo sigue
 //  corriendo, un compilado sigue escupiendo líneas. Eso importa más de lo que
 //  parece: media razón para abrir esto es mirar si algo ha terminado ya.
@@ -29,7 +29,7 @@
 //  se hace diminuta, y el último cuadro se queda pegado: quieto, pero ahí.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
 Item {
     id: tarjeta
@@ -129,7 +129,7 @@ Item {
             height: tarjeta.height + (index + 1) * 6
             color: "transparent"
             border.width: 2
-            border.color: K4.Tema.azul
+            border.color: K5.Tema.azul
             opacity: 0.20 / (index + 1)
             z: -1
         }
@@ -141,7 +141,7 @@ Item {
         color: "#0b0e14"
     }
 
-    K4.Miniatura {
+    K5.Miniatura {
         anchors.fill: parent
         direccion: tarjeta.ventana.dir
         live: tarjeta.aLaVista || !tarjeta.asentado
@@ -194,7 +194,7 @@ Item {
             width: index < 2 ? 2 : tarjeta.width + 2
             height: index < 2 ? tarjeta.height + 2 : 2
             color: tarjeta.elegida
-                ? K4.Tema.azul
+                ? K5.Tema.azul
                 : Qt.rgba(1, 1, 1, 0.10 + 0.30 * cara)
         }
     }
@@ -212,14 +212,14 @@ Item {
         radius: 9
         color: Qt.rgba(0, 0, 0, 0.66)
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: etiquetaWs
             anchors.centerIn: parent
             text: tarjeta.ventana.wsNombre.length > 0
                 ? tarjeta.ventana.wsNombre
                 : String(tarjeta.ventana.ws)
             font.pixelSize: 10
-            color: tarjeta.elegida ? K4.Tema.tinta : K4.Tema.apagado
+            color: tarjeta.elegida ? K5.Tema.tinta : K5.Tema.apagado
         }
     }
 
@@ -241,12 +241,12 @@ Item {
         border.width: 1
         border.color: Qt.rgba(1, 1, 1, 0.10)
 
-        K4.Icono {
+        K5.Icono {
             id: icono
             anchors.centerIn: parent
             width: parent.lado * 0.62
             height: width
-            source: K4.Apps.icono(tarjeta.ventana.clase)
+            source: K5.Apps.icono(tarjeta.ventana.clase)
         }
     }
 
@@ -262,7 +262,7 @@ Item {
         visible: tarjeta.g.w > 190 && tarjeta.g.t > 0.6
         color: Qt.rgba(0, 0, 0, tarjeta.elegida ? 0.74 : 0.5)
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
@@ -272,7 +272,7 @@ Item {
                 ? tarjeta.ventana.titulo
                 : tarjeta.ventana.clase
             font.pixelSize: 11
-            color: tarjeta.elegida ? K4.Tema.tinta : K4.Tema.apagado
+            color: tarjeta.elegida ? K5.Tema.tinta : K5.Tema.apagado
             elide: Text.ElideRight
         }
     }

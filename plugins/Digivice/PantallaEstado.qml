@@ -5,7 +5,7 @@
 //  cuando abre la ficha de su criatura.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -32,7 +32,7 @@ Item {
                 quieto: true
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 text: Digivice.ficha ? Digivice.ficha.n : ""
@@ -42,7 +42,7 @@ Item {
                 elide: Text.ElideRight
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 text: Digivice.etapa
@@ -50,7 +50,7 @@ Item {
                 color: "#8fbf9c"
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 text: Digivice.ficha ? (Digivice.ficha.a || "") : ""
@@ -62,7 +62,7 @@ Item {
             //  pide de comer, cuánto de mimo y qué le sienta mejor. Sin
             //  enseñarlo aquí sería una diferencia invisible, y una regla que
             //  no se ve no se puede jugar en contra.
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 text: Idioma.t(Digivice.caracter.nombre)
@@ -71,7 +71,7 @@ Item {
                 color: "#e8b45a"
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.WordWrap
@@ -111,13 +111,13 @@ Item {
                     required property var modelData
                     width: parent.width
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         width: parent.width * 0.55
                         text: linea.modelData.k
                         font.pixelSize: 13
                         color: "#8fbf9c"
                     }
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         width: parent.width * 0.45
                         horizontalAlignment: Text.AlignRight
                         text: linea.modelData.v
@@ -130,13 +130,13 @@ Item {
 
             Item { width: 1; height: 5 }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 text: Digivice.victorias + Idioma.t("V / ") + Digivice.derrotas + Idioma.t("D")
                 font.pixelSize: 12
                 color: "#8fbf9c"
             }
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 text: Idioma.t("desc") + " " + Digivice.errores
                     + "   ·   " + self.edadTexto
@@ -146,7 +146,7 @@ Item {
 
             //  Las técnicas que ha aprendido, que es lo que se gana
             //  entrenando además del número.
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 visible: Digivice.ficha && Digivice.ficha.sk
                       && Digivice.ficha.sk.length > 0

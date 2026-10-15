@@ -5,7 +5,7 @@
 //  de teclear, para no abusar del servicio.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -36,12 +36,12 @@ K4Plugin {
     property bool aurSearching: false
 
     // Al abrir el lanzador se actualiza el índice de aplicaciones del usuario.
-    // K4.Apps ya vigila cambios, pero este paso cubre instalaciones que
-    // crean el .desktop mientras k4 estaba cerrado o durante un escaneo.
+    // K5.Apps ya vigila cambios, pero este paso cubre instalaciones que
+    // crean el .desktop mientras k5 estaba cerrado o durante un escaneo.
     readonly property string applicationsDir: {
-        const dataHome = K4.Sistema.entorno("XDG_DATA_HOME")
+        const dataHome = K5.Sistema.entorno("XDG_DATA_HOME")
         const base = dataHome && dataHome.length > 0
-            ? dataHome : K4.Sistema.entorno("HOME") + "/.local/share"
+            ? dataHome : K5.Sistema.entorno("HOME") + "/.local/share"
         return base + "/applications"
     }
 
@@ -257,7 +257,7 @@ K4Plugin {
     // bajabas con las flechas o la rueda.
     function rebuild(conservarSeleccion) {
         const q = query.trim().toLowerCase()
-        const applications = K4.Apps.lista
+        const applications = K5.Apps.lista
         const found = []
 
         for (let i = 0; i < applications.length; ++i) {
@@ -397,18 +397,18 @@ K4Plugin {
 
     // No se usa entry.execute(): eso hereda el directorio de trabajo de la
     // barra, que es la carpeta de configuración de quickshell —de ahí que las
-    // terminales abrieran en ~/.config/quickshell/k4—. Se lanza con el
+    // terminales abrieran en ~/.config/quickshell/k5—. Se lanza con el
     // directorio que pida la propia entrada y, si no pide ninguno, en casa.
     function abrir(entry) {
         const dir = entry.workingDirectory && entry.workingDirectory.length > 0
-            ? entry.workingDirectory : K4.Sistema.entorno("HOME")
+            ? entry.workingDirectory : K5.Sistema.entorno("HOME")
 
         if (!entry.command || entry.command.length === 0) {
             entry.execute()
             return
         }
 
-        K4.Sistema.lanzar(["sh", "-c",
+        K5.Sistema.lanzar(["sh", "-c",
             "cd " + JSON.stringify(dir) + " && exec \"$@\"", "sh"].concat(entry.command))
     }
 
@@ -426,7 +426,7 @@ K4Plugin {
     }
 
     Connections {
-        target: K4.Apps
+        target: K5.Apps
         function onListaChanged() { self.rebuild() }
     }
 
@@ -443,7 +443,7 @@ K4Plugin {
         onTriggered: self.rebuild(true)
     }
 
-    K4.Process {
+    K5.Process {
         id: installedListProcess
         command: ["pacman", "-Qq"]
 
@@ -459,13 +459,13 @@ K4Plugin {
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: desktopDatabaseProcess
         command: ["update-desktop-database", self.applicationsDir]
         onTerminado: self.rebuild()
     }
 
-    K4.Process {
+    K5.Process {
         id: repoSearchProcess
         environment: ({ "LC_ALL": "C" })
 
@@ -474,7 +474,7 @@ K4Plugin {
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: aurSearchProcess
         environment: ({ "LC_ALL": "C" })
 
@@ -498,8 +498,8 @@ K4Plugin {
         onTriggered: self.runAurSearch()
     }
 
-    K4.Ipc {
-        target: "k4.launcher"
+    K5.Ipc {
+        target: "k5.launcher"
         function toggle(): void { self.toggle() }
         function install(q: string): void { self.openPackageSearch(q) }
         function search(q: string): void {

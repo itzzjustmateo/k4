@@ -2,9 +2,9 @@ pragma Singleton
 
 //  Qué terminal usa la casa.
 //
-//  k4 abre terminales para cosas que no caben en la barra: actualizar el
+//  k5 abre terminales para cosas que no caben en la barra: actualizar el
 //  sistema, instalar del AUR, sacar una sesión a lo grande. La nuestra
-//  —k4term— es la primera opción, pero **k4 tiene que funcionar sin ella**:
+//  —k4term— es la primera opción, pero **k5 tiene que funcionar sin ella**:
 //  quien clone la barra no tiene por qué tener instalada la terminal, y
 //  quedarse sin poder actualizar el sistema por eso sería absurdo.
 //

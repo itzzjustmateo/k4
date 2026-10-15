@@ -5,7 +5,7 @@
 //  acaba en el historial del portapapeles.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -105,8 +105,8 @@ K4Plugin {
     // la lista cambia con cada búsqueda: el índice no puede quedarse fuera
     onCountChanged: if (index >= count) index = Math.max(0, count - 1)
 
-    K4.Ipc {
-        target: "k4.files"
+    K5.Ipc {
+        target: "k5.files"
 
         function toggle(): void { self.toggle() }
         function open(): void { self.abrir() }

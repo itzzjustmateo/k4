@@ -18,7 +18,7 @@ Singleton {
 
     //  Quién tiene la island ahora mismo y si está desplegada. Lo pone
     //  shell.qml —que es quien lo decide, comparando prioridades— y lo leen
-    //  los plugins a través de K4.Isla, para no gastar en animaciones y
+    //  los plugins a través de K5.Isla, para no gastar en animaciones y
     //  sondeos que nadie va a ver.
     property string ocupante: ""
     property bool abierta: false
@@ -68,7 +68,7 @@ Singleton {
     //  `rect` es la de la pantalla principal — el caso de un monitor y el
     //  plugin que no pregunta más. `rects` es el mapa completo por nombre de
     //  pantalla: con varios monitores la island se repite, y lo que asome
-    //  con una K4.Ventana debe poder anclarse a la SUYA.
+    //  con una K5.Ventana debe poder anclarse a la SUYA.
     property var rect: ({ x: 0, y: 0, ancho: 0, alto: 0 })
 
     //  Lo que mide el monitor donde vive la barra. Lo pide la

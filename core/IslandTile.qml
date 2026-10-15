@@ -1,8 +1,8 @@
-//  Capa fina sobre K4.Baldosa — ver core/IconGlyph.qml.
+//  Capa fina sobre K5.Baldosa — ver core/IconGlyph.qml.
 
-import K4 as K4
+import K5 as K5
 
-K4.Baldosa {
+K5.Baldosa {
     id: baldosa
 
     readonly property bool hovered: baldosa.encima

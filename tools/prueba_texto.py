@@ -27,7 +27,7 @@ import re
 import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CARPETAS = ["core", "widgets", "services", "plugins", os.path.join("api", "K4")]
+CARPETAS = ["core", "widgets", "services", "plugins", os.path.join("api", "K5")]
 
 #  Los que heredan de Text y husmean el marcado. `TextInput` no: siempre plano.
 ABRE = re.compile(r'(?<![A-Za-z_.])(Text|TextEdit)\s*\{')

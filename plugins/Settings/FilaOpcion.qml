@@ -11,7 +11,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -106,7 +106,7 @@ Rectangle {
         anchors.rightMargin: 12
         spacing: 11
 
-        K4.IconoPlugin {
+        K5.IconoPlugin {
             //  Un plugin puede traer su propia
             //  imagen; el resto de opciones son
             //  glifos y caen por el mismo sitio.
@@ -251,7 +251,7 @@ Rectangle {
         //
         //  Un plugin de fuera no puede añadir su caso al
         //  servicio: trae las suyas en `alternativas`, tal
-        //  como promete K4.Ajustes desde el principio —
+        //  como promete K5.Ajustes desde el principio —
         //  hasta ahora esa promesa pintaba una fila vacía.
         RowLayout {
             visible: opcion.modelData.tipo === "eleccion"

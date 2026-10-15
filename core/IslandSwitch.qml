@@ -1,9 +1,9 @@
-//  Capa fina sobre K4.Interruptor — ver core/IconGlyph.qml. Solo traduce los
+//  Capa fina sobre K5.Interruptor — ver core/IconGlyph.qml. Solo traduce los
 //  nombres: `checked`/`toggled` es lo que escriben los veinte de casa.
 
-import K4 as K4
+import K5 as K5
 
-K4.Interruptor {
+K5.Interruptor {
     id: control
 
     property alias checked: control.marcado

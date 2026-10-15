@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 import "../../widgets"

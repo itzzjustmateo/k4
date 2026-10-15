@@ -560,7 +560,7 @@ Scope {
     //  escribir algo en ella, y una locución puede ser lo primero—, así que se
     //  asegura antes. Con un `mkdir` propio y no con `sh -c 'mkdir … && ffmpeg'`:
     //  por ahí entrarían las comillas, y las rutas de esta casa llevan espacios
-    //  y tildes («Pa twitter.k4»). Encadenar dos procesos no tiene ese problema.
+    //  y tildes («Pa twitter.k5»). Encadenar dos procesos no tiene ese problema.
     function grabarVoz(ruta, dispositivo, carpeta) {
         grabadorVoz.queja = ""
         //  `-y` porque el nombre lo elige el Editor y ya se ha asegurado de

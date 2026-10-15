@@ -11,7 +11,7 @@
 
 import QtQuick
 import QtQuick.Layouts
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -25,7 +25,7 @@ Rectangle {
     readonly property string ident: String(modelData.pluginId || "")
     readonly property var meta: PluginManager.metadata(fila.ident)
 
-    //  Sus ajustes, los que registró con `K4.Ajustes`. Puede no tener.
+    //  Sus ajustes, los que registró con `K5.Ajustes`. Puede no tener.
     readonly property var suGrupo: {
         const gs = Enganches.gruposAjustes
         for (let i = 0; i < gs.length; ++i)
@@ -226,7 +226,7 @@ Rectangle {
                         const c = m.comandos || ({})
                         if (c.atajos)
                             for (let j = 0; j < c.atajos.length; ++j)
-                                chips.push({ t: "k4:" + c.atajos[j], aviso: false })
+                                chips.push({ t: "k5:" + c.atajos[j], aviso: false })
                         if (c.ipc)
                             for (let k = 0; k < c.ipc.length; ++k)
                                 chips.push({ t: c.ipc[k], aviso: false })

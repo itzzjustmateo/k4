@@ -1,13 +1,13 @@
 //  El plugin mínimo: un saludo en la island.
 //
 //  Es el ejemplo de docs/PLUGINS.md, completo y cargable tal cual: copia la
-//  carpeta a ~/.config/k4/plugins/hola, enciéndelo en Ajustes, y
-//  `quickshell ipc -p <ruta>/shell.qml call k4.hola toggle` lo abre.
+//  carpeta a ~/.config/k5/plugins/hola, enciéndelo en Ajustes, y
+//  `quickshell ipc -p <ruta>/shell.qml call k5.hola toggle` lo abre.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Plugin {
+K5.Plugin {
     id: self
 
     name: "hola"
@@ -25,7 +25,7 @@ K4.Plugin {
     view: Component { HolaView { plugin: self } }
 
     //  El estado propio: sobrevive a reiniciar la barra.
-    property var guardado: K4.Guardado {
+    property var guardado: K5.Guardado {
         plugin: "hola"
         onCargado: function (d) {
             self.visitas = d.visitas || 0
@@ -41,19 +41,19 @@ K4.Plugin {
 
     //  Mis ajustes, dentro de los Ajustes de la barra. Los valores los guardo
     //  yo; la barra solo pregunta y avisa.
-    property var misAjustes: K4.Ajustes {
+    property var misAjustes: K5.Ajustes {
         plugin: "hola"
-        grupo: K4.Idioma.t("Hola")
+        grupo: K5.Idioma.t("Hola")
         opciones: [
-            { id: "saludar", nombre: K4.Idioma.t("Saludar al abrir"),
-              desc: K4.Idioma.t("Si no, solo enseña el contador"),
+            { id: "saludar", nombre: K5.Idioma.t("Saludar al abrir"),
+              desc: K5.Idioma.t("Si no, solo enseña el contador"),
               glifo: 0xF1821 },
             //  Un campo libre: aquí un nombre; en un plugin de verdad, la
             //  URL de un servicio o —con `secreto: true`— su clave.
             { id: "aQuien", tipo: "texto",
-              nombre: K4.Idioma.t("A quién saludar"),
-              desc: K4.Idioma.t("Sale en el saludo de la island"),
-              pista: K4.Idioma.t("el mundo"), glifo: 0xF17C4 }
+              nombre: K5.Idioma.t("A quién saludar"),
+              desc: K5.Idioma.t("Sale en el saludo de la island"),
+              pista: K5.Idioma.t("el mundo"), glifo: 0xF17C4 }
         ]
         valores: ({ saludar: self.saludar, aQuien: self.aQuien })
         onCambiado: function (id, valor) {
@@ -66,20 +66,20 @@ K4.Plugin {
     }
 
     //  Y una entrada en el lanzador, para abrirse escribiendo.
-    property var enElLanzador: K4.Lanzador {
+    property var enElLanzador: K5.Lanzador {
         plugin: "hola"
         onBuscando: function (texto) {
             const t = texto.trim().toLowerCase()
             resultados = (t.length >= 2 && "hola".indexOf(t) === 0)
-                ? [{ id: "abrir", titulo: K4.Idioma.t("Abrir Hola"),
-                     desc: K4.Idioma.t("El plugin de ejemplo") }]
+                ? [{ id: "abrir", titulo: K5.Idioma.t("Abrir Hola"),
+                     desc: K5.Idioma.t("El plugin de ejemplo") }]
                 : []
         }
         onElegido: function (id) { if (id === "abrir") self.abierto = true }
     }
 
-    K4.Ipc {
-        target: "k4.hola"
+    K5.Ipc {
+        target: "k5.hola"
         function toggle(): void {
             self.abierto = !self.abierto
             if (self.abierto) {

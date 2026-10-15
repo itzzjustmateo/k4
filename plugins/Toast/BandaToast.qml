@@ -7,17 +7,17 @@
 //  sostiene, clic va a la aplicación y la ✕ la descarta.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
-K4.Ventana {
+K5.Ventana {
     id: ventana
 
-    nombre: "k4-toast-banda"
+    nombre: "k5-toast-banda"
     zonaActiva: capsula
 
-    readonly property bool abajo: K4.Isla.posicion === "abajo"
+    readonly property bool abajo: K5.Isla.posicion === "abajo"
     readonly property var aviso: Notifs.latest
 
     Rectangle {
@@ -25,9 +25,9 @@ K4.Ventana {
 
         readonly property int alto: 56
 
-        x: K4.Isla.rect.x + (K4.Isla.rect.ancho - width) / 2
-        y: ventana.abajo ? K4.Isla.rect.y - alto - 8
-                         : K4.Isla.rect.y + K4.Isla.rect.alto + 8
+        x: K5.Isla.rect.x + (K5.Isla.rect.ancho - width) / 2
+        y: ventana.abajo ? K5.Isla.rect.y - alto - 8
+                         : K5.Isla.rect.y + K5.Isla.rect.alto + 8
         width: Math.min(420, contenido.implicitWidth + 84)
         height: alto
         radius: 16
@@ -44,10 +44,10 @@ K4.Ventana {
             NumberAnimation { target: capsula; property: "opacity"; to: 1; duration: 180 }
             NumberAnimation {
                 target: capsula; property: "y"
-                from: ventana.abajo ? K4.Isla.rect.y - 20
-                                    : K4.Isla.rect.y + K4.Isla.rect.alto - 20
-                to: ventana.abajo ? K4.Isla.rect.y - capsula.alto - 8
-                                  : K4.Isla.rect.y + K4.Isla.rect.alto + 8
+                from: ventana.abajo ? K5.Isla.rect.y - 20
+                                    : K5.Isla.rect.y + K5.Isla.rect.alto - 20
+                to: ventana.abajo ? K5.Isla.rect.y - capsula.alto - 8
+                                  : K5.Isla.rect.y + K5.Isla.rect.alto + 8
                 duration: 260
                 easing.type: Easing.OutBack
                 easing.overshoot: 0.6

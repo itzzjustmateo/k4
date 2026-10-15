@@ -15,7 +15,7 @@
 
 import QtQuick
 import QtQuick.Layouts
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -269,7 +269,7 @@ FadeIn {
                                 Layout.preferredWidth: 78
                             }
 
-                            K4.Medidor {
+                            K5.Medidor {
                                 Layout.fillWidth: true
                                 Layout.alignment: Qt.AlignVCenter
                                 valor: fila.pct

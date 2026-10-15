@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""El motor del editor de vídeo de k4.
+"""El motor del editor de vídeo de k5.
 
     editar.py abrir    <v.mp4> [--guardar plan.json]   -> plan JSON por stdout
     editar.py proponer <rastro.jsonl> --video <v.mp4>  -> plan JSON con zoom
@@ -53,7 +53,7 @@ def salir(**d):
 def leer_rastro(ruta):
     #  Sin rastro también se edita.
     #
-    #  El rastro del cursor solo existe si el vídeo lo grabó k4. Un vídeo
+    #  El rastro del cursor solo existe si el vídeo lo grabó k5. Un vídeo
     #  abierto del disco no lo tiene, y antes esto reventaba con un
     #  FileNotFoundError que se llevaba por delante `camara` y `render`: el
     #  editor se quedaba en blanco sin decir por qué.
@@ -625,15 +625,15 @@ def entradas(plan, carpeta=None):
 
 
 def carpeta_de(ruta_plan):
-    """La carpeta adjunta de un plan: `<vídeo>.k4/` para `<vídeo>.k4v`.
+    """La carpeta adjunta de un plan: `<vídeo>.k5/` para `<vídeo>.k4v`.
 
-    Se sigue entendiendo el nombre viejo —`<vídeo>.k4.json`— porque los
+    Se sigue entendiendo el nombre viejo —`<vídeo>.k5.json`— porque los
     proyectos de antes existen y se abren igual; quitarle el `.json` da la
     misma carpeta, así que los dos nombres apuntan al mismo sitio.
     """
     if ruta_plan.endswith(".k4v"):
         return ruta_plan[:-1]
-    return ruta_plan[:-5] if ruta_plan.endswith(".json") else ruta_plan + ".k4"
+    return ruta_plan[:-5] if ruta_plan.endswith(".json") else ruta_plan + ".k5"
 
 
 def migrar_nombre(ruta_plan):
@@ -645,7 +645,7 @@ def migrar_nombre(ruta_plan):
     """
     if not ruta_plan.endswith(".k4v"):
         return
-    viejo = ruta_plan[:-4] + ".k4.json"
+    viejo = ruta_plan[:-4] + ".k5.json"
     if os.path.exists(viejo) and not os.path.exists(ruta_plan):
         os.rename(viejo, ruta_plan)
 
@@ -774,7 +774,7 @@ def orden_renombrar(args):
     """Ponerle nombre a un proyecto: el fichero Y su carpeta adjunta.
 
     Las dos cosas a la vez y no solo el `.k4v`: la carpeta se llama a partir del
-    plan —`<plan>.k4/`, ver `carpeta_de`— así que renombrar uno sin el otro deja
+    plan —`<plan>.k5/`, ver `carpeta_de`— así que renombrar uno sin el otro deja
     el SRT y el texto de los rótulos huérfanos, y el editor los buscaría donde
     ya no están.
     """
@@ -2279,7 +2279,7 @@ def grafo(plan, sin_audio=False, carpeta=None, sonoridad=False,
     #  La carpeta primero: el anillo de los clics se dibuja ahí y entra como una
     #  entrada más, así que `entradas` la necesita.
     if carpeta is None:
-        carpeta = tempfile.mkdtemp(prefix="k4-grafo-")
+        carpeta = tempfile.mkdtemp(prefix="k5-grafo-")
     os.makedirs(carpeta, exist_ok=True)
     _, idx_de, idx_capa, idx_anillo = entradas(plan, carpeta)
     norma = norma_video(ancho, alto, fps)
@@ -3270,9 +3270,9 @@ def escribir_grafo(plan, ruta_plan, sin_audio=False, nombre="grafo.txt",
     De regalo, el grafo se queda en disco: cuando un render falle, ahí está lo
     que se le pidió a ffmpeg, tal cual.
     """
-    #  El plan es `<vídeo>.k4v` y su carpeta adjunta es `<vídeo>.k4/`, así
-    #  que solo hay que quitarle la última letra. Con `splitext` + ".k4" salía
-    #  `<vídeo>.k4.k4`, que funcionaba pero era un sitio que nadie esperaba.
+    #  El plan es `<vídeo>.k4v` y su carpeta adjunta es `<vídeo>.k5/`, así
+    #  que solo hay que quitarle la última letra. Con `splitext` + ".k5" salía
+    #  `<vídeo>.k5.k5`, que funcionaba pero era un sitio que nadie esperaba.
     carpeta = carpeta_de(ruta_plan)
     os.makedirs(carpeta, exist_ok=True)
     texto, nodos = grafo(plan, sin_audio, carpeta, sonoridad=sonoridad,

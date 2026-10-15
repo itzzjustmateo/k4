@@ -36,7 +36,7 @@ RowLayout {
 
     IslandLabel {
         text: guardar.puesto
-            ? Idioma.t("Guardado en config/k4-theme.lua · sobrevive al reinicio")
+            ? Idioma.t("Guardado en config/k5-theme.lua · sobrevive al reinicio")
             : Idioma.t("Aplicado solo en esta sesión · pulsa Guardar para que persista")
         color: Theme.muted
         font.pixelSize: 10

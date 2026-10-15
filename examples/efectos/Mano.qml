@@ -1,17 +1,17 @@
 //  La mano que asoma por el lateral de la island.
 //
-//  La pareja que lo hace posible: K4.Ventana —una superficie transparente a
-//  pantalla completa por encima de todo— y K4.Isla.rect, la geometría real
+//  La pareja que lo hace posible: K5.Ventana —una superficie transparente a
+//  pantalla completa por encima de todo— y K5.Isla.rect, la geometría real
 //  de la island para anclarse a su borde al píxel. Con estas dos piezas,
 //  cualquier cosa puede asomar, caerse o pasearse "fuera" de la barra.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Ventana {
+K5.Ventana {
     id: ventana
 
-    nombre: "k4-efectos-mano"
+    nombre: "k5-efectos-mano"
 
     //  Solo la mano captura el ratón; el resto de la pantalla sigue siendo
     //  del escritorio. Sin esto, la ventana invisible se tragaría los clics.
@@ -24,8 +24,8 @@ K4.Ventana {
 
         //  Pegada al borde derecho de la island, medio palmo por debajo del
         //  filo, mirando hacia fuera.
-        x: K4.Isla.rect.x + K4.Isla.rect.ancho - 4
-        y: K4.Isla.rect.y + 6
+        x: K5.Isla.rect.x + K5.Isla.rect.ancho - 4
+        y: K5.Isla.rect.y + 6
         text: "👋"
         font.pixelSize: 30
         rotation: -35

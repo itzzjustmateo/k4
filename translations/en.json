@@ -2,7 +2,7 @@
   "_meta": {
     "idioma": "English",
     "codigo": "en",
-    "traducido por": "k4",
+    "traducido por": "k5",
     "cómo": "Empty values fall back to the original Spanish text."
   },
   " GB": " GB",
@@ -283,7 +283,7 @@
   "Golpea y se cura con ello": "Strikes and heals off it",
   "Golpes certeros": "True Strikes",
   "Golpes que saltan de uno a otro": "Blows that leap from one to the next",
-  "Guardado en config/k4-theme.lua · sobrevive al reinicio": "Saved to config/k4-theme.lua · survives restarts",
+  "Guardado en config/k5-theme.lua · sobrevive al reinicio": "Saved to config/k5-theme.lua · survives restarts",
   "Guardar": "Save",
   "Guardián": "Guardian",
   "Hacia el borde izquierdo o el derecho de la pantalla": "Toward the left or the right edge of the screen",

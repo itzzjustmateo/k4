@@ -76,7 +76,7 @@ class Raton:
         for r in (REL_X, REL_Y, REL_WHEEL):
             fcntl.ioctl(self.fd, UI_SET_RELBIT, r)
 
-        nombre = b"k4-raton-de-pruebas"
+        nombre = b"k5-raton-de-pruebas"
         nombre += b"\0" * (80 - len(nombre))
         fcntl.ioctl(self.fd, UI_DEV_SETUP,
                     struct.pack("HHHH80sI", 0x03, 0x1234, 0x5679, 1, nombre, 0))

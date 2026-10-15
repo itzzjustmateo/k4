@@ -4,10 +4,10 @@
 //  captura, las de redimensionar ventanas, lo que hayas montado tú. Es
 //  invisible por diseño, justo hasta que se te olvida qué idioma habla y cada
 //  tecla empieza a hacer lo que no es. Este plugin lee el submapa activo por
-//  `K4.Submapas` y declara una extensión de la cápsula por `K4.Capsula`
+//  `K5.Submapas` y declara una extensión de la cápsula por `K5.Capsula`
 //  mientras haya uno puesto — y eso es TODO lo que le hace a la barra. Ni
 //  tripas de la píldora ni geometría: está escrito contra la API pública y
-//  nada más, la misma que recibe un plugin instalado en ~/.config/k4/plugins,
+//  nada más, la misma que recibe un plugin instalado en ~/.config/k5/plugins,
 //  y se podría coger y dejar ahí tal cual.
 //
 //  Nunca se queda la island (`active` es siempre false): la extensión es parte
@@ -17,18 +17,18 @@
 //  esa regla es de la cápsula, no de este plugin.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Plugin {
+K5.Plugin {
     id: self
 
     name: "submap"
-    title: K4.Idioma.t("Submapa")
+    title: K5.Idioma.t("Submapa")
     priority: 10
     active: false
 
     // ── lo que dice Hyprland ──────────────────────────────────
-    readonly property string mapaActual: K4.Submapas.actual
+    readonly property string mapaActual: K5.Submapas.actual
 
     readonly property bool enMarcha: habilitado && mostrar
         && mapaActual.length > 0
@@ -59,13 +59,13 @@ K4.Plugin {
     //  un objeto NUEVO cuando cambia el estado, y null cuando no hay nada que
     //  decir — que es el contrato de la API para entrar y para salir. Medir,
     //  capar y crecer son cosa de la barra.
-    K4.Capsula {
+    K5.Capsula {
         plugin: "submap"
         extension: self.enMarcha ? ({
             lado: self.lado,
             texto: self.etiqueta,
             glifo: 0xF030E,               // md-keyboard_caps
-            color: K4.Tema.azul,
+            color: K5.Tema.azul,
             largoMaximo: self.largoMaximo
         }) : null
     }
@@ -83,7 +83,7 @@ K4.Plugin {
         return Math.max(60, Math.min(1200, n))
     }
 
-    property var almacen: K4.Guardado {
+    property var almacen: K5.Guardado {
         plugin: "submap"
         onCargado: function (d) {
             if (d.mostrar !== undefined)
@@ -100,24 +100,24 @@ K4.Plugin {
                           largoMaximo: largoMaximo })
     }
 
-    K4.Ajustes {
+    K5.Ajustes {
         plugin: "submap"
-        grupo: K4.Idioma.t("Submapa")
+        grupo: K5.Idioma.t("Submapa")
         glifo: 0xF030E   // md-keyboard_caps
-        desc: K4.Idioma.t("La píldora crece hacia un borde con el nombre del modo activo.")
+        desc: K5.Idioma.t("La píldora crece hacia un borde con el nombre del modo activo.")
 
         opciones: [
-            { id: "mostrar", nombre: K4.Idioma.t("Enseñar el submapa activo"),
-              desc: K4.Idioma.t("La cápsula se extiende mientras hay un modo puesto"),
+            { id: "mostrar", nombre: K5.Idioma.t("Enseñar el submapa activo"),
+              desc: K5.Idioma.t("La cápsula se extiende mientras hay un modo puesto"),
               glifo: 0xF030E },
-            { id: "lado", nombre: K4.Idioma.t("Hacia qué lado crece"),
-              desc: K4.Idioma.t("Hacia el borde izquierdo o el derecho de la pantalla"),
+            { id: "lado", nombre: K5.Idioma.t("Hacia qué lado crece"),
+              desc: K5.Idioma.t("Hacia el borde izquierdo o el derecho de la pantalla"),
               glifo: 0xF0E73, tipo: "eleccion",
-              alternativas: [{ codigo: "izquierda", nombre: K4.Idioma.t("Izquierda") },
-                             { codigo: "derecha", nombre: K4.Idioma.t("Derecha") }] },
+              alternativas: [{ codigo: "izquierda", nombre: K5.Idioma.t("Izquierda") },
+                             { codigo: "derecha", nombre: K5.Idioma.t("Derecha") }] },
             { id: "largoMaximo", tipo: "numero",
-              nombre: K4.Idioma.t("Largo máximo"),
-              desc: K4.Idioma.t("Píxeles hasta los que puede crecer; el nombre se recorta al pasarlos"),
+              nombre: K5.Idioma.t("Largo máximo"),
+              desc: K5.Idioma.t("Píxeles hasta los que puede crecer; el nombre se recorta al pasarlos"),
               glifo: 0xF046D,
               min: 60, max: 1200, paso: 20, unidad: "px" }
         ]

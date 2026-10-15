@@ -10,16 +10,16 @@
 //  quien pase por delante.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
-K4.SuperficieBloqueo {
+K5.SuperficieBloqueo {
     id: pantalla
 
     color: "black"
 
-    K4.Autenticacion {
+    K5.Autenticacion {
         id: auth
         onResuelto: function (correcto) {
             if (correcto) {

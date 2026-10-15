@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Capturas de pantalla para k4.
+"""Capturas de pantalla para k5.
 
     captura.py foto --ambito pantalla|region|ventana [--geometria "X,Y WxH"]
                     [--salida DP-3] [--cursor] [--destino fichero|portapapeles|ambos|anotar]
@@ -16,7 +16,7 @@ traductor, así que el texto que lee el usuario lo pone el QML con Idioma.t().
 """
 import argparse, json, os, shutil, subprocess, sys, time
 
-TRABAJO = "/tmp/k4-captura"
+TRABAJO = "/tmp/k5-captura"
 
 
 def salir(**datos):
@@ -67,7 +67,7 @@ def nombre(que):
 def region_con_slurp():
     """La región, preguntada con slurp.
 
-    Es el camino de reserva: k4 trae su propio selector, pero si por lo que sea
+    Es el camino de reserva: k5 trae su propio selector, pero si por lo que sea
     no está disponible, más vale una ventana ajena que no poder recortar.
     """
     p = subprocess.run(["slurp", "-d"], capture_output=True, text=True)

@@ -10,7 +10,7 @@
 //  paso son ~2.000 celdas, y dos mil Items en una barra son dos mil Items.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
 Item {
     id: self

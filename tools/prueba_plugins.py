@@ -27,7 +27,7 @@ import plugins
 import publicar
 
 fallos = []
-BORRADOR = pathlib.Path(tempfile.mkdtemp(prefix="k4-prueba-plugins-"))
+BORRADOR = pathlib.Path(tempfile.mkdtemp(prefix="k5-prueba-plugins-"))
 HOST = "1.1.0"
 
 
@@ -167,9 +167,9 @@ def prueba_permiso_desconocido():
 
 def prueba_usa_sin_declarar():
     d = carpeta("colado", manifiesto_base("colado"),
-                {"Plugin.qml": "Item { K4.Process { command: [\"ls\"] } }\n"})
+                {"Plugin.qml": "Item { K5.Process { command: [\"ls\"] } }\n"})
     v = plugins.validar_carpeta(d, set(), HOST)
-    igual("usar K4.Process sin declararlo no carga", v["cargable"], False)
+    igual("usar K5.Process sin declararlo no carga", v["cargable"], False)
     #  El motivo es un código, para que la barra escriba la frase en el
     #  idioma del usuario; el permiso que falta va en el detalle, y la frase
     #  en español en `dice`, que es lo que lee quien está en una terminal.
@@ -181,25 +181,25 @@ def prueba_usa_sin_declarar():
 def prueba_usa_declarado():
     d = carpeta("honesto", dict(manifiesto_base("honesto"),
                                 permisos=["procesos"]),
-                {"Plugin.qml": "Item { K4.Process { command: [\"ls\"] } }\n"})
+                {"Plugin.qml": "Item { K5.Process { command: [\"ls\"] } }\n"})
     v = plugins.validar_carpeta(d, set(), HOST)
     igual("declarado, cargable", v["cargable"], True)
 
 
 def prueba_comentario_no_delata():
     d = carpeta("comentado", manifiesto_base("comentado"),
-                {"Plugin.qml": "Item {} // algún día usaré K4.Process\n"})
+                {"Plugin.qml": "Item {} // algún día usaré K5.Process\n"})
     v = plugins.validar_carpeta(d, set(), HOST)
-    igual("hablar de K4.Process en un comentario no es usarlo",
+    igual("hablar de K5.Process en un comentario no es usarlo",
           v["cargable"], True)
 
 
 def prueba_huella_exige_permiso():
     d = carpeta("curioso", manifiesto_base("curioso"),
                 {"Plugin.qml":
-                 "Item { property var j: K4.Huella.steam.juegos }\n"})
+                 "Item { property var j: K5.Huella.steam.juegos }\n"})
     v = plugins.validar_carpeta(d, set(), HOST)
-    igual("nombrar K4.Huella sin datos-personales no carga",
+    igual("nombrar K5.Huella sin datos-personales no carga",
           v["cargable"], False)
     contiene("y el motivo lo dice", v["dice"], "datos-personales")
 
@@ -207,7 +207,7 @@ def prueba_huella_exige_permiso():
 def prueba_portapapeles_delata_al_leer():
     d = carpeta("fisgon", manifiesto_base("fisgon"),
                 {"Plugin.qml":
-                 "Item { property var h: K4.Portapapeles.entradas }\n"})
+                 "Item { property var h: K5.Portapapeles.entradas }\n"})
     v = plugins.validar_carpeta(d, set(), HOST)
     igual("solo LEER el portapapeles ya exige permiso", v["cargable"], False)
     contiene("con su nombre", v["dice"], "portapapeles")
@@ -216,7 +216,7 @@ def prueba_portapapeles_delata_al_leer():
 def prueba_la_vista_tambien_se_examina():
     d = carpeta("repartido", manifiesto_base("repartido"),
                 {"Plugin.qml": "Item {}\n",
-                 "Vista.qml": "Item { K4.Sonido { fuente: \"x.wav\" } }\n"})
+                 "Vista.qml": "Item { K5.Sonido { fuente: \"x.wav\" } }\n"})
     v = plugins.validar_carpeta(d, set(), HOST)
     igual("el permiso se busca en TODOS los .qml, no solo la entrada",
           v["cargable"], False)
@@ -327,7 +327,7 @@ def prueba_registro_de_verdad_es_valido():
 
 # ── el ancla: instalar UN commit, y saber cuál ───────────────────────
 #
-#  Estas se instalan de verdad, pero NUNCA en `~/.config/k4/plugins`: se
+#  Estas se instalan de verdad, pero NUNCA en `~/.config/k5/plugins`: se
 #  redirige `plugins.DE_USUARIO` a un temporal. Una prueba que te toque los
 #  plugins de verdad es una prueba que no puedes correr con la barra abierta.
 
@@ -349,7 +349,7 @@ def repo_con_dos_commits(nombre="anclado", dentro=""):
     base.mkdir(parents=True)
     _git_init = subprocess.run(["git", "init", "-q", "-b", "main", str(d)],
                                check=True, capture_output=True)
-    _git(d, "config", "user.email", "prueba@k4")
+    _git(d, "config", "user.email", "prueba@k5")
     _git(d, "config", "user.name", "prueba")
 
     man = manifiesto_base(nombre)

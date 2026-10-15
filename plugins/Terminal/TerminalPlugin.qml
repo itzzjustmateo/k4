@@ -7,12 +7,12 @@
 //  plugin, y está bien así: se enciende y se apaga desde Ajustes como todo lo
 //  demás, y su target de IPC se desregistra solo al apagarlo.
 //
-//      quickshell ipc -p shell.qml call k4.term abrir
-//      quickshell ipc -p shell.qml call k4.term aqui
-//      quickshell ipc -p shell.qml call k4.term ejecutar "yay -Syu"
+//      quickshell ipc -p shell.qml call k5.term abrir
+//      quickshell ipc -p shell.qml call k5.term aqui
+//      quickshell ipc -p shell.qml call k5.term ejecutar "yay -Syu"
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -247,7 +247,7 @@ K4Plugin {
     //  de las cosas que uno no perdona.
     function alCopiar(texto) {
         if (texto)
-            K4.Sistema.copiar(texto)
+            K5.Sistema.copiar(texto)
     }
 
     function pegar(primaria) {
@@ -255,7 +255,7 @@ K4Plugin {
         pegador.running = true
     }
 
-    property K4.Process pegador: K4.Process {
+    property K5.Process pegador: K5.Process {
         property bool primaria: false
         command: primaria ? ["wl-paste", "--primary", "--no-newline"]
                           : ["wl-paste", "--no-newline"]
@@ -270,7 +270,7 @@ K4Plugin {
     //  de siempre: seleccionas, pegas con el botón de en medio.
     function copiarPrimaria(texto) {
         if (texto)
-            K4.Sistema.lanzar(["wl-copy", "--primary", "--", String(texto)])
+            K5.Sistema.lanzar(["wl-copy", "--primary", "--", String(texto)])
     }
 
     //  Lo que la sesión contesta cuando se le pide un trozo del historial. El
@@ -281,10 +281,10 @@ K4Plugin {
             return
         }
         if (!contenido) {
-            K4.Sistema.avisar(Idioma.t("Terminal"), Idioma.t("No hay nada que copiar"), false)
+            K5.Sistema.avisar(Idioma.t("Terminal"), Idioma.t("No hay nada que copiar"), false)
             return
         }
-        K4.Sistema.copiar(contenido)
+        K5.Sistema.copiar(contenido)
     }
 
     //  Un enlace escrito en la terminal, abierto con lo que el escritorio
@@ -294,7 +294,7 @@ K4Plugin {
         const limpio = String(url || "")
         if (!limpio)
             return
-        K4.Sistema.abrir(limpio.indexOf("www.") === 0 ? "https://" + limpio : limpio)
+        K5.Sistema.abrir(limpio.indexOf("www.") === 0 ? "https://" + limpio : limpio)
     }
 
     //  ── buscar ────────────────────────────────────────────────────
@@ -349,7 +349,7 @@ K4Plugin {
 
     function correrAqui(guion) {
         if (!Consola.hayIsla) {
-            K4.Sistema.lanzar(Consola.orden(guion))
+            K5.Sistema.lanzar(Consola.orden(guion))
             return
         }
         //  Los mandatos de la casa van SIEMPRE a una terminal nueva, no a la
@@ -387,7 +387,7 @@ K4Plugin {
             if (sesion && sesion.sabeClaves) {
                 mandar({ que: "clave", valor: Consola.claveConexion })
             } else {
-                K4.Sistema.lanzar(["notify-send", "-a", "k4",
+                K5.Sistema.lanzar(["notify-send", "-a", "k5",
                                    Idioma.t("Actualiza k4term"),
                                    Idioma.t("Esta versión de k4term-isla no sabe teclear contraseñas: la conexión te la pedirá a mano.")])
             }
@@ -431,7 +431,7 @@ K4Plugin {
         //  nuestro— pero tampoco hay por qué no hacer nada: se abre una
         //  ventana con la terminal que haya.
         if (!Consola.hayIsla) {
-            K4.Sistema.lanzar(Consola.abrir(""))
+            K5.Sistema.lanzar(Consola.abrir(""))
             return
         }
         //  La primera sesión no se arranca hasta que la pides: quien no use la
@@ -453,7 +453,7 @@ K4Plugin {
     //  lo que se hacía antes de que esto existiera.
     function sacar() {
         if (!sesion || !Consola.esNuestra) {
-            K4.Sistema.lanzar(Consola.abrir(""))
+            K5.Sistema.lanzar(Consola.abrir(""))
             return
         }
         mandar({ que: "emigrar" })
@@ -464,7 +464,7 @@ K4Plugin {
     function alEmigrar(socket) {
         if (!socket)
             return
-        K4.Sistema.lanzar([Consola.binario, "--heredar", socket])
+        K5.Sistema.lanzar([Consola.binario, "--heredar", socket])
         abierto = false
     }
 
@@ -520,7 +520,7 @@ K4Plugin {
             onTexto: function (contenido, motivo) { self.alRecibirTexto(contenido, motivo) }
             onBuscado: function (hay, fila) { self.hallazgo(hay, fila) }
             onEmigrando: function (socket) { self.alEmigrar(socket) }
-            onAviso: function (texto) { K4.Sistema.avisar(Idioma.t("Terminal"), texto, false) }
+            onAviso: function (texto) { K5.Sistema.avisar(Idioma.t("Terminal"), texto, false) }
         }
         onObjectAdded: function (indice, objeto) {
             const v = self.vivas.slice()
@@ -676,7 +676,7 @@ K4Plugin {
         enCurso = Object.keys(t).length
 
         const insignia = insigniaDe(mandato)
-        K4.Pildora.registrar(idDe(pid), reloj(0),
+        K5.Pildora.registrar(idDe(pid), reloj(0),
                              insignia.glifo, insignia.color, 30, true)
     }
 
@@ -695,7 +695,7 @@ K4Plugin {
         const nombre = String(titulo || "").trim() || Idioma.t("Terminal")
         //  La campana del tema: dice «te llaman» sin necesidad de leerlo, y
         //  en amarillo, que reclama sin alarmar.
-        K4.Pildora.registrar(idEspera(pid), nombre.slice(0, 18), Theme.ico.bell.codePointAt(0),
+        K5.Pildora.registrar(idEspera(pid), nombre.slice(0, 18), Theme.ico.bell.codePointAt(0),
                              Theme.yellow, 29, true)
         //  Se guarda CON QUIÉN, no un `true`: al atenderla hay que poder
         //  retirar su notificación, y para eso hace falta saber cuál era.
@@ -711,12 +711,12 @@ K4Plugin {
         if (String(pid).indexOf("isla.") !== 0)
             Notifs.apuntarDestino("k4term", nombre, pid)
 
-        K4.Sistema.lanzar(["notify-send", "-a", "k4term", "-t", "8000",
+        K5.Sistema.lanzar(["notify-send", "-a", "k4term", "-t", "8000",
                            Idioma.t("Te está esperando"), nombre])
     }
 
     function dejarDeEsperar(pid) {
-        K4.Pildora.quitar(idEspera(pid))
+        K5.Pildora.quitar(idEspera(pid))
         if (esperas[pid] === undefined)
             return
         //  La píldora y la notificación cuentan lo MISMO: quitar una y dejar la
@@ -763,13 +763,13 @@ K4Plugin {
         delete t[pid]
         trabajos = t
         enCurso = Object.keys(t).length
-        K4.Pildora.quitar(idDe(pid))
+        K5.Pildora.quitar(idDe(pid))
     }
 
     function tictac() {
         const ahora = Date.now()
         for (const pid in trabajos)
-            K4.Pildora.actualizar(idDe(pid), { texto: reloj(ahora - trabajos[pid].desde) })
+            K5.Pildora.actualizar(idDe(pid), { texto: reloj(ahora - trabajos[pid].desde) })
     }
 
     //  Solo late mientras hay algo que contar: sin trabajos, ni un despertar.
@@ -785,7 +785,7 @@ K4Plugin {
     //  indicador se cura solo, y pulsarlo es el único momento en el que
     //  compensa comprobarlo.
     property Connections clics: Connections {
-        target: K4.Pildora
+        target: K5.Pildora
         function onInvocado(id) {
             if (String(id).indexOf("terminal.") !== 0)
                 return
@@ -893,12 +893,12 @@ K4Plugin {
         const d = Object.assign({}, dentroDe)
         d[clave] = nombre
         dentroDe = d
-        K4.Pildora.registrar(idConexion(clave), nombre.slice(0, 20),
+        K5.Pildora.registrar(idConexion(clave), nombre.slice(0, 20),
                              0xF08C0, Theme.blue, 28, true)
     }
 
     function salirDe(clave) {
-        K4.Pildora.quitar(idConexion(clave))
+        K5.Pildora.quitar(idConexion(clave))
         const destino = dentroDe[clave]
         if (destino) {
             const d = Object.assign({}, dentroDe)
@@ -915,7 +915,7 @@ K4Plugin {
     //  son nuestras y sabemos cuándo se van.
     //
     //  Y va por las TRES familias, no solo por la de los servidores: el adiós
-    //  de la ventana (`k4.term limpiar`) sale de k4term cuando muere su shell,
+    //  de la ventana (`k5.term limpiar`) sale de k4term cuando muere su shell,
     //  y cerrar la ventana no pasa por ahí —el proceso se va en el acto y la
     //  shell se entera después, cuando ya no hay quien lo cuente—. Un mandato
     //  largo o una campana se quedaban entonces en la isla para siempre, con
@@ -961,7 +961,7 @@ K4Plugin {
         dejarDeEsperar(pid)
     }
 
-    property K4.Process vivos: K4.Process {
+    property K5.Process vivos: K5.Process {
         onSalida: function (texto) {
             const siguen = String(texto).trim().split(/\s+/)
             const pids = self.pidsVigilados
@@ -984,10 +984,10 @@ K4Plugin {
 
     function refrescarAbiertas() {
         if (vivas.length === 0 || abierto) {
-            K4.Pildora.quitar(idAbiertas)
+            K5.Pildora.quitar(idAbiertas)
             return
         }
-        K4.Pildora.registrar(idAbiertas, String(vivas.length),
+        K5.Pildora.registrar(idAbiertas, String(vivas.length),
                              0xF018D, Theme.muted, 31, true)
     }
 
@@ -1013,18 +1013,18 @@ K4Plugin {
                       : Math.floor(m / 60) + " h " + (m % 60) + " min"
     }
 
-    K4.Ipc {
-        target: "k4.term"
+    K5.Ipc {
+        target: "k5.term"
 
         //  Sin decir dónde, en tu casa. Hay que ser explícito: lo que se
         //  hereda al lanzar desde aquí es el directorio de la barra, que no
         //  le importa a nadie.
         function abrir(): void {
-            K4.Sistema.lanzar(Consola.abrir(K4.Sistema.entorno("HOME")))
+            K5.Sistema.lanzar(Consola.abrir(K5.Sistema.entorno("HOME")))
         }
 
         function abrirEn(ruta: string): void {
-            K4.Sistema.lanzar(Consola.abrir(ruta))
+            K5.Sistema.lanzar(Consola.abrir(ruta))
         }
 
         //  Donde la casa corra las cosas: la island si la hay, y si no una
@@ -1132,7 +1132,7 @@ K4Plugin {
         //  Un recado suelto de la terminal: no tiene dónde decir «guardado»
         //  sin taparse a sí misma, y la isla sí.
         function decir(titulo: string, cuerpo: string): void {
-            K4.Sistema.lanzar(["notify-send", "-a", "k4term", "-t", "5000",
+            K5.Sistema.lanzar(["notify-send", "-a", "k4term", "-t", "5000",
                                titulo, cuerpo])
         }
     }
@@ -1140,7 +1140,7 @@ K4Plugin {
     function avisar(mandato, salida, segundos) {
         const fallo = String(salida) !== "0"
         const cuerpo = resumir(mandato) + " · " + duracion(segundos)
-        K4.Sistema.lanzar(["notify-send", "-a", "k4term",
+        K5.Sistema.lanzar(["notify-send", "-a", "k4term",
                            fallo ? "-u" : "-t", fallo ? "critical" : "6000",
                            fallo ? Idioma.t("Falló el mandato") + " (" + salida + ")"
                                  : Idioma.t("Mandato terminado"),
@@ -1155,7 +1155,7 @@ K4Plugin {
     //  entero a propósito: quien lo haya editado a mano tiene derecho a que
     //  no se le borren sus comentarios ni sus claves.
 
-    readonly property string ficheroConf: K4.Sistema.entorno("HOME") + "/.config/k4term/k4term.conf"
+    readonly property string ficheroConf: K5.Sistema.entorno("HOME") + "/.config/k4term/k4term.conf"
 
     property var conf: ({ tamaño: "13", opacidad: "0.92", estela: "si",
                           tranquilo: "no" })
@@ -1188,12 +1188,12 @@ K4Plugin {
         fConf.setText(texto)
     }
 
-    property K4.Fichero fConf: K4.Fichero {
+    property K5.Fichero fConf: K5.Fichero {
         path: self.ficheroConf
         onLoaded: self.leerConf()
     }
 
-    K4.Ajustes {
+    K5.Ajustes {
         plugin: "terminal"
         grupo: Idioma.t("Terminal")
 
@@ -1204,7 +1204,7 @@ K4Plugin {
         //
         //  La detección de Consola tarda —es un proceso que corre al
         //  arrancar—, así que esto vale «no» durante los primeros
-        //  milisegundos; lo que hace que aparezca después es que K4.Ajustes se
+        //  milisegundos; lo que hace que aparezca después es que K5.Ajustes se
         //  vuelve a registrar cuando `opciones` cambia.
         opciones: !Consola.esNuestra ? [] : [
             { id: "tamaño", nombre: Idioma.t("Tamaño de letra"),
@@ -1241,7 +1241,7 @@ K4Plugin {
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: buscar
         property string pid: ""
         command: ["hyprctl", "clients", "-j"]
@@ -1268,7 +1268,7 @@ K4Plugin {
     //  Hyprland 0.56 ya no traga `dispatch focuswindow pid:N`: su parser Lua
     //  se atraganta con los dos puntos del selector. La vía viva es `eval`,
     //  la misma que usa el tema de Hyprland en esta casa.
-    K4.Process {
+    K5.Process {
         id: enfoque
         property string pid: ""
         command: ["hyprctl", "eval",
@@ -1280,7 +1280,7 @@ K4Plugin {
     //  Quién está delante ahora mismo. Con eso se decide hacia dónde muda la
     //  sesión: la barra no puede preguntarle a una ventana de GPUI, pero sí
     //  puede llamarla — y al proceso de una ventana se le llama con una señal.
-    K4.Process {
+    K5.Process {
         id: quien
         command: ["hyprctl", "activewindow", "-j"]
         onSalida: function (texto) {
@@ -1291,7 +1291,7 @@ K4Plugin {
                 v = null
             }
             if (v && String(v.class) === "k4term" && v.pid > 0) {
-                K4.Sistema.lanzar(["kill", "-USR1", String(v.pid)])
+                K5.Sistema.lanzar(["kill", "-USR1", String(v.pid)])
                 return
             }
             //  Mudar es mover algo que existe. Sin sesión en la island no hay
@@ -1303,7 +1303,7 @@ K4Plugin {
         onTerminado: running = false
     }
 
-    K4.Process {
+    K5.Process {
         id: donde
         command: ["sh", "-c",
             "p=$(hyprctl activewindow -j | python3 -c 'import json,sys; print(json.load(sys.stdin).get(\"pid\") or 0)' 2>/dev/null);" +
@@ -1311,7 +1311,7 @@ K4Plugin {
             " while c=$(pgrep -P \"$p\" -n 2>/dev/null); [ -n \"$c\" ]; do p=$c; done;" +
             " readlink /proc/$p/cwd 2>/dev/null"]
         onSalida: function (texto) {
-            K4.Sistema.lanzar(Consola.abrir(texto.trim()))
+            K5.Sistema.lanzar(Consola.abrir(texto.trim()))
         }
         onTerminado: running = false
     }

@@ -16,7 +16,7 @@ Singleton {
     id: manager
 
     readonly property string rutaEstado:
-        (Quickshell.env("HOME") || "") + "/.local/state/k4/plugins.json"
+        (Quickshell.env("HOME") || "") + "/.local/state/k5/plugins.json"
 
     //  Dos redes de seguridad, y las dos existen por lo mismo: actualizar la
     //  barra no puede costarte los plugins que tenías puestos.
@@ -34,9 +34,9 @@ Singleton {
     //     emergencia embebido, que solo trae los de casa. Los tuyos
     //     desaparecían de la lista y se descargaban de memoria.
     readonly property string rutaCopia:
-        (Quickshell.env("HOME") || "") + "/.local/state/k4/plugins.json.bak"
+        (Quickshell.env("HOME") || "") + "/.local/state/k5/plugins.json.bak"
     readonly property string rutaCache:
-        (Quickshell.env("HOME") || "") + "/.local/state/k4/catalogo.json"
+        (Quickshell.env("HOME") || "") + "/.local/state/k5/catalogo.json"
     readonly property string rutaCatalogo:
         Quickshell.shellPath("plugins/catalog.json")
 
@@ -195,11 +195,11 @@ Singleton {
         revisarRequisitos()
     }
 
-    //  La carpeta de un plugin, contada desde la raíz de k4. Son los mismos
+    //  La carpeta de un plugin, contada desde la raíz de k5. Son los mismos
     //  tres casos que resuelve la `url` de `_crear`, dichos en ruta en vez de
     //  en url — y por eso viven pegadas: si alguien toca una, toca la otra.
     //
-    //  `external/` es un enlace a ~/.config/k4/plugins que mantiene
+    //  `external/` es un enlace a ~/.config/k5/plugins que mantiene
     //  tools/plugins.py; leer a través de él va bien y deja una sola forma de
     //  nombrar las cosas.
     function relDeCarpeta(m, ruta) {
@@ -225,7 +225,7 @@ Singleton {
         //  contestando desde el cadáver equivocado.
         //
         //  Los de usuario entran por el enlace `external/` —que apunta a
-        //  ~/.config/k4/plugins y lo mantiene tools/plugins.py— justamente
+        //  ~/.config/k5/plugins y lo mantiene tools/plugins.py— justamente
         //  para poder resolverse con el mismo esquema que todo lo demás.
         //  Y una recarga llega ya con su ruta hecha —`recargas/<id>-<n>/…`,
         //  la carpeta nueva que da plugins.py— así que se resuelve tal cual.
@@ -249,7 +249,7 @@ Singleton {
             //  así que la bandera vieja queda como constante y los bindings
             //  de los plugins (`running: habilitado && …`) siguen valiendo.
             //  Y su propia carpeta, que hasta ahora un plugin no tenía forma
-            //  de saber. `K4.Paths.raiz` es la de k4, no la suya, así que un
+            //  de saber. `K5.Paths.raiz` es la de k5, no la suya, así que un
             //  plugin de fuera no podía construir la ruta de un guion propio ni
             //  de un asset para pasárselo a un proceso — comprobado: ninguno de
             //  los external ejecuta nada suyo, y sospecho que es por esto.
@@ -313,7 +313,7 @@ Singleton {
 
         //  Y sus enganches fuera: una fila de Ajustes o un resultado del
         //  lanzador que apunte a un plugin destruido es una llamada a un
-        //  cadáver. Los K4.Ajustes se dan de baja solos al destruirse, pero
+        //  cadáver. Los K5.Ajustes se dan de baja solos al destruirse, pero
         //  eso es diferido y aquí queremos que desaparezcan YA.
         Enganches.quitarDe(id)
 
@@ -338,7 +338,7 @@ Singleton {
         //  recreado registraba en vano («another handler is registered») y
         //  contestaba «Function not found» desde el muerto. Se buscan entre
         //  los hijos declarados los que tengan target y enabled, que son los
-        //  K4.Ipc. `Component.onDestruction` dentro del propio Ipc habría sido
+        //  K5.Ipc. `Component.onDestruction` dentro del propio Ipc habría sido
         //  más limpio, pero a un IpcHandler no se le puede adjuntar.
         const hijos = obj.services || []
         for (let i = 0; i < hijos.length; ++i) {
@@ -362,7 +362,7 @@ Singleton {
     //  Recargar un plugin VIVO: destruirlo y volver a crearlo del disco.
     //
     //  Es la herramienta de desarrollo: editas el QML de tu plugin, lanzas
-    //  `k4 pluginReload <id>` y ves el cambio sin reiniciar la barra. Vale
+    //  `k5 pluginReload <id>` y ves el cambio sin reiniciar la barra. Vale
     //  igual para los de casa que para los de fuera.
     //
     //  Si la versión nueva no compila, el plugin queda como roto —con su error
@@ -371,7 +371,7 @@ Singleton {
     //  no se finge lo contrario.
     //  Recargar un plugin VIVO, del disco, sin reiniciar la barra.
     //
-    //  Es la herramienta de desarrollo: editas tu plugin, `k4 pluginReload
+    //  Es la herramienta de desarrollo: editas tu plugin, `k5 pluginReload
     //  <id>`, y ves el cambio. Vale para los de casa y para los de fuera.
     //
     //  Si la versión nueva no compila, el plugin queda como roto —con su error
@@ -503,7 +503,7 @@ Singleton {
     }
 
     //  El icono de un plugin por su id, en los dos campos que entiende
-    //  `K4.IconoPlugin`: su imagen si trae una, su códice si no.
+    //  `K5.IconoPlugin`: su imagen si trae una, su códice si no.
     //
     //  Existe porque el lanzador enseñaba los aportes de los plugins SIN
     //  icono. La fila esperaba un nombre de icono del escritorio —lo que
@@ -638,7 +638,7 @@ Singleton {
             if (deCopia !== null) {
                 mapa = deCopia
                 estadoRepuesto = true
-                console.warn("k4: plugins.json no se pudo leer; repuesto de "
+                console.warn("k5: plugins.json no se pudo leer; repuesto de "
                              + manager.rutaCopia)
             }
         }
@@ -666,7 +666,7 @@ Singleton {
     }
 
     //  El catálogo lo emite `tools/plugins.py --list`: los del repo más los
-    //  de ~/.config/k4/plugins, ya validados y con su veredicto. La validación
+    //  de ~/.config/k5/plugins, ya validados y con su veredicto. La validación
     //  vive en UN sitio —python— y aquí solo se consume; un manifiesto roto
     //  llega como `cargable: false` con su motivo, nunca como una barra que no
     //  arranca.
@@ -710,7 +710,7 @@ Singleton {
             //  cuenta.
             if (_aplicarCatalogo(cacheCatalogo.text())) {
                 catalogoDe = "cache"
-                console.warn("k4: no se ha podido listar los plugins; se usa "
+                console.warn("k5: no se ha podido listar los plugins; se usa "
                              + manager.rutaCache)
             }
         }
@@ -735,9 +735,9 @@ Singleton {
     //  Y que se note SOLO: la carpeta de plugins del usuario se vigila con
     //  inotify (vía FolderListModel, sin un solo proceso) y aparecer o
     //  desaparecer una carpeta relee el catálogo. Instalar deja de exigir
-    //  saberse el `k4 pluginRefresh` — copias, y a los dos segundos está.
+    //  saberse el `k5 pluginRefresh` — copias, y a los dos segundos está.
     property var _vigiaCarpeta: FolderListModel {
-        folder: "file://" + Quickshell.env("HOME") + "/.config/k4/plugins"
+        folder: "file://" + Quickshell.env("HOME") + "/.config/k5/plugins"
         showDirs: true
         showFiles: false
         showDotAndDotDot: false
@@ -1046,7 +1046,7 @@ Singleton {
     }
 
     Process {
-        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k4"]
+        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k5"]
         running: true
         onExited: manager.cargar()
     }

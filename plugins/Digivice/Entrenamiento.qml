@@ -10,7 +10,7 @@
 //  puntería es lo que sacas.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -78,7 +78,7 @@ Item {
         spacing: 16
         width: parent.width * 0.8
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.horizontalCenter: parent.horizontalCenter
             text: self.corriendo
                 ? Idioma.f(Idioma.t("Tiro %1 de %2"),
@@ -95,7 +95,7 @@ Item {
             width: parent.width
             height: 34
             radius: 17
-            color: K4.Tema.superficie
+            color: K5.Tema.superficie
 
             //  El blanco
             Rectangle {
@@ -104,7 +104,7 @@ Item {
                 x: parent.width * self.centroBlanco - width / 2
                 y: 4
                 radius: height / 2
-                color: K4.Tema.verde
+                color: K5.Tema.verde
                 opacity: 0.28
 
                 Behavior on width { NumberAnimation { duration: 200 } }
@@ -116,7 +116,7 @@ Item {
                 height: parent.height - 12
                 x: parent.width * self.centroBlanco - 1
                 y: 6
-                color: K4.Tema.verde
+                color: K5.Tema.verde
                 opacity: 0.7
             }
 
@@ -127,7 +127,7 @@ Item {
                 height: parent.height - 4
                 y: 2
                 radius: 3
-                color: K4.Tema.tinta
+                color: K5.Tema.tinta
 
                 //  Va y viene; se acelera cada ronda para que la última
                 //  cueste de verdad.
@@ -149,12 +149,12 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.horizontalCenter: parent.horizontalCenter
             text: self.ultimo || Idioma.t("Clic o espacio para golpear")
             font.pixelSize: 13
-            color: self.ultimo === Idioma.t("Fuera") ? K4.Tema.rojo
-                 : self.ultimo ? K4.Tema.verde : K4.Tema.apagado
+            color: self.ultimo === Idioma.t("Fuera") ? K5.Tema.rojo
+                 : self.ultimo ? K5.Tema.verde : K5.Tema.apagado
         }
     }
 }

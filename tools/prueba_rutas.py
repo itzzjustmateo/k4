@@ -26,7 +26,7 @@ import io, os, re, sys
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #  El mismo fichero vale en los dos repos: el editor vive en `Estado/` en
-#  Omascreen y en `services/` en k4, y lo único que cambia es el nombre de la
+#  Omascreen y en `services/` en k5, y lo único que cambia es el nombre de la
 #  carpeta. Manteniéndolo idéntico, un arreglo en uno se copia al otro tal cual.
 QML = "Estado" if os.path.isdir(os.path.join(RAIZ, "Estado")) else "services"
 

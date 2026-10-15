@@ -8,7 +8,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -77,7 +77,7 @@ ColumnLayout {
             cursorShape: Qt.PointingHandCursor
             //  Pulsar lo copia: nadie va a teclear a mano una
             //  URL de Hugging Face de ciento y pico caracteres.
-            onClicked: K4.Sistema.copiar(Editor.comoInstalar)
+            onClicked: K5.Sistema.copiar(Editor.comoInstalar)
         }
     }
 

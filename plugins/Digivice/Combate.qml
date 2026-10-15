@@ -25,7 +25,7 @@
 //    guardería al mejor que hayas criado, que pega una vez y se va.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -223,17 +223,17 @@ Item {
         if (r.paralizado) {
             cartel = Idioma.t("¡Paralizado! Pierdes el turno")
             _pitar("recibido")
-            K4.Isla.efecto("digivice", "empujon", 0.6)
+            K5.Isla.efecto("digivice", "empujon", 0.6)
         } else if (miColumnaLenta) {
             cartel = Idioma.t("¡Demasiado lento!")
                    + (r.aQuien === "mio" && r.daño > 0 ? "  −" + r.daño : "")
             _pitar("atras")
             if (r.daño > 0)
-                K4.Isla.efecto("digivice", "empujon", 0.7)
+                K5.Isla.efecto("digivice", "empujon", 0.7)
         } else if (r.aQuien === "ambos") {
             cartel = Idioma.t("¡Chocan los dos!")
             _pitar("golpe")
-            K4.Isla.efecto("digivice", "sacudida", 0.6)
+            K5.Isla.efecto("digivice", "sacudida", 0.6)
         } else if (r.aQuien !== "" && r.daño === 0) {
             //  Alguien tiró el golpe y no entró: es una esquiva, y se dice.
             cartel = r.aQuien === "mio" ? Idioma.t("¡Lo esquivas!")
@@ -242,12 +242,12 @@ Item {
         } else if (r.aQuien === "suyo") {
             cartel = _cartelGolpe(r, false)
             _pitar("golpe")
-            K4.Isla.efecto("digivice", "sacudida",
+            K5.Isla.efecto("digivice", "sacudida",
                            forma === "columna" ? 0.9 : 0.5)
         } else if (r.aQuien === "mio") {
             cartel = _cartelGolpe(r, true)
             _pitar("recibido")
-            K4.Isla.efecto("digivice", "empujon", 0.6)
+            K5.Isla.efecto("digivice", "empujon", 0.6)
         } else if (r.cargaGanada > 0) {
             cartel = Idioma.t("Cargando…") + "  ×" + (1 + 0.5 * carga).toFixed(1)
             _pitar("elegir")
@@ -363,14 +363,14 @@ Item {
         fase = "fin"
         cartel = g ? Idioma.t("¡Victoria!") : Idioma.t("Derrota")
         _pitar(g ? "victoria" : "derrota")
-        K4.Tema.tintar("digivice", g ? K4.Tema.verde : K4.Tema.rojo, 0.3, 1200)
+        K5.Tema.tintar("digivice", g ? K5.Tema.verde : K5.Tema.rojo, 0.3, 1200)
         cierre.restart()
     }
 
     Timer {
         id: cierre
         interval: 1500
-        onTriggered: { K4.Tema.destintar("digivice"); self.terminado(self.gane) }
+        onTriggered: { K5.Tema.destintar("digivice"); self.terminado(self.gane) }
     }
 
     signal huido()
@@ -484,8 +484,8 @@ Item {
         _proyectil = true
         vuela.restart()
         _pitar("invocar")
-        K4.Isla.efecto("digivice", "sacudida", 0.9)
-        K4.Tema.tintar("digivice", K4.Tema.amarillo, 0.22, 700)
+        K5.Isla.efecto("digivice", "sacudida", 0.9)
+        K5.Tema.tintar("digivice", K5.Tema.amarillo, 0.22, 700)
         _cobrarVeneno()
         saleAliado.restart()
     }
@@ -494,7 +494,7 @@ Item {
         id: saleAliado
         interval: 1300
         onTriggered: {
-            K4.Tema.destintar("digivice")
+            K5.Tema.destintar("digivice")
             self.aliadoEnEscena = ""
             if (self.vidaSuya <= 0) self.terminar(true)
             else { self.fase = "eligiendo"; self.cartel = "" }
@@ -523,7 +523,7 @@ Item {
                                                   easing.type: Easing.OutBack } }
 
                 Retrato { especie: self.mio; lado: 54 }
-                K4.Etiqueta {
+                K5.Etiqueta {
                     width: 76
                     horizontalAlignment: Text.AlignHCenter
                     text: self.dMio ? self.dMio.n : ""
@@ -532,7 +532,7 @@ Item {
                     color: "#9fe8ac"
                     elide: Text.ElideRight
                 }
-                K4.Etiqueta {
+                K5.Etiqueta {
                     width: 76
                     horizontalAlignment: Text.AlignHCenter
                     text: self.dMio ? self.dMio.l : ""
@@ -541,7 +541,7 @@ Item {
                 }
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.centerIn: parent
                 text: Idioma.t("VS")
                 font.pixelSize: 26
@@ -563,7 +563,7 @@ Item {
                                                   easing.type: Easing.OutBack } }
 
                 Retrato { especie: self.enemigo; lado: 54 }
-                K4.Etiqueta {
+                K5.Etiqueta {
                     width: 76
                     horizontalAlignment: Text.AlignHCenter
                     text: self.dSuyo ? self.dSuyo.n : ""
@@ -572,7 +572,7 @@ Item {
                     color: "#e0806b"
                     elide: Text.ElideRight
                 }
-                K4.Etiqueta {
+                K5.Etiqueta {
                     width: 76
                     horizontalAlignment: Text.AlignHCenter
                     text: (self.dSuyo ? self.dSuyo.l : "")
@@ -670,7 +670,7 @@ Item {
 
                         //  El rótulo va SIEMPRE en el borde de fuera, pegado
                         //  al extremo por el que se vacía su barra.
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.verticalCenter: parent.verticalCenter
                             visible: lado.modelData.mio
                             text: Idioma.t("TÚ") + "  " + self.vidaMia
@@ -683,7 +683,7 @@ Item {
                         Repeater {
                             model: lado.modelData.lista
 
-                            K4.Glifo {
+                            K5.Glifo {
                                 required property var modelData
                                 text: Digivice.glifoEstado(modelData.tipo)
                                 font.pixelSize: 12
@@ -700,7 +700,7 @@ Item {
                             }
                         }
 
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.verticalCenter: parent.verticalCenter
                             visible: !lado.modelData.mio
                             text: self.vidaSuya + "/" + self.statsSuyos.vida
@@ -742,7 +742,7 @@ Item {
                 }
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: self.carga > 0
                 text: "×" + (1 + self.carga * 0.5).toFixed(1)
@@ -861,7 +861,7 @@ Item {
                     }
 
                     //  Sin nadie a quien llamar, el icono del arreón.
-                    K4.Glifo {
+                    K5.Glifo {
                         visible: self.aliado === null
                         anchors.verticalCenter: parent.verticalCenter
                         text: "\u{F0241}"
@@ -877,7 +877,7 @@ Item {
                     //  «¿cuándo puedes invocar a un compañero, y si es
                     //  automático, en qué momento?». No lo es: entra cuando
                     //  lo llamas, una vez por combate, y cuesta energía.
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.verticalCenter: parent.verticalCenter
                         text: self.aliadoUsado ? Idioma.t("ya vino")
                             : !Digivice.puedeLlamar ? Idioma.t("sin ⚡")
@@ -931,14 +931,14 @@ Item {
                     anchors.centerIn: parent
                     spacing: 2
 
-                    K4.Glifo {
+                    K5.Glifo {
                         anchors.verticalCenter: parent.verticalCenter
                         text: "\u{F004D}"
                         font.pixelSize: 11
                         color: Digivice.puedeHuir ? "#e0a08b" : "#8a7550"
                     }
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.verticalCenter: parent.verticalCenter
                         text: Digivice.costeHuida + "⚡"
                         font.pixelSize: 9
@@ -1061,7 +1061,7 @@ Item {
             }
 
             //  El número del daño, subiendo desde quien lo recibe.
-            K4.Etiqueta {
+            K5.Etiqueta {
                 id: cifra
                 visible: self._impacto && self._daño > 0
                 text: "−" + self._daño
@@ -1082,7 +1082,7 @@ Item {
             }
 
             //  Y la esquiva, que también tiene que verse.
-            K4.Etiqueta {
+            K5.Etiqueta {
                 visible: self._esquiva && self.fase === "resolviendo"
                 text: Idioma.t("¡Esquiva!")
                 font.pixelSize: 13
@@ -1222,7 +1222,7 @@ Item {
                     { g: self.suGesto, mio: false }
                 ]
 
-                K4.Glifo {
+                K5.Glifo {
                     id: gesto
                     required property var modelData
                     visible: self.fase === "resolviendo" && self.miGesto !== ""
@@ -1260,7 +1260,7 @@ Item {
             spacing: 1
             visible: self.fase === "tecnica"
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 text: self.tecnicaArmada ? self.tecnicaArmada.nombre : ""
@@ -1270,7 +1270,7 @@ Item {
                 elide: Text.ElideRight
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 text: {
@@ -1287,7 +1287,7 @@ Item {
         }
 
         //  El cartel: qué elegir, o qué ha pasado.
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             visible: self.fase !== "tecnica"
@@ -1321,7 +1321,7 @@ Item {
         }
 
         //  La leyenda del selector, en su sitio para que no baile el cartel.
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             visible: self.fase === "tecnica"

@@ -12,7 +12,7 @@
 //  pulsar y otra para arrastrar— siempre gana una y la otra parece rota.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -107,7 +107,7 @@ Item {
     Repeater {
         model: franja.lista
 
-        delegate: K4.Baldosa {
+        delegate: K5.Baldosa {
             id: celda
             required property var modelData
             required property int index
@@ -148,7 +148,7 @@ Item {
                 anchors.centerIn: parent
                 spacing: 7
 
-                K4.IconoPlugin {
+                K5.IconoPlugin {
                     imagen: celda.modelData.imagen
                     glifo: celda.modelData.glifo
                     tamano: 15
@@ -223,7 +223,7 @@ Item {
 
     //  El cajón entero, siempre el último y quieto: no se reordena porque no
     //  es un acceso directo, es la salida a todos los demás.
-    K4.Baldosa {
+    K5.Baldosa {
         x: franja.posicion(franja.lista.length)
         width: franja.anchoCelda
         height: franja.altura
@@ -237,7 +237,7 @@ Item {
             anchors.centerIn: parent
             spacing: 7
 
-            K4.Glifo {
+            K5.Glifo {
                 text: String.fromCodePoint(0xF02C1)     // md-grid
                 color: Theme.muted
                 font.pixelSize: 15

@@ -47,14 +47,14 @@
 
 import QtQuick
 import QtQuick.Shapes
-import K4 as K4
+import K5 as K5
 
-K4.Ventana {
+K5.Ventana {
     id: caida
 
     required property var plugin
 
-    nombre: "k4-dual-gota"
+    nombre: "k5-dual-gota"
     encima: true
 
     //  En la pantalla de la barra de la que cuelga, no en la que el compositor
@@ -89,7 +89,7 @@ K4.Ventana {
     //  quedaría colgando de un sitio en el que ya no hay barra.
     readonly property real xBarra: caida.plugin.origenX
     readonly property real yBarra: caida.plugin.origenY
-        + K4.Tema.altoPlegado / 2
+        + K5.Tema.altoPlegado / 2
 
     //  Y dónde acaba abajo: el centro de la semilla del dock, a ras del borde.
     //  La semilla sale donde vaya a salir el dock —su alineación, ver
@@ -105,12 +105,12 @@ K4.Ventana {
     //  se ve. Y son los mismos: `anchoSemilla` de la barra son estos mismos
     //  píxeles menos las dos alas.
     readonly property real rxFin: caida.plugin.largoTrozo
-    readonly property real ryFin: K4.Tema.altoPlegado / 2
+    readonly property real ryFin: K5.Tema.altoPlegado / 2
 
     //  Lo gorda que llega a ser colgando. Sale del grosor de la barra —es de ahí
     //  de donde sale la masa— y no de una medida propia: con la barra fina, una
     //  gota de tamaño fijo parecía un globo atado a un hilo.
-    readonly property real radio: K4.Tema.altoPlegado * 0.72
+    readonly property real radio: K5.Tema.altoPlegado * 0.72
 
     //  Y lo que se descuelga antes de romperse.
     //
@@ -341,7 +341,7 @@ K4.Ventana {
         //  Una cuadrática no tiene sentido que equivocar.
         ShapePath {
             id: trazoGota
-            fillColor: K4.Tema.fondo
+            fillColor: K5.Tema.fondo
             strokeWidth: 0
             strokeColor: "transparent"
 
@@ -412,7 +412,7 @@ K4.Ventana {
         //  un Loader reconstruye el trazado entero a media animación.
         ShapePath {
             id: trazoCuello
-            fillColor: K4.Tema.fondo
+            fillColor: K5.Tema.fondo
             strokeWidth: 0
             strokeColor: "transparent"
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rastro del cursor durante una grabación, para el zoom automático.
 
-    rastro.py --salida /tmp/k4-captura/rastro-X.jsonl [--hz 30] [--region "X,Y WxH"]
+    rastro.py --salida /tmp/k5-captura/rastro-X.jsonl [--hz 30] [--region "X,Y WxH"]
 
 Escribe JSONL: una línea de cabecera y luego una por muestra. Los clics NO se
 sondean —Hyprland no los publica—: llegan por la entrada estándar, una línea

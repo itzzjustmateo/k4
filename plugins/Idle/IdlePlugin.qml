@@ -40,7 +40,7 @@ K4Plugin {
 
     // La carátula y las barras van juntas a la izquierda, así que el hueco de
     // las barras se reserva ahí y no enfrente.
-    //  Y las extensiones de flanco (K4.Capsula → services/Extensiones.qml):
+    //  Y las extensiones de flanco (K5.Capsula → services/Extensiones.qml):
     //  lo que la cápsula gana a cada lado mientras un plugin tenga algo que
     //  decir ahí. La píldora solo le hace sitio en el flanco que toque — el
     //  anclaje para que el cuerpo no se mueva lo hace el host con estos mismos

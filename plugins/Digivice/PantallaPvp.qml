@@ -4,7 +4,7 @@
 //  servidor, así que el equipo se empaqueta en un código y se pasa copiando y
 //  pegando, como cualquier otra cosa entre dos personas.
 //
-//  El código se lee de un `TextInput` y NO de la API de portapapeles de k4:
+//  El código se lee de un `TextInput` y NO de la API de portapapeles de k5:
 //  esa pide el permiso `portapapeles` a propósito —lleva contraseñas y
 //  tokens— y gastarlo en un juego sería desproporcionado. Un campo de texto
 //  acepta Ctrl+V sin permiso ninguno, y de paso deja teclearlo.
@@ -13,7 +13,7 @@
 //  otra mitad del asunto: sin poder copiarlo no hay nada que mandarle a nadie.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -50,7 +50,7 @@ Item {
         anchors.margins: 5
         spacing: 3
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             text: Idioma.t("Duelo por código")
             font.pixelSize: 12
@@ -59,7 +59,7 @@ Item {
         }
 
         // ── mi código ─────────────────────────────────────────────
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             text: Idioma.f(Idioma.t("Tu equipo (%1)"), Digivice.miEquipo.length)
             font.pixelSize: 11
@@ -81,7 +81,7 @@ Item {
                 text: Digivice.miCodigo
                 readOnly: true
                 selectByMouse: true
-                font.family: K4.Tema.fuenteIconos
+                font.family: K5.Tema.fuenteIconos
                 font.pixelSize: 11
                 color: "#9fe8ac"
                 selectionColor: "#2f6a44"
@@ -112,7 +112,7 @@ Item {
         }
 
         // ── el suyo ───────────────────────────────────────────────
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             text: Idioma.t("Pega el suyo")
             font.pixelSize: 11
@@ -136,7 +136,7 @@ Item {
                 //  misma persona, y volver a pedirle el código para la
                 //  revancha sería un peaje por jugar dos veces.
                 text: Digivice.ultimoCodigo
-                font.family: K4.Tema.fuenteIconos
+                font.family: K5.Tema.fuenteIconos
                 font.pixelSize: 11
                 color: "#e8dcc8"
                 selectionColor: "#6a5a2f"
@@ -147,7 +147,7 @@ Item {
                 onAccepted: self.elegir()
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.left: parent.left
                 anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
@@ -158,7 +158,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: self.foco === 0 ? Idioma.t("B lo selecciona para copiar")
@@ -170,7 +170,7 @@ Item {
 
         //  Cuántos equipos distintos has vencido. Es el poso del PVP: sin
         //  esto, ganar un duelo no dejaría ninguna huella.
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             visible: Object.keys(Digivice.codigosVencidos).length > 0

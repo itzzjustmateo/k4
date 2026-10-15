@@ -220,7 +220,7 @@ Singleton {
     //  clic en «te está esperando» llevaba siempre a la más vieja — a la de al
     //  lado, la mitad de las veces.
     //
-    //  Lo que k4 manda por su cuenta SÍ sabe de quién es: la campana la toca
+    //  Lo que k5 manda por su cuenta SÍ sabe de quién es: la campana la toca
     //  una terminal concreta y su pid es la clave con la que se apunta la
     //  píldora. Aquí se guarda para que el clic vaya a esa y no a su hermana.
     //  Quien no apunte destino sigue como estaba, buscando por clase.

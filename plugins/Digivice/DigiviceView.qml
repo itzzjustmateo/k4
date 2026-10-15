@@ -9,7 +9,7 @@
 //  qué se está mirando y contra quién se pelea.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -160,7 +160,7 @@ Item {
         function onObjetivoCobrado(id, bits, objeto) {
             zumbador.sonar("victoria")
             raiz.reaccion("\u{F0538}")
-            K4.Tema.tintar("digivice", K4.Tema.amarillo, 0.22, 900)
+            K5.Tema.tintar("digivice", K5.Tema.amarillo, 0.22, 900)
             destinte.restart()
         }
 
@@ -192,7 +192,7 @@ Item {
     Timer {
         id: destinte
         interval: 950
-        onTriggered: K4.Tema.destintar("digivice")
+        onTriggered: K5.Tema.destintar("digivice")
     }
 
     // ── el teclado ────────────────────────────────────────────────
@@ -201,7 +201,7 @@ Item {
     //  dependería de que el foco bajara hasta allí, que es lo que no hay que
     //  suponer.
     focus: true
-    property var foco: K4.FocoInicial { objetivo: raiz }
+    property var foco: K5.FocoInicial { objetivo: raiz }
 
     //  Y reclamarlo al entrar el ratón, que es cuando `tecladoAlPasar` nos da
     //  el teclado: para entonces FocoInicial ya se rindió.
@@ -524,24 +524,24 @@ Item {
         //  Merece la fanfarria y que la barra entera lo note.
         function onFusionado(a, b, hijo) {
             zumbador.sonar("evolucion")
-            K4.Isla.efecto("digivice", "tiron")
-            K4.Tema.tintar("digivice", K4.Tema.amarillo, 0.4, 1800)
+            K5.Isla.efecto("digivice", "tiron")
+            K5.Tema.tintar("digivice", K5.Tema.amarillo, 0.4, 1800)
             raiz.aviso = Idioma.f(Idioma.t("¡%1 ha nacido de la fusión!"),
                                   Digivice.nombreDe(hijo))
             avisoTimer.restart()
         }
         function onEclosiono(id) {
             zumbador.sonar("evolucion")
-            K4.Isla.efecto("digivice", "tiron")
+            K5.Isla.efecto("digivice", "tiron")
         }
         //  El jefe se anuncia con la llamada y un tirón de la barra: es el
         //  momento en que merece la pena que la island llame la atención.
         function onJefeALaVista(idJefe, zonaId) {
             zumbador.sonar("llamada")
-            K4.Isla.efecto("digivice", "tiron")
+            K5.Isla.efecto("digivice", "tiron")
         }
         function onJefeCaido(idJefe, zonaId) {
-            K4.Tema.tintar("digivice", K4.Tema.amarillo, 0.35, 1600)
+            K5.Tema.tintar("digivice", K5.Tema.amarillo, 0.35, 1600)
         }
     }
 
@@ -645,7 +645,7 @@ Item {
     //
     //  Glifo y no Etiqueta: son iconos de la Nerd Font y con la tipografía de
     //  texto salen como cuadraditos.
-    K4.Glifo {
+    K5.Glifo {
         id: globoAccion
         readonly property real _base: aparato.width * 0.95 * 0.42
         anchors.horizontalCenter: parent.horizontalCenter
@@ -687,7 +687,7 @@ Item {
         //  En dos trozos y no en uno: `Idioma.f` solo sustituye %1 y %2, así
         //  que el marcador de cuatro cifras salía con «%3–%4» literal en
         //  pantalla. Se vio jugando el primer duelo.
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: marcador
             anchors.centerIn: parent
             text: Idioma.f(Idioma.t("Duelo · asalto %1 de %2"),
@@ -710,7 +710,7 @@ Item {
         border.color: "#7de08a"
         z: 8
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: cartelD
             anchors.centerIn: parent
             text: raiz.carteDuelo
@@ -735,7 +735,7 @@ Item {
         border.color: "#3f7a52"
         z: 5
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: textoAviso
             anchors.centerIn: parent
             text: raiz.aviso
@@ -748,7 +748,7 @@ Item {
     Component {
         id: cargando
         Item {
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.centerIn: parent
                 text: Idioma.t("Cargando…")
                 font.pixelSize: 12
@@ -775,7 +775,7 @@ Item {
                     rompiendo: raiz.rompiendo
                 }
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: Digivice.huevoListo ? Idioma.t("¡Está rompiendo!")
                                               : Idioma.t("Incubando…")
@@ -800,7 +800,7 @@ Item {
                     }
                 }
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: 190
                     horizontalAlignment: Text.AlignHCenter
@@ -818,7 +818,7 @@ Item {
                 spacing: 10
                 visible: !Digivice.hayIncubacion
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: Idioma.t("Sin huevo")
                     font.pixelSize: 13
@@ -830,7 +830,7 @@ Item {
                     width: 110; height: 26; radius: 13
                     color: "#2f6b40"
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.centerIn: parent
                         text: Idioma.t("Poner uno")
                         font.pixelSize: 12

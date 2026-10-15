@@ -14,7 +14,7 @@
 //  porque si irse a mitad costara doce pasos nadie abriría esto dos veces.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -86,7 +86,7 @@ Item {
             self.fase = "resultado"
             self._pitar(r.malo ? "fallo" : "acierto")
             if (!r.malo)
-                K4.Tema.tintar("digivice", K4.Tema.verde, 0.2, 700)
+                K5.Tema.tintar("digivice", K5.Tema.verde, 0.2, 700)
             self.cierre.restart()
         }
     }
@@ -102,7 +102,7 @@ Item {
     Timer {
         id: cierreT
         interval: 1900
-        onTriggered: { K4.Tema.destintar("digivice"); self.terminado() }
+        onTriggered: { K5.Tema.destintar("digivice"); self.terminado() }
     }
 
     Paisaje {
@@ -172,7 +172,7 @@ Item {
         spacing: 4
         visible: self.fase === "eligiendo"
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: self.andando ? Idioma.t("Siguiendo el rastro…")
@@ -182,7 +182,7 @@ Item {
             color: "#d8f0de"
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: self.caceria && self.caceria.pistas > 0
@@ -214,7 +214,7 @@ Item {
                         anchors.centerIn: parent
                         spacing: 2
 
-                        K4.Glifo {
+                        K5.Glifo {
                             anchors.horizontalCenter: parent.horizontalCenter
                             //  Todos iguales mientras no se sepa qué hay: si
                             //  el icono delatara el contenido, no habría nada
@@ -228,7 +228,7 @@ Item {
                         //  La pista: una cruz sobre un rastro malo. Marca los
                         //  MALOS y no el bueno, porque señalar el premio
                         //  sería resolver la cacería en vez de ayudarte.
-                        K4.Glifo {
+                        K5.Glifo {
                             id: cruz
                             anchors.horizontalCenter: parent.horizontalCenter
                             visible: huella.modelData.marcado === true
@@ -248,7 +248,7 @@ Item {
                             }
                         }
 
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.horizontalCenter: parent.horizontalCenter
                             visible: huella.modelData.marcado !== true
                             text: "?"
@@ -296,14 +296,14 @@ Item {
                 anchors.centerIn: parent
                 spacing: 3
 
-                K4.Glifo {
+                K5.Glifo {
                     anchors.verticalCenter: parent.verticalCenter
                     text: "\u{F03E9}"
                     font.pixelSize: 12
                     color: Digivice.puedeOlfatear ? "#e8b45a" : "#6a7a6e"
                 }
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.verticalCenter: parent.verticalCenter
                     text: Idioma.t("Olfatear") + "  " + Digivice.costeOlfato
                     font.pixelSize: 11
@@ -325,7 +325,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: Idioma.f(Idioma.t("A pasa · B lo sigue · C se va   (%1 de rastro)"),
@@ -342,7 +342,7 @@ Item {
         spacing: 4
         visible: self.fase === "resultado" && self.hallazgo !== null
 
-        K4.Glifo {
+        K5.Glifo {
             anchors.horizontalCenter: parent.horizontalCenter
             text: {
                 if (!self.hallazgo) return ""
@@ -360,7 +360,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: {
@@ -374,7 +374,7 @@ Item {
             elide: Text.ElideRight
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.WordWrap

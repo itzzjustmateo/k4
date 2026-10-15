@@ -74,7 +74,7 @@ class Teclado:
         for tecla in range(1, 128):
             fcntl.ioctl(self.fd, UI_SET_KEYBIT, tecla)
 
-        nombre = b"k4-teclado-de-pruebas" + b"\0" * (80 - 21)
+        nombre = b"k5-teclado-de-pruebas" + b"\0" * (80 - 21)
         fcntl.ioctl(self.fd, UI_DEV_SETUP,
                     struct.pack("HHHH80sI", 0x03, 0x1234, 0x5678, 1, nombre, 0))
         fcntl.ioctl(self.fd, UI_DEV_CREATE)

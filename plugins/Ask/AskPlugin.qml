@@ -5,7 +5,7 @@
 //  consulta anterior ni el de otras sesiones de Codex que haya por ahí.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -36,8 +36,8 @@ K4Plugin {
     // Nunca se resume con --last, que engancharía con otras sesiones.
     property string threadId: ""
 
-    readonly property string dir: "/tmp/k4-ask"
-    readonly property string script: K4.Paths.enRaiz("ask.sh")
+    readonly property string dir: "/tmp/k5-ask"
+    readonly property string script: K5.Paths.enRaiz("ask.sh")
 
     islandWidth: 700
     islandHeight: messages.length > 0 ? 430 : 128
@@ -99,7 +99,7 @@ K4Plugin {
         const t = String(texto)
         const adjunto = t.match(/attachment:\/\/([^\s"'`)]+\.(?:png|jpe?g|webp|gif))/i)
         if (adjunto && threadId.length > 0)
-            return K4.Sistema.entorno("HOME") + "/.codex/generated_images/"
+            return K5.Sistema.entorno("HOME") + "/.codex/generated_images/"
                 + threadId + "/" + adjunto[1]
         const ruta = t.match(/(\/[^\s"'`)]+\.(?:png|jpe?g|webp|gif))/i)
         return ruta ? ruta[1] : ""
@@ -226,12 +226,12 @@ K4Plugin {
         if (threadId.length === 0)
             return
         buscadorImagen.command = ["sh", "-c",
-            "ls -t " + K4.Sistema.entorno("HOME") + "/.codex/generated_images/"
+            "ls -t " + K5.Sistema.entorno("HOME") + "/.codex/generated_images/"
             + threadId + "/*.png 2>/dev/null | head -1"]
         buscadorImagen.running = true
     }
 
-    K4.Process {
+    K5.Process {
         id: buscadorImagen
         onSalida: function (texto) {
             const ruta = texto.trim()
@@ -292,32 +292,32 @@ K4Plugin {
     function guardarImagen(ruta) {
         if (!ruta || ruta.length === 0)
             return
-        const destino = K4.Sistema.entorno("HOME") + "/Imágenes"
-        K4.Sistema.lanzar(["sh", "-c",
+        const destino = K5.Sistema.entorno("HOME") + "/Imágenes"
+        K5.Sistema.lanzar(["sh", "-c",
             "mkdir -p " + JSON.stringify(destino)
             + " && cp -n " + JSON.stringify(ruta) + " " + JSON.stringify(destino) + "/"])
     }
 
     function abrirExterno(ruta) {
         if (ruta && ruta.length > 0)
-            K4.Sistema.lanzar(["xdg-open", ruta])
+            K5.Sistema.lanzar(["xdg-open", ruta])
     }
 
     function copyAnswer() {
         for (let i = messages.length - 1; i >= 0; --i) {
             if (messages[i].role === "assistant" && messages[i].text.length > 0) {
-                K4.Sistema.lanzar(["wl-copy", "--", messages[i].text])
+                K5.Sistema.lanzar(["wl-copy", "--", messages[i].text])
                 return
             }
         }
     }
 
-    K4.Process {
+    K5.Process {
         command: ["mkdir", "-p", self.dir]
         running: true
     }
 
-    K4.Process {
+    K5.Process {
         id: selectionProcess
         command: ["wl-paste", "--primary", "--no-newline"]
 
@@ -329,7 +329,7 @@ K4Plugin {
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: shotProcess
         onTerminado: function (code) {
             const shot = code === 0 ? self.dir + "/shot.png" : ""
@@ -338,7 +338,7 @@ K4Plugin {
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: askProcess
         porLineas: true
 
@@ -366,7 +366,7 @@ K4Plugin {
                 //  Apartada mientras pensaba: avisar de que ya está, que para
                 //  eso se apartó — para no quedarse mirando.
                 if (!self.open)
-                    K4.Sistema.avisar(Idioma.t("Respuesta lista"),
+                    K5.Sistema.avisar(Idioma.t("Respuesta lista"),
                                       self.resumenConversacion(), false)
             }
 
@@ -396,8 +396,8 @@ K4Plugin {
         }
     }
 
-    K4.Ipc {
-        target: "k4.ask"
+    K5.Ipc {
+        target: "k5.ask"
         function toggle(): void {
             if (self.open) self.close()
             else self.openAsk(false)

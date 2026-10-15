@@ -8,7 +8,7 @@
 //  huevo, se recorren con A los disponibles y B pone uno.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -70,7 +70,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: Digivice.huevoListo ? Idioma.t("¡Está rompiendo!")
@@ -81,7 +81,7 @@ Item {
             color: Digivice.huevoListo ? "#e8b45a" : "#8fbf9c"
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: Digivice.huevoListo ? Idioma.t("B lo saca")
@@ -104,7 +104,7 @@ Item {
             lado: 56
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: Digivice.nombreDe(self.elegido)
@@ -114,7 +114,7 @@ Item {
             elide: Text.ElideRight
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: (self.indice + 1) + " / " + self.total + "   ·   "
@@ -124,7 +124,7 @@ Item {
         }
     }
 
-    K4.Etiqueta {
+    K5.Etiqueta {
         anchors.centerIn: parent
         width: parent.width - 20
         horizontalAlignment: Text.AlignHCenter

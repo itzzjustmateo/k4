@@ -1,11 +1,11 @@
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Plugin {
+K5.Plugin {
     id: self
 
     name: "pantallas"
-    title: K4.Idioma.t("Pantallas")
+    title: K5.Idioma.t("Pantallas")
     priority: 67
     active: abierto
     islandWidth: 920
@@ -27,7 +27,7 @@ K4.Plugin {
     property string mensaje: ""
     property bool mensajeError: false
 
-    readonly property string helper: K4.Paths.enRaiz("plugins/Pantallas/pantallas.py")
+    readonly property string helper: K5.Paths.enRaiz("plugins/Pantallas/pantallas.py")
 
     function monitor(name) {
         for (let i = 0; i < monitores.length; ++i)
@@ -266,7 +266,7 @@ K4.Plugin {
         if (statusProcess.running)
             return
         ocupado = true
-        mensaje = K4.Idioma.t("Leyendo Hyprland…")
+        mensaje = K5.Idioma.t("Leyendo Hyprland…")
         mensajeError = false
         statusProcess.command = ["python3", helper, "status"]
         statusProcess.running = true
@@ -309,10 +309,10 @@ K4.Plugin {
             else if (!monitor(principal))
                 principal = active.length ? active[0].name : ""
             mensaje = active.length
-                ? K4.Idioma.f(K4.Idioma.t("%1 pantallas conectadas"), active.length)
-                : K4.Idioma.t("No hay pantallas activas")
+                ? K5.Idioma.f(K5.Idioma.t("%1 pantallas conectadas"), active.length)
+                : K5.Idioma.t("No hay pantallas activas")
         } catch (error) {
-            mensaje = K4.Idioma.t("No pude leer la configuración")
+            mensaje = K5.Idioma.t("No pude leer la configuración")
             mensajeError = true
         }
     }
@@ -337,8 +337,8 @@ K4.Plugin {
             return
         ocupado = true
         mensajeError = false
-        mensaje = persist ? K4.Idioma.t("Guardando distribución…")
-                          : K4.Idioma.t("Aplicando distribución…")
+        mensaje = persist ? K5.Idioma.t("Guardando distribución…")
+                          : K5.Idioma.t("Aplicando distribución…")
         applyProcess.command = ["python3", helper, "apply", payload(persist)]
         applyProcess.running = true
         principalPreferido = principal
@@ -348,10 +348,10 @@ K4.Plugin {
     function receiveApply(text) {
         try {
             const result = JSON.parse(text)
-            mensaje = result.message || K4.Idioma.t("Configuración aplicada")
+            mensaje = result.message || K5.Idioma.t("Configuración aplicada")
             mensajeError = result.ok !== true
         } catch (error) {
-            mensaje = K4.Idioma.t("Hyprland devolvió una respuesta inesperada")
+            mensaje = K5.Idioma.t("Hyprland devolvió una respuesta inesperada")
             mensajeError = true
         }
     }
@@ -364,7 +364,7 @@ K4.Plugin {
 
     function close() { abierto = false }
 
-    property var guardado: K4.Guardado {
+    property var guardado: K5.Guardado {
         plugin: "pantallas"
         onCargado: function (data) {
             self.principalPreferido = data.primary || ""
@@ -373,25 +373,25 @@ K4.Plugin {
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: statusProcess
         onSalida: function (text) { self.receiveStatus(text) }
         onTerminado: function (code) {
             self.ocupado = false
             if (code !== 0) {
-                self.mensaje = K4.Idioma.t("No pude consultar Hyprland")
+                self.mensaje = K5.Idioma.t("No pude consultar Hyprland")
                 self.mensajeError = true
             }
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: applyProcess
         onSalida: function (text) { self.receiveApply(text) }
         onTerminado: function (code) {
             self.ocupado = false
             if (code !== 0 && !self.mensajeError) {
-                self.mensaje = K4.Idioma.t("No se pudo aplicar la distribución")
+                self.mensaje = K5.Idioma.t("No se pudo aplicar la distribución")
                 self.mensajeError = true
             }
             refreshAfterApply.restart()
@@ -404,8 +404,8 @@ K4.Plugin {
         onTriggered: self.refresh()
     }
 
-    K4.Ipc {
-        target: "k4.pantallas"
+    K5.Ipc {
+        target: "k5.pantallas"
         function toggle(): void { self.toggle() }
         function open(): void { self.abierto = true; self.refresh() }
         function close(): void { self.close() }

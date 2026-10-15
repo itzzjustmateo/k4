@@ -1,4 +1,4 @@
-//  Los indicadores que aportan los plugins por K4.Pildora.
+//  Los indicadores que aportan los plugins por K5.Pildora.
 //
 //  Va en las tres vistas de la píldora, con el mismo trato que la grabación o
 //  la mazmorra: en reposo solo se mira —al acercar el ratón la island ya ha

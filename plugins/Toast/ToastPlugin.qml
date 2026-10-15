@@ -3,7 +3,7 @@
 //  vez de abrir el centro de control.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -66,7 +66,7 @@ K4Plugin {
     active: habilitado && Notifs.toastOpen && !enBanda
 
     //  La banda vive fuera de la island y solo mientras hace falta.
-    property var banda: K4.Cargador {
+    property var banda: K5.Cargador {
         active: self.habilitado && Notifs.toastOpen && self.enBanda
         BandaToast {}
     }

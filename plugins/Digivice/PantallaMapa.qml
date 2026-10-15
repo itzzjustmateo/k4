@@ -24,7 +24,7 @@
 //  centro, que es justo la parte que no parecía un sitio.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -302,7 +302,7 @@ Item {
                 border.width: 1
                 border.color: "#8fbf9c"
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.centerIn: parent
                     text: "?"
                     font.pixelSize: 9
@@ -337,7 +337,7 @@ Item {
                 border.color: Digivice.jefeVencido(Digivice.zona) ? "#e8b45a" : "#3f7a52"
             }
 
-            K4.Glifo {
+            K5.Glifo {
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: String.fromCodePoint(0xF01A5)
@@ -472,7 +472,7 @@ Item {
         spacing: 0
         width: parent.width
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: self.zonaActual.nombre
@@ -482,7 +482,7 @@ Item {
             elide: Text.ElideRight
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             visible: !Digivice.encuentroPendiente
@@ -496,7 +496,7 @@ Item {
         }
 
         //  Con alguien delante, el rótulo dice QUIÉN.
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             visible: Digivice.encuentroPendiente
@@ -560,7 +560,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: {
@@ -603,21 +603,21 @@ Item {
             anchors.centerIn: parent
             spacing: 6
 
-            K4.Glifo {
+            K5.Glifo {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: !Digivice.encuentroPendiente
                 text: "\u{F004D}"
                 font.pixelSize: 12
                 color: "#d8f0de"
             }
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.verticalCenter: parent.verticalCenter
                 text: Digivice.encuentroPendiente ? Idioma.t("¡Pelear!")
                                                   : Idioma.t("Cambiar zona")
                 font.pixelSize: 13
                 font.weight: Font.DemiBold
             }
-            K4.Glifo {
+            K5.Glifo {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: !Digivice.encuentroPendiente
                 text: "\u{F0054}"

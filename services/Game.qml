@@ -1835,7 +1835,7 @@ Singleton {
     }
 
     // ── persistencia ──────────────────────────────────────────────
-    readonly property string ruta: Quickshell.env("HOME") + "/.local/state/k4/partida.json"
+    readonly property string ruta: Quickshell.env("HOME") + "/.local/state/k5/partida.json"
 
     function ahora() { return Date.now() / 1000 }
 
@@ -1897,7 +1897,7 @@ Singleton {
     FileView { id: lector; path: game.ruta; blockLoading: true }
 
     Process {
-        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k4"]
+        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k5"]
         //  Con la mazmorra apagada ni se lee la partida: al encenderla en
         //  Ajustes este binding se enciende solo y la carga llega entonces.
         running: Settings.juegoActivo

@@ -5,7 +5,7 @@
 //  está clicando, y cerrarse solo a mitad de una pelea sería insufrible.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -126,8 +126,8 @@ K4Plugin {
         open = false
     }
 
-    K4.Ipc {
-        target: "k4.game"
+    K5.Ipc {
+        target: "k5.game"
         function toggle(): void { self.toggle() }
         function close(): void { self.close() }
 

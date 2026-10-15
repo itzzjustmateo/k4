@@ -6,7 +6,7 @@
 //  instante, aquí sostienes el esfuerzo.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -81,7 +81,7 @@ Item {
         width: parent.width - 24
         spacing: 10
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: self.corriendo
@@ -122,7 +122,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: self.ultimo || Idioma.t("Mantén pulsado y suelta en la franja")

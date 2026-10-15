@@ -14,7 +14,7 @@
 //  vuelve. En el aparato de verdad no hay nada más, y aquí tampoco.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
 Item {
     id: self
@@ -80,7 +80,7 @@ Item {
         Repeater {
             model: self.iconos
 
-            K4.Glifo {
+            K5.Glifo {
                 id: icono
                 required property var modelData
                 required property int index
@@ -88,7 +88,7 @@ Item {
                     self.alertas.indexOf(modelData.accion) >= 0
                 text: String.fromCodePoint(modelData.glifo)
                 font.pixelSize: 13
-                color: index === self.iconoActivo ? K4.Tema.amarillo
+                color: index === self.iconoActivo ? K5.Tema.amarillo
                      : avisa ? "#e8b45a" : "#4c5561"
 
                 //  El icono elegido parpadea, como el cursor del aparato.
@@ -137,14 +137,14 @@ Item {
     }
 
     //  La leyenda, pegada bajo la pantalla.
-    K4.Etiqueta {
+    K5.Etiqueta {
         id: leyendaTexto
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: bisel.bottom
         anchors.topMargin: 4
         text: self.leyenda
         font.pixelSize: 12
-        color: K4.Tema.apagado
+        color: K5.Tema.apagado
     }
 
     // ── los tres botones ──────────────────────────────────────────
@@ -187,12 +187,12 @@ Item {
                     y: raton.pressed ? 3 : 0
                     Behavior on y { NumberAnimation { duration: 60 } }
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.centerIn: parent
                         text: boton.modelData
                         font.pixelSize: 15
                         font.weight: Font.Bold
-                        color: raton.containsMouse ? K4.Tema.tinta : "#98a2b3"
+                        color: raton.containsMouse ? K5.Tema.tinta : "#98a2b3"
                     }
                 }
 

@@ -9,14 +9,14 @@
 //  uno vale para los dos.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
-K4.Ventana {
+K5.Ventana {
     id: ventana
 
-    nombre: "k4-editor"
+    nombre: "k5-editor"
 
     //  El teclado en exclusiva mientras está delante: aquí se usan el espacio,
     //  las flechas y Supr, y sin esto se los quedaría la ventana de debajo.

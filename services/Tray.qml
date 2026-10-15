@@ -2,7 +2,7 @@ pragma Singleton
 
 //  Bandeja del sistema (StatusNotifierItem).
 //
-//  Instanciar este servicio es lo que registra a k4 como anfitrión de bandeja:
+//  Instanciar este servicio es lo que registra a k5 como anfitrión de bandeja:
 //  hasta que existe, las aplicaciones no publican nada. Las que arrancaron
 //  antes que la barra puede que no vuelvan a intentarlo, así que si falta
 //  alguna hay que reiniciar esa aplicación, no la barra.

@@ -7,7 +7,7 @@ Son ondas CUADRADAS sintetizadas aqui, no grabaciones: un juguete de LCD no
 tiene altavoz para mas que eso, asi que la fidelidad y la honestidad legal
 apuntan al mismo sitio. Nada de esto viene del emulador ni de ningun juego.
 
-WAV sin comprimir a proposito: K4.Sonido carga los WAV con SoundEffect, que
+WAV sin comprimir a proposito: K5.Sonido carga los WAV con SoundEffect, que
 los tiene en memoria y los dispara sin latencia. Lo demas pasa por MediaPlayer
 y llega tarde, que en un golpe de combate se nota.
 

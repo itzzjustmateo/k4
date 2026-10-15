@@ -16,12 +16,12 @@
 //  Con un solo monitor es lo mismo y no se nota, con dos importa.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
-K4.PorPantalla {
-    delegate: K4.Ventana {
+K5.PorPantalla {
+    delegate: K5.Ventana {
         id: lienzo
 
         required property var modelData
@@ -29,7 +29,7 @@ K4.PorPantalla {
 
         // Por encima de todo, la island incluida: mientras encuadras no debe
         // haber nada que puedas pulsar sin querer, y el teclado es nuestro.
-        nombre: "k4-selector"
+        nombre: "k5-selector"
         conTeclado: true
 
         readonly property int origenX: screen ? screen.x : 0

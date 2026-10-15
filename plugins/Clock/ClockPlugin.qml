@@ -53,7 +53,7 @@ K4Plugin {
     //  metía hacia el centro y quedaba dibujado ENCIMA de la hora.
     //
     //  Y alargar la suma con otra constante no arreglaba nada: lo que ocupa
-    //  «🔔 claude · k4» depende de su texto y de la fuente, así que el único
+    //  «🔔 claude · k5» depende de su texto y de la fuente, así que el único
     //  que puede decirlo es quien lo pinta. La vista lo mide y lo publica en
     //  `anchoDerecho`; aquí se recoge.
     //

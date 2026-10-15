@@ -18,7 +18,7 @@ set -u
 prompt=${1:-}
 image=${2:-}
 session=${3:-}
-workdir=${ASK_DIR:-/tmp/k4-ask}
+workdir=${ASK_DIR:-/tmp/k5-ask}
 
 mkdir -p "$workdir"
 

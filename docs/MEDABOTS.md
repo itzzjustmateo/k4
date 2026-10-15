@@ -1,7 +1,7 @@
 # Medabots como plugin
 
 El primer corte jugable vive en `services/Medabots.qml` y
-`plugins/Medabots/`. Se ha construido como una adaptación original para k4:
+`plugins/Medabots/`. Se ha construido como una adaptación original para k5:
 no carga la ROM, no depende de sus gráficos y no copia código ni recursos del
 juego original.
 
@@ -21,16 +21,16 @@ juego original.
 
 ## IPC
 
-Con k4 en marcha:
+Con k5 en marcha:
 
 ```sh
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.medabots toggle
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.medabots robattle
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.medabots atacar
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.medabots cubrirse
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.medabots brazo
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.medabots medaforce
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.medabots estado
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.medabots toggle
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.medabots robattle
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.medabots atacar
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.medabots cubrirse
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.medabots brazo
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.medabots medaforce
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.medabots estado
 ```
 
 En la vista también se puede usar `1–4` para cambiar de pestaña, `A` para

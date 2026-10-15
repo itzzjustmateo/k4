@@ -1,4 +1,4 @@
-//  k4 — host de la island.
+//  k5 — host de la island.
 //
 //  Aquí no hay lógica de ningún módulo: esto monta la superficie, dibuja la
 //  silueta y decide qué plugin se queda la island. Añadir un módulo es crear
@@ -9,7 +9,7 @@ import QtQuick.Shapes
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
-import K4 as K4
+import K5 as K5
 import "core"
 import "services"
 
@@ -26,7 +26,7 @@ Scope {
     //
     //  Las referencias cruzadas (`panel`, `tray`, `juego`…) también las
     //  reparte el gestor: cualquier plugin que declare la propiedad la
-    //  recibe, venga del repo o de ~/.config/k4/plugins.
+    //  recibe, venga del repo o de ~/.config/k5/plugins.
 
     // ── quién se queda la island ──────────────────────────────────
     // Gana el activo de mayor prioridad. El binding se recalcula solo cuando
@@ -84,7 +84,7 @@ Scope {
     }
 
     //  Lo que decide el reparto, publicado para que lo lean los plugins por
-    //  K4.Isla: quién la tiene y si está desplegada.
+    //  K5.Isla: quién la tiene y si está desplegada.
     onActivePluginChanged: {
         apartarTransitorios()
         const anterior = Island.ocupante
@@ -127,27 +127,27 @@ Scope {
     // Los singletons de QML son perezosos: sin tocarlos no arrancan sus
     // procesos ni registran nada (el servidor de notificaciones, por ejemplo).
     Component.onCompleted: {
-        //  El puente de la API, lo PRIMERO: los ficheros del módulo K4 no
+        //  El puente de la API, lo PRIMERO: los ficheros del módulo K5 no
         //  pueden importar la barra por ruta relativa —cargarían una segunda
-        //  copia entera de services/, ver api/K4/Puente.qml— así que el host
+        //  copia entera de services/, ver api/K5/Puente.qml— así que el host
         //  les inyecta aquí lo que necesitan.
-        K4.Puente.tema = Theme
-        K4.Puente.idioma = Idioma
-        K4.Puente.indicadores = Indicadores
-        K4.Puente.audio = Audio
-        K4.Puente.medios = Media
-        K4.Puente.notificaciones = Notifs
-        K4.Puente.wifi = Wifi
-        K4.Puente.bluetooth = Bt
-        K4.Puente.escritorios = Workspaces
-        K4.Puente.portapapeles = Clipboard
-        K4.Puente.reloj = Clock
-        K4.Puente.enganches = Enganches
-        K4.Puente.isla = Island
-        K4.Puente.extensiones = Extensiones
-        K4.Puente.submapas = Submapas
-        K4.Puente.huella = Huella
-        K4.Puente.consola = Consola
+        K5.Puente.tema = Theme
+        K5.Puente.idioma = Idioma
+        K5.Puente.indicadores = Indicadores
+        K5.Puente.audio = Audio
+        K5.Puente.medios = Media
+        K5.Puente.notificaciones = Notifs
+        K5.Puente.wifi = Wifi
+        K5.Puente.bluetooth = Bt
+        K5.Puente.escritorios = Workspaces
+        K5.Puente.portapapeles = Clipboard
+        K5.Puente.reloj = Clock
+        K5.Puente.enganches = Enganches
+        K5.Puente.isla = Island
+        K5.Puente.extensiones = Extensiones
+        K5.Puente.submapas = Submapas
+        K5.Puente.huella = Huella
+        K5.Puente.consola = Consola
 
         void Audio.volume
         void Wifi.name
@@ -170,8 +170,8 @@ Scope {
     }
 
     // ── IPC ───────────────────────────────────────────────────────
-    // Cada módulo publica su propio target (k4.panel, k4.ask, k4.launcher).
-    // Esto es la capa de compatibilidad: mantiene el target `k4` con los
+    // Cada módulo publica su propio target (k5.panel, k5.ask, k5.launcher).
+    // Esto es la capa de compatibilidad: mantiene el target `k5` con los
     // nombres de siempre para no romper los atajos ya configurados.
     //  Atajo del registro: el plugin vivo con ese id, o null si está
     //  deshabilitado o roto. Con `?.` detrás, llamar a uno apagado no hace
@@ -179,7 +179,7 @@ Scope {
     function _p(id) { return PluginManager.instancia(id) }
 
     IpcHandler {
-        target: "k4"
+        target: "k5"
         function toggleLauncher(): void { _p("launcher")?.toggle() }
         function clipboard(): void { _p("clipboard")?.toggle() }
         function system(): void { _p("system")?.toggle() }
@@ -261,7 +261,7 @@ Scope {
         //  de apariencia, que es donde vive el color que configuraba.
         function theme(): void { _p("settings")?.abrirPagina("fondos") }
         //  Ajustes abierto por una página concreta, para atarlo a una tecla:
-        //  `k4 settingsSection apariencia`, `… island`, `… efectos`… Vale el
+        //  `k5 settingsSection apariencia`, `… island`, `… efectos`… Vale el
         //  nombre de la sección o su id de vista.
         function settingsSection(seccion: string): void {
             _p("settings")?.abrirPagina(seccion)
@@ -365,7 +365,7 @@ Scope {
 
             //  Y por dónde de ese borde. La de la vista si la trae; si no, la
             //  de la barra —que incluye lo que un plugin pida temporalmente
-            //  por `K4.Isla.colocar`—.
+            //  por `K5.Isla.colocar`—.
             readonly property real fraccionIsla: {
                 const p = pluginVisible
                 const a = p ? Settings.alineacionDe(p.name) : -1
@@ -441,7 +441,7 @@ Scope {
             //
             //  Quien aparta la barra es quien tiene que devolverla, y con su
             //  animación. El contrato de `barraApartada` es ese: si te la
-            //  llevas, mira `K4.Isla.ocupadaPor` y tráela cuando alguien la
+            //  llevas, mira `K5.Isla.ocupadaPor` y tráela cuando alguien la
             //  pida. Un módulo que se abre mientras tanto espera lo que dure el
             //  regreso, y entonces sale con ella.
             readonly property bool sinBarra: apartada !== null
@@ -666,7 +666,7 @@ Scope {
             //  esa región los clics pasan de largo como si no hubiera nada.
             //
             //  `Theme.maxIslandHeight` no se va con esto: sigue siendo el techo
-            //  con el que miden los plugins (K4.Tema.altoMaximo). Lo que cambia
+            //  con el que miden los plugins (K5.Tema.altoMaximo). Lo que cambia
             //  es de quién es el techo — era el de la superficie y ahora es el
             //  de la island.
             //  Y el eje que no atan las anclas lo da la pantalla. Se ponen los
@@ -802,7 +802,7 @@ Scope {
                 //  ── crecer hacia UN solo lado ────────────────────
                 //
                 //  Mientras la píldora lleva extensiones de flanco —lo que los
-                //  plugins declaran por K4.Capsula— la island crece hacia el
+                //  plugins declaran por K5.Capsula— la island crece hacia el
                 //  borde que toque y NO hacia los dos a la vez como de
                 //  costumbre: si no, el cuerpo de la píldora se deslizaría
                 //  media extensión cada vez que una entra o sale.
@@ -1027,8 +1027,8 @@ Scope {
 
                 // ── geometría publicada, para pintar fuera de la island ──
                 //
-                //  K4.Isla.rect: coordenadas de pantalla, solo la principal.
-                //  Un plugin con K4.Ventana ancla aquí lo que asoma.
+                //  K5.Isla.rect: coordenadas de pantalla, solo la principal.
+                //  Un plugin con K5.Ventana ancla aquí lo que asoma.
                 onXChanged: publicarRect()
                 onYChanged: publicarRect()
                 onWidthChanged: publicarRect()
@@ -1043,7 +1043,7 @@ Scope {
                 //  island YA son coordenadas de pantalla. Deducirla del borde
                 //  daba la buena de casualidad mientras solo hubo dos lados, y
                 //  mentía en cuanto una vista se abre pegada a un lateral —que
-                //  es de donde cuelgan trece plugins por `K4.Isla.rect`—.
+                //  es de donde cuelgan trece plugins por `K5.Isla.rect`—.
                 function publicarRect() {
                     Island.publicarRect(panelWindow.screen.name, {
                         x: island.x, y: island.y,

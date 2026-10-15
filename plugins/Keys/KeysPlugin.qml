@@ -1,7 +1,7 @@
 //  Chuleta de atajos: qué tienes atado a cada tecla, sin abrir el fichero.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -58,8 +58,8 @@ K4Plugin {
         onTriggered: self.closing = false
     }
 
-    K4.Ipc {
-        target: "k4.keys"
+    K5.Ipc {
+        target: "k5.keys"
 
         function toggle(): void { self.toggle() }
         function open(): void { self.abrir() }

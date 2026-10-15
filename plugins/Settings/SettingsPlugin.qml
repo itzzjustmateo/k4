@@ -12,7 +12,7 @@
 //  quedado pequeño, así que se cambió de sitio: ver `VentanaAjustes.qml`.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -25,7 +25,7 @@ K4Plugin {
     //  la island. El teclado lo pide la ventana por su cuenta.
     priority: 66
 
-    //  ── ¿hay k4 nuevo? ───────────────────────────────────────────
+    //  ── ¿hay k5 nuevo? ───────────────────────────────────────────
     //
     //  Vive aquí y no en un servicio por una razón práctica: un singleton nuevo
     //  en `services/` no se carga en caliente —hace falta reiniciar la barra
@@ -63,7 +63,7 @@ K4Plugin {
 
     // ── una página en la que aterrizar ────────────────────────────
     //
-    //  `k4 settingsSection apariencia` y compañía apuntan aquí, y la ventana
+    //  `k5 settingsSection apariencia` y compañía apuntan aquí, y la ventana
     //  aterriza en esa página al abrirse — o en el acto, si ya estaba abierta.
     //  Vacío es arriba del todo, como siempre.
     //
@@ -103,13 +103,13 @@ K4Plugin {
         }
     }
 
-    K4.Ipc {
-        target: "k4.settings"
+    K5.Ipc {
+        target: "k5.settings"
         function toggle(): void { self.toggle() }
         function close(): void { self.close() }
 
         //  Abrir por una página, para atarlo a una tecla:
-        //  `quickshell ipc call k4.settings abrirPagina apariencia`. Vale el
+        //  `quickshell ipc call k5.settings abrirPagina apariencia`. Vale el
         //  nombre de la sección o su `vista`, sin distinguir mayúsculas.
         function abrirPagina(pagina: string): void { self.abrirPagina(pagina) }
 

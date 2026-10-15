@@ -6,7 +6,7 @@
 //  bicho, está en el sitio equivocado.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -58,7 +58,7 @@ K4Plugin {
     //  es un plugin que se desinstala.
     property bool conSonido: true
 
-    property var misAjustes: K4.Ajustes {
+    property var misAjustes: K5.Ajustes {
         plugin: "digivice"
         grupo: Idioma.t("Digivice")
         opciones: [
@@ -75,7 +75,7 @@ K4Plugin {
         }
     }
 
-    property var guardado: K4.Guardado {
+    property var guardado: K5.Guardado {
         plugin: "digivice"
         nombre: "ajustes"
         onCargado: function (d) { self.conSonido = d.conSonido !== false }
@@ -133,7 +133,7 @@ K4Plugin {
 
     function _refrescarPildora() {
         if (!Digivice.hayPartida) {
-            K4.Pildora.quitar("digivice.estado")
+            K5.Pildora.quitar("digivice.estado")
             return
         }
         //  La cacería cuenta: la carretera la puso delante y se queda
@@ -143,7 +143,7 @@ K4Plugin {
                      || Digivice.animo === 0 || Digivice.puedeEvolucionar()
                      || Digivice.encuentroPendiente || Digivice.caceria !== null
         if (!reclama) {
-            K4.Pildora.quitar("digivice.estado")
+            K5.Pildora.quitar("digivice.estado")
             return
         }
         const texto = Digivice.enfermo ? Idioma.t("enfermo")
@@ -152,8 +152,8 @@ K4Plugin {
                     : Digivice.caceria !== null ? Idioma.t("rastro")
                     : Digivice.hambre === 0 ? Idioma.t("hambre")
                     : Idioma.t("triste")
-        K4.Pildora.registrar("digivice.estado", texto, 0xF06D3,
-                             Digivice.enfermo ? K4.Tema.rojo : K4.Tema.amarillo,
+        K5.Pildora.registrar("digivice.estado", texto, 0xF06D3,
+                             Digivice.enfermo ? K5.Tema.rojo : K5.Tema.amarillo,
                              63, true)
     }
 
@@ -167,7 +167,7 @@ K4Plugin {
     //  PluginPildora: en reposo solo se mira); al acercar el ratón, la island
     //  pasa a reloj o reproductor y ahí sí.
     property var _clicPildora: Connections {
-        target: K4.Pildora
+        target: K5.Pildora
         function onInvocado(id) {
             if (id !== "digivice.estado")
                 return
@@ -178,8 +178,8 @@ K4Plugin {
 
     Component.onCompleted: _refrescarPildora()
 
-    K4.Ipc {
-        target: "k4.digivice"
+    K5.Ipc {
+        target: "k5.digivice"
         function toggle(): void { self.toggle() }
         function close(): void { self.close() }
         function nueva(): void { Digivice.nuevaPartida(); self._refrescarPildora() }

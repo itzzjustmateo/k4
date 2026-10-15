@@ -10,7 +10,7 @@
 //  pantalla en vez de encima de ella.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -70,7 +70,7 @@ Item {
     //  El símbolo que sube y se desvanece: comida, corazón, chispa, escoba.
     //  Glifo y no Etiqueta: son iconos de la Nerd Font y con la tipografía de
     //  texto salen como cuadraditos.
-    K4.Glifo {
+    K5.Glifo {
         id: globo
         x: cuerpo.x + self.lado * 0.55
         text: self._simbolo
@@ -191,11 +191,11 @@ Item {
     }
 
     //  Las zzz.
-    K4.Etiqueta {
+    K5.Etiqueta {
         visible: self.durmiendo
         text: "z z"
         font.pixelSize: 12
-        color: K4.Tema.apagado
+        color: K5.Tema.apagado
         x: cuerpo.x + self.lado * 0.7
         y: cuerpo.y - 6
 

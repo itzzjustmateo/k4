@@ -94,7 +94,7 @@ FadeIn {
                 elide: Text.ElideRight
             }
 
-            // Botones que manda la aplicación. k4 declara actionsSupported, así
+            // Botones que manda la aplicación. k5 declara actionsSupported, así
             // que si no se pintan el usuario nunca puede pulsarlos.
             RowLayout {
                 visible: view.actions.length > 0

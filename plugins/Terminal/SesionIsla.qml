@@ -9,7 +9,7 @@
 //  suelto dentro del plugin y por eso solo podía existir una.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 QtObject {
@@ -84,7 +84,7 @@ QtObject {
             proceso.escribir(JSON.stringify(orden) + "\n")
     }
 
-    property K4.Process proceso: K4.Process {
+    property K5.Process proceso: K5.Process {
         command: sesion.heredar ? ["k4term-isla", "--heredar", sesion.heredar]
                                 : ["k4term-isla"]
         running: sesion.viva

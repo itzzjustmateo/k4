@@ -12,7 +12,7 @@ FadeIn {
 
     //  Lo que mide de verdad CADA zona, para que el plugin sepa cuánto tiene
     //  que reservar. Se mide aquí porque es aquí donde están los widgets con su
-    //  fuente puesta: cuánto ocupa «🔔 claude · k4» no se sabe contando
+    //  fuente puesta: cuánto ocupa «🔔 claude · k5» no se sabe contando
     //  constantes, y contándolas era como se sabía —de ahí que las píldoras de
     //  los agents acabaran pintadas encima de la hora—.
     //

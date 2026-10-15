@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Puente pequeño y auditable entre K4 y la configuración Lua de Hyprland."""
+"""Puente pequeño y auditable entre K5 y la configuración Lua de Hyprland."""
 
 from __future__ import annotations
 
@@ -148,9 +148,9 @@ def atomic_write(path: Path, text: str) -> None:
 def persist(config: dict[str, Any]) -> None:
     hypr = Path.home() / ".config" / "hypr"
     entry = hypr / "hyprland.lua"
-    vars_file = hypr / "config" / "k4-displays-vars.lua"
-    displays_file = hypr / "config" / "k4-displays.lua"
-    backup = hypr / "hyprland.lua.k4-displays.bak"
+    vars_file = hypr / "config" / "k5-displays-vars.lua"
+    displays_file = hypr / "config" / "k5-displays.lua"
+    backup = hypr / "hyprland.lua.k5-displays.bak"
 
     if not backup.exists():
         shutil.copy2(entry, backup)
@@ -162,7 +162,7 @@ def persist(config: dict[str, Any]) -> None:
         ordered.append("")
 
     variables = (
-        "-- Generado por K4 · plugin Pantallas.\n"
+        "-- Generado por K5 · plugin Pantallas.\n"
         "-- Define los nombres antes de que binds y reglas creen sus objetos.\n\n"
         f"MONITOR1 = {lua_string(ordered[0])}\n"
         f"MONITOR2 = {lua_string(ordered[1])}\n"
@@ -170,7 +170,7 @@ def persist(config: dict[str, Any]) -> None:
         f"PRIMARY_MONITOR = {lua_string(config['primary'])}\n"
     )
     body = [
-        "-- Generado por K4 · plugin Pantallas.",
+        "-- Generado por K5 · plugin Pantallas.",
         "-- Se carga al final para que esta distribución sea la efectiva.",
         "",
     ]
@@ -186,28 +186,28 @@ def persist(config: dict[str, Any]) -> None:
 
     text = entry.read_text(encoding="utf-8")
     early_pattern = re.compile(
-        r"\n?-- k4-pantallas: variables\n.*?-- /k4-pantallas: variables\n?",
+        r"\n?-- k5-pantallas: variables\n.*?-- /k5-pantallas: variables\n?",
         re.DOTALL,
     )
     late_pattern = re.compile(
-        r"\n?-- k4-pantallas: distribución\n.*?-- /k4-pantallas: distribución\n?",
+        r"\n?-- k5-pantallas: distribución\n.*?-- /k5-pantallas: distribución\n?",
         re.DOTALL,
     )
     text = early_pattern.sub("\n", text)
     text = late_pattern.sub("\n", text).rstrip() + "\n"
     anchor = 'require("config.variables")'
     early = (
-        "\n\n-- k4-pantallas: variables\n"
-        'require("config.k4-displays-vars")\n'
-        "-- /k4-pantallas: variables"
+        "\n\n-- k5-pantallas: variables\n"
+        'require("config.k5-displays-vars")\n'
+        "-- /k5-pantallas: variables"
     )
     if anchor not in text:
         raise ValueError("No encuentro config.variables en hyprland.lua")
     text = text.replace(anchor, anchor + early, 1)
     text = text.rstrip() + (
-        "\n\n-- k4-pantallas: distribución\n"
-        'require("config.k4-displays")\n'
-        "-- /k4-pantallas: distribución\n"
+        "\n\n-- k5-pantallas: distribución\n"
+        'require("config.k5-displays")\n'
+        "-- /k5-pantallas: distribución\n"
     )
     atomic_write(entry, text)
 

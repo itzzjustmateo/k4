@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import "../../services"
 import QtQuick.Layouts
-import K4 as K4
+import K5 as K5
 import "../../core"
 
 FadeIn {
@@ -363,7 +363,7 @@ FadeIn {
                         text: messageRow.modelData.text.length > 0 ? messageRow.modelData.text : "…"
 
                         onLinkActivated: function (enlace) {
-                            K4.Sistema.lanzar(["xdg-open", enlace])
+                            K5.Sistema.lanzar(["xdg-open", enlace])
                         }
 
                         // el cursor avisa de que el enlace se puede pulsar

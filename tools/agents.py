@@ -79,7 +79,7 @@ CLAUDE_USO_URL = "https://api.anthropic.com/api/oauth/usage"
 #  minuto como mucho.
 CLAUDE_CACHE = os.path.join(
     os.environ.get("XDG_STATE_HOME", os.path.expanduser("~/.local/state")),
-    "k4", "agents-uso.json")
+    "k5", "agents-uso.json")
 CLAUDE_CACHE_SEGUNDOS = 60
 CLAUDE_ESPERA = 6
 
@@ -208,7 +208,7 @@ def uso_en_vivo():
     peticion = urllib.request.Request(CLAUDE_USO_URL, headers={
         "Authorization": "Bearer " + tok,
         "anthropic-beta": "oauth-2025-04-20",
-        "User-Agent": "k4-agents/1.0",
+        "User-Agent": "k5-agents/1.0",
     })
     try:
         with urllib.request.urlopen(peticion, timeout=CLAUDE_ESPERA) as r:

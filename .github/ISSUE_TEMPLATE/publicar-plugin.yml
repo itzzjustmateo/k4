@@ -1,4 +1,4 @@
-#  El formulario por el que se publica un plugin en el registro de k4.
+#  El formulario por el que se publica un plugin en el registro de k5.
 #
 #  En inglés, aunque el proyecto hable español por dentro: esto lo rellena
 #  gente de fuera, y un ecosistema al que solo puede entrar quien sepa español
@@ -11,7 +11,7 @@
 #  nuevo, que cuesta un minuto y hace que la revisión signifique algo.
 
 name: Publish a plugin
-description: Add your plugin to the registry so it can be installed from k4
+description: Add your plugin to the registry so it can be installed from k5
 title: "[plugin] "
 labels: ["envio"]
 body:

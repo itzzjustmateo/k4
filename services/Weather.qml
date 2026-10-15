@@ -5,7 +5,7 @@ pragma Singleton
 //  Sin clave de API y sin cuenta: se pide por curl y se parsea el JSON. La
 //  ubicación se adivina por IP la primera vez —que es aproximada, así que cae
 //  en la ciudad grande más cercana— y a partir de ahí manda la que busques tú,
-//  que se guarda en ~/.local/state/k4/weather.json.
+//  que se guarda en ~/.local/state/k5/weather.json.
 //
 //  Los códigos son los WMO que devuelve Open-Meteo; el mapa de abajo los pasa
 //  a glifo e idioma, con variante de día y de noche donde tiene sentido.
@@ -18,7 +18,7 @@ import "../core"
 Singleton {
     id: weather
 
-    readonly property string stateFile: Quickshell.env("HOME") + "/.local/state/k4/weather.json"
+    readonly property string stateFile: Quickshell.env("HOME") + "/.local/state/k5/weather.json"
 
     // ── ubicación ─────────────────────────────────────────────────
     property string place: ""
@@ -174,8 +174,8 @@ Singleton {
     FileView { id: stateView; path: weather.stateFile; blockLoading: true }
 
     Process {
-        // el estado vive en ~/.local/state/k4, que puede no existir aún
-        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k4"]
+        // el estado vive en ~/.local/state/k5, que puede no existir aún
+        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k5"]
         running: true
         onExited: weather.load()
     }

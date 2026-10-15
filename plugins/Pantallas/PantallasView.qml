@@ -1,8 +1,8 @@
 import QtQuick
 import "../../services"
-import K4 as K4
+import K5 as K5
 
-K4.Aparicion {
+K5.Aparicion {
     id: view
 
     required property var plugin
@@ -19,19 +19,19 @@ K4.Aparicion {
         width: Math.max(minimumWidth, labelText.implicitWidth + 20)
         height: 28
         radius: 14
-        color: selected ? K4.Tema.superficieAlta
-                        : (mouse.containsMouse && enabled ? K4.Tema.superficie : "transparent")
+        color: selected ? K5.Tema.superficieAlta
+                        : (mouse.containsMouse && enabled ? K5.Tema.superficie : "transparent")
         border.width: selected ? 1 : 0
-        border.color: selected ? K4.Tema.azul : "transparent"
+        border.color: selected ? K5.Tema.azul : "transparent"
         opacity: enabled ? 1 : 0.35
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: labelText
             anchors.centerIn: parent
             text: chip.label
             font.pixelSize: 11
             font.weight: chip.selected ? Font.DemiBold : Font.Normal
-            color: chip.selected ? K4.Tema.tinta : K4.Tema.apagado
+            color: chip.selected ? K5.Tema.tinta : K5.Tema.apagado
         }
 
         MouseArea {
@@ -54,17 +54,17 @@ K4.Aparicion {
         width: actionText.implicitWidth + 28
         height: 34
         radius: 17
-        color: primary ? K4.Tema.tinta
-            : (actionMouse.containsMouse && enabled ? K4.Tema.superficieAlta : K4.Tema.superficie)
+        color: primary ? K5.Tema.tinta
+            : (actionMouse.containsMouse && enabled ? K5.Tema.superficieAlta : K5.Tema.superficie)
         opacity: enabled ? 1 : 0.4
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: actionText
             anchors.centerIn: parent
             text: action.label
             font.pixelSize: 11
             font.weight: Font.DemiBold
-            color: action.primary ? K4.Tema.fondo : K4.Tema.tinta
+            color: action.primary ? K5.Tema.fondo : K5.Tema.tinta
         }
 
         MouseArea {
@@ -92,17 +92,17 @@ K4.Aparicion {
             for (let i = 0; i < options.length; ++i)
                 if (String(options[i].value) === String(selectedValue))
                     return options[i].label
-            return K4.Idioma.t("Elegir")
+            return K5.Idioma.t("Elegir")
         }
 
         height: 58
         z: open ? 100 : 1
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             text: dropdown.label
             font.pixelSize: 10
             font.weight: Font.DemiBold
-            color: K4.Tema.apagado
+            color: K5.Tema.apagado
         }
 
         Rectangle {
@@ -111,12 +111,12 @@ K4.Aparicion {
             width: parent.width
             height: 36
             radius: 11
-            color: dropdownMouse.containsMouse ? K4.Tema.superficieAlta
-                                               : K4.Tema.superficie
+            color: dropdownMouse.containsMouse ? K5.Tema.superficieAlta
+                                               : K5.Tema.superficie
             border.width: dropdown.open ? 1 : 0
-            border.color: K4.Tema.azul
+            border.color: K5.Tema.azul
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 x: 12
                 width: parent.width - 44
                 anchors.verticalCenter: parent.verticalCenter
@@ -126,12 +126,12 @@ K4.Aparicion {
                 font.weight: Font.DemiBold
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
                 text: dropdown.open ? "⌃" : "⌄"
-                color: K4.Tema.apagado
+                color: K5.Tema.apagado
                 font.pixelSize: 13
             }
 
@@ -150,12 +150,12 @@ K4.Aparicion {
             height: Math.min(dropdown.menuHeight, dropdown.options.length * 31 + 8)
             visible: dropdown.open
             radius: 12
-            color: K4.Tema.superficieAlta
+            color: K5.Tema.superficieAlta
             border.width: 1
             border.color: Qt.rgba(1, 1, 1, 0.10)
             z: 200
 
-            K4.Rodillo {
+            K5.Rodillo {
                 anchors.fill: parent
                 anchors.margins: 4
                 muesca: 32
@@ -183,10 +183,10 @@ K4.Aparicion {
                                 radius: 3
                                 visible: String(dropdownOption.modelData.value)
                                     === String(dropdown.selectedValue)
-                                color: K4.Tema.azul
+                                color: K5.Tema.azul
                             }
 
-                            K4.Etiqueta {
+                            K5.Etiqueta {
                                 x: 20
                                 width: parent.width - 28
                                 anchors.verticalCenter: parent.verticalCenter
@@ -224,16 +224,16 @@ K4.Aparicion {
         height: 34
         spacing: 10
 
-        K4.Glifo {
+        K5.Glifo {
             text: "󰍹"
             width: 24
             height: parent.height
-            color: K4.Tema.azul
+            color: K5.Tema.azul
             font.pixelSize: 19
         }
 
-        K4.Etiqueta {
-            text: K4.Idioma.t("Pantallas")
+        K5.Etiqueta {
+            text: K5.Idioma.t("Pantallas")
             width: 112
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: 15
@@ -241,14 +241,14 @@ K4.Aparicion {
         }
 
         Chip {
-            label: K4.Idioma.t("Distribución")
+            label: K5.Idioma.t("Distribución")
             selected: view.plugin.tab === "pantallas"
             anchors.verticalCenter: parent.verticalCenter
             onClicked: view.plugin.tab = "pantallas"
         }
 
         Chip {
-            label: K4.Idioma.t("Escritorios")
+            label: K5.Idioma.t("Escritorios")
             selected: view.plugin.tab === "workspaces"
             anchors.verticalCenter: parent.verticalCenter
             onClicked: view.plugin.tab = "workspaces"
@@ -256,7 +256,7 @@ K4.Aparicion {
 
         Item { width: Math.max(0, header.width - 478); height: 1 }
 
-        K4.Boton {
+        K5.Boton {
             glifo: "󰑐"
             tamano: 15
             activo: !view.plugin.ocupado
@@ -264,7 +264,7 @@ K4.Aparicion {
             onPulsado: view.plugin.refresh()
         }
 
-        K4.Boton {
+        K5.Boton {
             glifo: "󰅖"
             tamano: 16
             anchors.verticalCenter: parent.verticalCenter
@@ -286,7 +286,7 @@ K4.Aparicion {
             width: parent.width
             height: 232
             radius: 18
-            color: K4.Tema.superficie
+            color: K5.Tema.superficie
             clip: true
 
             property bool dragging: false
@@ -334,15 +334,15 @@ K4.Aparicion {
                 y: 9
                 spacing: 8
 
-                K4.Glifo {
+                K5.Glifo {
                     text: "󰇄"
                     width: 18
                     height: 26
                     font.pixelSize: 15
-                    color: K4.Tema.azul
+                    color: K5.Tema.azul
                 }
-                K4.Etiqueta {
-                    text: K4.Idioma.t("Arrastra las pantallas como están colocadas en tu mesa")
+                K5.Etiqueta {
+                    text: K5.Idioma.t("Arrastra las pantallas como están colocadas en tu mesa")
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 11
                     font.weight: Font.DemiBold
@@ -380,10 +380,10 @@ K4.Aparicion {
                     radius: 10
                     z: modelData.name === view.plugin.seleccionado ? 3 : 1
                     color: modelData.name === view.plugin.seleccionado
-                        ? Qt.rgba(0.04, 0.52, 1, 0.30) : K4.Tema.superficieAlta
+                        ? Qt.rgba(0.04, 0.52, 1, 0.30) : K5.Tema.superficieAlta
                     border.width: modelData.name === view.plugin.seleccionado ? 2 : 1
                     border.color: modelData.name === view.plugin.seleccionado
-                        ? K4.Tema.azul : K4.Tema.tenue
+                        ? K5.Tema.azul : K5.Tema.tenue
 
                     Behavior on color { ColorAnimation { duration: 130 } }
 
@@ -405,30 +405,30 @@ K4.Aparicion {
                         height: 3
                         radius: 2
                         color: modelData.name === view.plugin.seleccionado
-                            ? K4.Tema.azul : K4.Tema.apagado
+                            ? K5.Tema.azul : K5.Tema.apagado
                     }
 
                     Column {
                         anchors.centerIn: parent
                         spacing: 2
 
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: String(screen.index + 1)
                             font.pixelSize: Math.min(24, screen.height * 0.23)
                             font.weight: Font.Bold
                         }
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: screen.modelData.model || screen.modelData.name
                             font.pixelSize: 10
                             font.weight: Font.DemiBold
                         }
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: screen.modelData.name + " · "
                                 + Number(screen.modelData.refreshRate).toFixed(0) + " Hz"
-                            color: K4.Tema.apagado
+                            color: K5.Tema.apagado
                             font.pixelSize: 8
                         }
                     }
@@ -464,20 +464,20 @@ K4.Aparicion {
                 }
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.left: parent.left
                 anchors.leftMargin: 14
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 8
                 property var current: view.plugin.draft(view.plugin.seleccionado)
-                text: current ? K4.Idioma.f(K4.Idioma.t("Posición %1 × %2"),
+                text: current ? K5.Idioma.f(K5.Idioma.t("Posición %1 × %2"),
                                              current.x, current.y) : ""
-                color: K4.Tema.apagado
+                color: K5.Tema.apagado
                 font.pixelSize: 9
             }
         }
 
-        K4.Rodillo {
+        K5.Rodillo {
             id: monitorSelector
             y: 244
             width: 274
@@ -489,7 +489,7 @@ K4.Aparicion {
 
                 Repeater {
                     model: view.plugin.monitores
-                    delegate: K4.Baldosa {
+                    delegate: K5.Baldosa {
                         id: monitorCard
                         required property var modelData
                         required property int index
@@ -504,8 +504,8 @@ K4.Aparicion {
                             width: 30
                             height: 30
                             radius: 9
-                            color: monitorCard.activa ? K4.Tema.azul : K4.Tema.superficieAlta
-                            K4.Etiqueta {
+                            color: monitorCard.activa ? K5.Tema.azul : K5.Tema.superficieAlta
+                            K5.Etiqueta {
                                 anchors.centerIn: parent
                                 text: String(monitorCard.index + 1)
                                 font.pixelSize: 12
@@ -518,16 +518,16 @@ K4.Aparicion {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 116
                             spacing: 2
-                            K4.Etiqueta {
+                            K5.Etiqueta {
                                 width: parent.width
                                 text: monitorCard.modelData.model || monitorCard.modelData.name
                                 elide: Text.ElideRight
                                 font.pixelSize: 11
                                 font.weight: Font.DemiBold
                             }
-                            K4.Etiqueta {
+                            K5.Etiqueta {
                                 text: monitorCard.modelData.name
-                                color: K4.Tema.apagado
+                                color: K5.Tema.apagado
                                 font.pixelSize: 9
                             }
                         }
@@ -536,7 +536,7 @@ K4.Aparicion {
                             x: monitorCard.width - width - 8
                             anchors.verticalCenter: parent.verticalCenter
                             label: view.plugin.principal === monitorCard.modelData.name
-                                ? K4.Idioma.t("Principal") : K4.Idioma.t("Elegir")
+                                ? K5.Idioma.t("Principal") : K5.Idioma.t("Elegir")
                             selected: view.plugin.principal === monitorCard.modelData.name
                             minimumWidth: 58
                             onClicked: view.plugin.principal = monitorCard.modelData.name
@@ -564,7 +564,7 @@ K4.Aparicion {
                 Dropdown {
                     key: "mode"
                     width: parent.width - 322
-                    label: K4.Idioma.t("Resolución y refresco")
+                    label: K5.Idioma.t("Resolución y refresco")
                     menuHeight: 182
                     openUpward: true
                     selectedValue: {
@@ -586,7 +586,7 @@ K4.Aparicion {
                 Dropdown {
                     key: "scale"
                     width: 142
-                    label: K4.Idioma.t("Escala")
+                    label: K5.Idioma.t("Escala")
                     openUpward: true
                     selectedValue: {
                         const draft = view.plugin.draft(view.plugin.seleccionado)
@@ -603,17 +603,17 @@ K4.Aparicion {
                 Dropdown {
                     key: "rotation"
                     width: 144
-                    label: K4.Idioma.t("Orientación")
+                    label: K5.Idioma.t("Orientación")
                     openUpward: true
                     selectedValue: {
                         const draft = view.plugin.draft(view.plugin.seleccionado)
                         return draft ? draft.transform : 0
                     }
                     options: [
-                        { value: 0, label: K4.Idioma.t("Horizontal · 0°") },
-                        { value: 1, label: K4.Idioma.t("Vertical · 90°") },
-                        { value: 2, label: K4.Idioma.t("Horizontal · 180°") },
-                        { value: 3, label: K4.Idioma.t("Vertical · 270°") }
+                        { value: 0, label: K5.Idioma.t("Horizontal · 0°") },
+                        { value: 1, label: K5.Idioma.t("Vertical · 90°") },
+                        { value: 2, label: K5.Idioma.t("Horizontal · 180°") },
+                        { value: 3, label: K5.Idioma.t("Vertical · 270°") }
                     ]
                     onPicked: function (value) { view.plugin.setDraft("transform", Number(value)) }
                 }
@@ -630,11 +630,11 @@ K4.Aparicion {
         height: parent.height - 120
         visible: view.plugin.tab === "workspaces"
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: workspaceIntro
             width: parent.width
-            text: K4.Idioma.t("Arrastra cada escritorio a la pantalla donde quieres que viva")
-            color: K4.Tema.apagado
+            text: K5.Idioma.t("Arrastra cada escritorio a la pantalla donde quieres que viva")
+            color: K5.Tema.apagado
             font.pixelSize: 11
         }
 
@@ -658,9 +658,9 @@ K4.Aparicion {
                     height: workspaceBoards.height
                     radius: 18
                     color: boardDrop.containsDrag
-                        ? Qt.rgba(0.04, 0.52, 1, 0.18) : K4.Tema.superficie
+                        ? Qt.rgba(0.04, 0.52, 1, 0.18) : K5.Tema.superficie
                     border.width: boardDrop.containsDrag ? 2 : 1
-                    border.color: boardDrop.containsDrag ? K4.Tema.azul
+                    border.color: boardDrop.containsDrag ? K5.Tema.azul
                                                         : Qt.rgba(1, 1, 1, 0.05)
 
                     Behavior on color { ColorAnimation { duration: 120 } }
@@ -672,10 +672,10 @@ K4.Aparicion {
                         height: 30
                         radius: 7
                         color: workspaceBoard.index === 0
-                            ? Qt.rgba(0.04, 0.52, 1, 0.24) : K4.Tema.superficieAlta
+                            ? Qt.rgba(0.04, 0.52, 1, 0.24) : K5.Tema.superficieAlta
                         border.width: 1
-                        border.color: workspaceBoard.index === 0 ? K4.Tema.azul : K4.Tema.tenue
-                        K4.Etiqueta {
+                        border.color: workspaceBoard.index === 0 ? K5.Tema.azul : K5.Tema.tenue
+                        K5.Etiqueta {
                             anchors.centerIn: parent
                             text: String(workspaceBoard.index + 1)
                             font.pixelSize: 12
@@ -688,16 +688,16 @@ K4.Aparicion {
                         y: 12
                         width: parent.width - 150
                         spacing: 2
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             width: parent.width
                             text: workspaceBoard.modelData.model || workspaceBoard.modelData.name
                             elide: Text.ElideRight
                             font.pixelSize: 12
                             font.weight: Font.DemiBold
                         }
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             text: workspaceBoard.modelData.name
-                            color: K4.Tema.apagado
+                            color: K5.Tema.apagado
                             font.pixelSize: 9
                         }
                     }
@@ -707,7 +707,7 @@ K4.Aparicion {
                         anchors.rightMargin: 12
                         y: 14
                         label: view.plugin.principal === workspaceBoard.monitorName
-                            ? K4.Idioma.t("Principal") : K4.Idioma.t("Elegir")
+                            ? K5.Idioma.t("Principal") : K5.Idioma.t("Elegir")
                         selected: view.plugin.principal === workspaceBoard.monitorName
                         onClicked: view.plugin.principal = workspaceBoard.monitorName
                     }
@@ -741,33 +741,33 @@ K4.Aparicion {
                                 radius: 14
                                 z: workspaceDrag.active ? 20 : 1
                                 scale: workspaceDrag.active ? 1.08 : 1
-                                color: workspaceDrag.active ? K4.Tema.superficieAlta
+                                color: workspaceDrag.active ? K5.Tema.superficieAlta
                                                            : Qt.rgba(1, 1, 1, 0.055)
                                 border.width: 1
-                                border.color: workspaceDrag.active ? K4.Tema.azul
+                                border.color: workspaceDrag.active ? K5.Tema.azul
                                                                   : Qt.rgba(1, 1, 1, 0.06)
 
                                 Drag.active: workspaceDrag.active
                                 Drag.source: workspaceChip
-                                Drag.keys: ["k4-workspace"]
+                                Drag.keys: ["k5-workspace"]
                                 Drag.hotSpot.x: width / 2
                                 Drag.hotSpot.y: height / 2
 
                                 Behavior on scale { NumberAnimation { duration: 100 } }
                                 Behavior on color { ColorAnimation { duration: 100 } }
 
-                                K4.Etiqueta {
+                                K5.Etiqueta {
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     y: 8
                                     text: workspaceChip.workspaceNumber
                                     font.pixelSize: 17
                                     font.weight: Font.Bold
                                 }
-                                K4.Etiqueta {
+                                K5.Etiqueta {
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     y: 34
-                                    text: K4.Idioma.t("escritorio")
-                                    color: K4.Tema.apagado
+                                    text: K5.Idioma.t("escritorio")
+                                    color: K5.Tema.apagado
                                     font.pixelSize: 7
                                 }
 
@@ -792,19 +792,19 @@ K4.Aparicion {
                         }
                     }
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.centerIn: parent
                         anchors.verticalCenterOffset: 34
                         visible: view.plugin.workspacesFor(workspaceBoard.monitorName).length === 0
-                        text: K4.Idioma.t("Suelta aquí un escritorio")
-                        color: K4.Tema.apagado
+                        text: K5.Idioma.t("Suelta aquí un escritorio")
+                        color: K5.Tema.apagado
                         font.pixelSize: 11
                     }
 
                     DropArea {
                         id: boardDrop
                         anchors.fill: parent
-                        keys: ["k4-workspace"]
+                        keys: ["k5-workspace"]
                         onDropped: function (drop) {
                             if (drop.source)
                                 view.plugin.setAssignment(drop.source.workspaceNumber,
@@ -815,11 +815,11 @@ K4.Aparicion {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            text: K4.Idioma.t("También puedes pulsar un escritorio para mandarlo a la siguiente pantalla")
-            color: K4.Tema.apagado
+            text: K5.Idioma.t("También puedes pulsar un escritorio para mandarlo a la siguiente pantalla")
+            color: K5.Tema.apagado
             font.pixelSize: 9
         }
     }
@@ -838,28 +838,28 @@ K4.Aparicion {
             height: 8
             radius: 4
             anchors.verticalCenter: parent.verticalCenter
-            color: view.plugin.ocupado ? K4.Tema.amarillo
-                : (view.plugin.mensajeError ? K4.Tema.rojo : K4.Tema.verde)
+            color: view.plugin.ocupado ? K5.Tema.amarillo
+                : (view.plugin.mensajeError ? K5.Tema.rojo : K5.Tema.verde)
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: Math.max(200, footer.width - 340)
             anchors.verticalCenter: parent.verticalCenter
             text: view.plugin.mensaje
             elide: Text.ElideRight
-            color: view.plugin.mensajeError ? K4.Tema.rojo : K4.Tema.apagado
+            color: view.plugin.mensajeError ? K5.Tema.rojo : K5.Tema.apagado
             font.pixelSize: 10
         }
 
         Action {
-            label: K4.Idioma.t("Aplicar ahora")
+            label: K5.Idioma.t("Aplicar ahora")
             enabled: !view.plugin.ocupado
             anchors.verticalCenter: parent.verticalCenter
             onClicked: view.plugin.apply(false)
         }
 
         Action {
-            label: K4.Idioma.t("Guardar y aplicar")
+            label: K5.Idioma.t("Guardar y aplicar")
             primary: true
             enabled: !view.plugin.ocupado
             anchors.verticalCenter: parent.verticalCenter

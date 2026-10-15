@@ -3,12 +3,12 @@
 
     python3 tools/api.py
 
-La regla de oro de k4: **un plugin importa QtQuick y K4. Nada más.**
+La regla de oro de k5: **un plugin importa QtQuick y K5. Nada más.**
 
 No es purismo. Todo lo que un plugin importe de Quickshell solo existe donde
 existe Quickshell, o sea en Linux con Wayland. El día que haya un host propio
 para Windows o Mac, lo que esté escrito contra `Quickshell.Io` no se porta: hay
-que reescribirlo. Lo que esté escrito contra `K4` se porta reescribiendo
+que reescribirlo. Lo que esté escrito contra `K5` se porta reescribiendo
 únicamente la carpeta api/.
 
 Y hay un beneficio que se nota ya, sin esperar a ningún host: quien quiera
@@ -19,7 +19,7 @@ Los servicios de services/ SÍ pueden usar Quickshell directamente: son
 implementación, no superficie pública. Si un plugin necesita algo de
 plataforma, o se añade a la API o se baja a un servicio.
 
-Esta comprobación existe porque la regla de capas de k4 ya funciona así: se
+Esta comprobación existe porque la regla de capas de k5 ya funciona así: se
 cumple porque se comprueba. Una regla que solo vive en un comentario dura hasta
 el primer día con prisa.
 """
@@ -40,7 +40,7 @@ def revisar_documentacion():
     `Puente` se salta a propósito: es fontanería entre el host y la API, no
     algo que un plugin deba tocar.
     """
-    qmldir = (RAIZ / "api" / "K4" / "qmldir").read_text()
+    qmldir = (RAIZ / "api" / "K5" / "qmldir").read_text()
     tipos = [t for t in re.findall(r"^(?:singleton )?([A-Z]\w+) 1\.0",
                                    qmldir, re.M)
              if t != "Puente"]
@@ -53,24 +53,24 @@ def revisar_documentacion():
         texto = (RAIZ / doc).read_text()
         for t in tipos:
             if not re.search(r"\bK4\.%s\b" % t, texto):
-                fallos.append("api/K4/%s.qml no se menciona en %s" % (t, doc))
+                fallos.append("api/K5/%s.qml no se menciona en %s" % (t, doc))
     return fallos
 
 
 def revisar_api():
-    """La regla inversa: un fichero de api/K4 no importa la barra.
+    """La regla inversa: un fichero de api/K5 no importa la barra.
 
-    El módulo K4 se resuelve por file:// para todo el mundo, así que un import
+    El módulo K5 se resuelve por file:// para todo el mundo, así que un import
     relativo desde dentro carga una SEGUNDA copia de services/ y core/ — dos
     PluginManager, dos oleadas de plugins, cada IPC registrado dos veces. Lo
-    que necesite la API se inyecta por el Puente (api/K4/Puente.qml).
+    que necesite la API se inyecta por el Puente (api/K5/Puente.qml).
     """
     fallos = []
-    for f in sorted((RAIZ / "api" / "K4").glob("*.qml")):
+    for f in sorted((RAIZ / "api" / "K5").glob("*.qml")):
         for n, linea in enumerate(f.read_text().split("\n"), 1):
             limpia = re.sub(r"//.*$", "", linea)
             if re.search(r'import\s+"\.\./', limpia):
-                fallos.append("api/K4/%s:%d importa la barra por ruta "
+                fallos.append("api/K5/%s:%d importa la barra por ruta "
                               "relativa: %s" % (f.name, n, limpia.strip()))
     return fallos
 
@@ -82,9 +82,9 @@ def revisar_api():
 #  existe aquí, y eso es lo que hay que esconder.
 #
 #  También se permiten los imports por ruta relativa —"../../core"— que son los
-#  del propio k4.
+#  del propio k5.
 PERMITIDOS = re.compile(
-    r"^import\s+(Qt\w*(\.\w+)*|K4(\s+as\s+\w+)?|\"[^\"]+\"(\s+as\s+\w+)?)\s*$"
+    r"^import\s+(Qt\w*(\.\w+)*|K5(\s+as\s+\w+)?|\"[^\"]+\"(\s+as\s+\w+)?)\s*$"
 )
 
 # Tipos que delatan un import que se ha colado por otra vía.
@@ -150,7 +150,7 @@ def main():
         print("\nEso carga una SEGUNDA copia de services/ y core/: dos")
         print("PluginManager, los plugins creados dos veces y cada IPC")
         print("registrado por duplicado. Lo que necesite la API se inyecta")
-        print("desde shell.qml por api/K4/Puente.qml.")
+        print("desde shell.qml por api/K5/Puente.qml.")
         return 1
 
     if not todos:
@@ -160,7 +160,7 @@ def main():
     print("La API se está saltando en %d sitios:\n" % len(todos))
     for ruta, n, que, porque in todos:
         print("  %s:%d  %s  (%s)" % (ruta, n, que, porque))
-    print("\nSi hace falta algo que la API no da, se añade a api/K4 o se baja a")
+    print("\nSi hace falta algo que la API no da, se añade a api/K5 o se baja a")
     print("un servicio. Importarlo a pelo desde un plugin no es una opción.")
     return 1
 

@@ -26,7 +26,7 @@
 //  A recorre, B cobra el que esté listo.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -143,7 +143,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.left: aro.right
             anchors.leftMargin: 5
             anchors.verticalCenter: parent.verticalCenter
@@ -164,7 +164,7 @@ Item {
 
     //  Las monedas del premio, volando del renglón cobrado al monedero. Es
     //  lo que convierte «has cobrado» en algo que ha PASADO.
-    K4.Etiqueta {
+    K5.Etiqueta {
         visible: self._vuelo > 0
         text: "+" + self._premio
         font.pixelSize: 13
@@ -226,7 +226,7 @@ Item {
                 }
 
                 //  El sello de cobrado, que cae encima al cobrarlo.
-                K4.Glifo {
+                K5.Glifo {
                     visible: self._selloOp > 0 && fila.e !== null
                              && fila.e.obj.id === self._sellado
                     anchors.right: parent.right
@@ -262,7 +262,7 @@ Item {
                             opacity: fila.e && fila.e.cobrado ? 0.35 : 1
                         }
 
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width - 58
                             text: fila.e ? Idioma.t(fila.e.obj.texto) : ""
@@ -272,7 +272,7 @@ Item {
                             elide: Text.ElideRight
                         }
 
-                        K4.Glifo {
+                        K5.Glifo {
                             anchors.verticalCenter: parent.verticalCenter
                             visible: fila.e !== null && fila.e.cobrado
                             text: "\u{F012C}"
@@ -321,7 +321,7 @@ Item {
                             }
                         }
 
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             width: 30
                             anchors.verticalCenter: parent.verticalCenter
                             text: fila.e ? fila.e.hay + "/" + fila.e.meta : ""
@@ -343,7 +343,7 @@ Item {
         spacing: 4
         visible: self.elegido !== null
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.verticalCenter: parent.verticalCenter
             text: !self.elegido ? ""
                 : self.elegido.cobrado ? Idioma.t("Ya cobrado")
@@ -362,7 +362,7 @@ Item {
 
         //  Y el objeto que regala, si regala alguno: es la mitad del premio
         //  en los cuatro que lo llevan.
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.verticalCenter: parent.verticalCenter
             visible: self.elegido !== null && !self.elegido.cobrado
                      && self.elegido.obj.objeto !== undefined

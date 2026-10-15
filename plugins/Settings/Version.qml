@@ -1,4 +1,4 @@
-//  ¿Hay k4 nuevo?
+//  ¿Hay k5 nuevo?
 //
 //  El actualizador es `./installer.sh` y lleva ahí desde el principio —hace el
 //  `git pull`, repasa los paquetes y los atajos y ofrece reiniciar la barra—,
@@ -23,7 +23,7 @@
 //  de cada una se contesta ahí mismo.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
 QtObject {
     id: version
@@ -72,11 +72,11 @@ QtObject {
     //  contraseña al gestor de paquetes. Con k4term además sale DENTRO de la
     //  island, así que actualizar la barra se ve en la propia barra.
     function actualizar() {
-        K4.Terminal.ejecutar("cd " + JSON.stringify(K4.Paths.raiz)
-                             + " && ./installer.sh;" + K4.Terminal.cierre)
+        K5.Terminal.ejecutar("cd " + JSON.stringify(K5.Paths.raiz)
+                             + " && ./installer.sh;" + K5.Terminal.cierre)
     }
 
-    property K4.Process ojeada: K4.Process {
+    property K5.Process ojeada: K5.Process {
         //  `$0` es el nombre y `$1` el primer argumento: por eso el "sh" suelto
         //  entre el guion y la raíz. Es el mismo apaño que usa el modo dual para
         //  lanzar aplicaciones sin heredar el directorio de la barra.
@@ -94,7 +94,7 @@ QtObject {
             //  vieja y con la pega puesta, que es más útil que no contestar.
             'git fetch --quiet 2>/dev/null || echo pega=sin-red',
             'n=$(git rev-list --count "HEAD..@{u}" 2>/dev/null) && echo "detras=$n"'
-        ].join("\n"), "sh", K4.Paths.raiz]
+        ].join("\n"), "sh", K5.Paths.raiz]
 
         //  En inglés, que es como se parsea igual en cualquier máquina.
         environment: ({ "LC_ALL": "C" })

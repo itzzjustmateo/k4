@@ -70,7 +70,7 @@ paréntesis se llaman distinto allí.
 
 Las **imágenes no se empaquetan**: son de Bandai. Se piden a la API la
 primera vez que hacen falta y se quedan en
-`~/.local/state/k4/plugins/digivice/img/`. Mientras no están, se dibuja la
+`~/.local/state/k5/plugins/digivice/img/`. Mientras no están, se dibuja la
 silueta con la inicial. Por eso este plugin no está en `registro.json`:
 cambiar a arte propio es cambiar `rutaImagen` en el servicio, no
 reescribir el juego.
@@ -273,7 +273,7 @@ nombre —se comprobaron las 1488— y eso son 82 KB de índice que no se cargan
   carácter espera a que no esté haciendo nada especial. Un bicho dando botes
   con tu música mientras el aparato dice «se esconde y observa» es el aparato
   desmintiéndose delante de tus ojos.
-- **`K4.Medios` se lee sin permiso** —la API solo lo pide para controlar la
+- **`K5.Medios` se lee sin permiso** —la API solo lo pide para controlar la
   música— y aquí no se mira el título, ni el artista, ni la aplicación: solo
   si suena algo. La promesa de no leer nada de tu escritorio sigue intacta.
 - **Cada bicho tiene su CARÁCTER**, sacado de la misma semilla que su agenda y
@@ -457,7 +457,7 @@ nombre —se comprobaron las 1488— y eso son 82 KB de índice que no se cargan
   ese equipo**. Sin las dos cosas, pegar el código de un amigo en bucle sería
   la mejor manera de jugar a todo lo demás.
 - **El código se lee de un campo de texto**, no de la API de portapapeles de
-  k4: esa pide permiso a propósito —lleva contraseñas y tokens— y gastarlo en
+  k5: esa pide permiso a propósito —lleva contraseñas y tokens— y gastarlo en
   un juego sería desproporcionado. Un `TextInput` acepta Ctrl+V sin permiso
   ninguno, y el tuyo sale en un campo seleccionable para poder copiarlo.
 - **Alfabeto Crockford base32**: sin las letras que se confunden al copiar a
@@ -552,7 +552,7 @@ nombre —se comprobaron las 1488— y eso son 82 KB de índice que no se cargan
 - Indicador en la píldora solo cuando el bicho reclama algo, y **se pincha**
   para volver al juego: si lo que reclama es un combate abre el mapa, si es
   hambre o una evolución abre el bicho. Funciona con la island desplegada
-  (reloj o reproductor); en reposo la píldora solo se mira, que es como k4
+  (reloj o reproductor); en reposo la píldora solo se mira, que es como k5
   trata todos los indicadores.
 
 ## Decisiones que no son obvias
@@ -583,8 +583,8 @@ juego. Ahora cada choque lo decide mitad el bicho y mitad tú. La regla vive
 en `intercambio()`, una sola, y la usan los dos caminos —el jugado y el del
 IPC, que empuja un 0,5 fijo— para que no puedan divergir.
 
-**La pelota sale de la barra.** Se apoya en `K4.Ventana` —una capa
-transparente a pantalla completa— y en `K4.Isla.rect` para que el bicho
+**La pelota sale de la barra.** Se apoya en `K5.Ventana` —una capa
+transparente a pantalla completa— y en `K5.Isla.rect` para que el bicho
 salga justo de la island. Ojo con `rect`: da `{x, y, ancho, alto}`, con esos
 nombres; usando `width`/`height` de QML sale `undefined` y la escena entera
 se coloca en NaN.
@@ -765,10 +765,10 @@ grabaciones. Un juguete de LCD no tiene altavoz para más que eso, así que la
 fidelidad y no usar nada de nadie apuntan al mismo sitio. Son 14 ficheros,
 118 KB en total, en `plugins/Digivice/sonidos/`.
 
-**WAV sin comprimir a propósito**: `K4.Sonido` carga los WAV con
+**WAV sin comprimir a propósito**: `K5.Sonido` carga los WAV con
 `SoundEffect`, que los tiene en memoria y los dispara sin latencia. Todo lo
 demás pasa por `MediaPlayer`, que abre el fichero al reproducir y llega
-tarde — en el golpe de un combate eso se nota. Ningún otro módulo de k4 usa
+tarde — en el golpe de un combate eso se nota. Ningún otro módulo de k5 usa
 WAV (todos van por `delSistema()`, que devuelve `.oga`), así que esta es la
 primera vez que se pisa esa ruta.
 
@@ -779,45 +779,45 @@ jugador a no fiarse del sonido.
 ## IPC
 
 ```sh
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice toggle
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice nueva
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice estado
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice comer
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice mimar
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice entrenar
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice curar
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice evolucionar
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice ver mapa
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice zona "Dark Area"
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice pelear
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice sonidos
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice pitar golpe
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice huevos
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice incubar 0
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice eclosionar
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice guarderia
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice sacar 0
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice fusiones
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice fusionar 0
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice tecnicas
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice aliado
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice despensa
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice comerDe carne
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice cazar
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice rastro 1
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice objetivos
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice cobrar ganar10
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice bolsa
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice comprar antidoto
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice vender carne
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice usar vitamina pv
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice vias
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice armor 0
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice equis
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice warp
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice codigo
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice leer "<código>"
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.digivice duelo "<código>"
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice toggle
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice nueva
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice estado
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice comer
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice mimar
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice entrenar
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice curar
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice evolucionar
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice ver mapa
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice zona "Dark Area"
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice pelear
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice sonidos
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice pitar golpe
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice huevos
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice incubar 0
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice eclosionar
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice guarderia
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice sacar 0
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice fusiones
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice fusionar 0
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice tecnicas
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice aliado
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice despensa
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice comerDe carne
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice cazar
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice rastro 1
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice objetivos
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice cobrar ganar10
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice bolsa
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice comprar antidoto
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice vender carne
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice usar vitamina pv
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice vias
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice armor 0
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice equis
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice warp
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice codigo
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice leer "<código>"
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.digivice duelo "<código>"
 ```
 
 `leer` descifra un código sin pelear, para comprobar que lo que te han pasado
@@ -921,7 +921,7 @@ especie que no está en el índice.
 
 ## Siguiente bloque
 
-El plan por fases vive en Edinot (`Proyectos/k4/Digivice/Digivice — plan de
+El plan por fases vive en Edinot (`Proyectos/k5/Digivice/Digivice — plan de
 ejecución`). Hechas: **1** (entreno por estadística), **2** (evolución
 completa: XP, requisitos a la vista y Jogress), **3** (combate: formas de
 ataque, estados y aliado), **4** (comida y caza), **5** (meta-juego: bits,

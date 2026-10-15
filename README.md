@@ -1,4 +1,4 @@
-# k4
+# k5
 
 **A Dynamic Island for Hyprland.** It sits collapsed at the edge of your
 screen and expands only when it has something to say — and everything it does,
@@ -8,22 +8,22 @@ including the parts that look built in, is a plugin.
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 [![Built with Quickshell](https://img.shields.io/badge/built%20with-Quickshell-5c6bc0?style=flat)](https://quickshell.org/)
 
-<img src="screenshots/bar.png" width="100%" alt="The k4 bar at rest, collapsed at the top edge of the screen">
+<img src="screenshots/bar.png" width="100%" alt="The k5 bar at rest, collapsed at the top edge of the screen">
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/k4ditano/k4/main/installer.sh | sh
+curl -fsSL https://raw.githubusercontent.com/k4ditano/k5/main/installer.sh | sh
 ```
 
 Arch Linux and Hyprland. Installs what is missing, writes the Hyprland
 integration, starts the bar, and keeps a checkout at
-`~/.config/quickshell/k4`. Run `./installer.sh --dry-run` first if you would rather
+`~/.config/quickshell/k5`. Run `./installer.sh --dry-run` first if you would rather
 see what it would do.
 
 > ### Want your own widget? Ask your agent.
 >
-> k4 installs a skill for coding agents, so Claude Code or Codex already know
-> what a k4 plugin looks like, how to test one without restarting your bar,
-> and how to publish it. Say *"make me a k4 plugin that shows the train times
+> k5 installs a skill for coding agents, so Claude Code or Codex already know
+> what a k5 plugin looks like, how to test one without restarting your bar,
+> and how to publish it. Say *"make me a k5 plugin that shows the train times
 > to work"* and it starts from something that already runs.
 >
 > [How that works ↓](#or-just-ask-your-agent-for-one) · [Publishing yours ↓](#publish-it)
@@ -37,7 +37,7 @@ see what it would do.
 | <img src="screenshots/launcher.png" alt="Application launcher"> | <img src="screenshots/control-center.png" alt="Control center with Wi-Fi, Bluetooth, sound and media"> |
 | **Launcher** — apps, package search, install and update. | **Control center** — Wi-Fi, Bluetooth, per-device sound, player. |
 | <img src="screenshots/theme.png" alt="Hyprland theme panel"> | <img src="screenshots/shortcuts.png" alt="Searchable shortcut viewer"> |
-| **Hyprland's theme**, live — colors, gaps, borders, blur, animations, and the wallpaper. | **Every shortcut**, searchable — yours and the ones k4 adds. |
+| **Hyprland's theme**, live — colors, gaps, borders, blur, animations, and the wallpaper. | **Every shortcut**, searchable — yours and the ones k5 adds. |
 
 Plus notifications with actions and history, a system tray, clipboard history,
 a window switcher, and a bar that lives wherever you put it — top or bottom,
@@ -60,7 +60,7 @@ The bar draws the wallpaper itself, on its own layer below the windows, so a
 wallpaper can be a video or a GIF and not only a picture. Nothing new to
 install: QtMultimedia was already a dependency, for the video editor.
 
-And because k4 is the one drawing it, it can do what a wallpaper daemon cannot:
+And because k5 is the one drawing it, it can do what a wallpaper daemon cannot:
 **pause the video when no window leaves any of it visible.** Measured on a
 twelve-core machine, a 1080p60 loop costs about 1.5% of it while you can see it
 and next to nothing while you cannot — which matters, because a daemon left to
@@ -70,7 +70,7 @@ One wallpaper per monitor, and a transition when you change it: a crossfade, an
 iris that grows out of the island, or a tide that rises from the bottom edge
 with a wavy front.
 
-The colour comes from the wallpaper too. k4 pulls a palette out of the image
+The colour comes from the wallpaper too. k5 pulls a palette out of the image
 and hands it to the three places colour shows up — the bar's own tint,
 Hyprland's window borders, and the terminal. Pick a preset by hand and it
 steps aside.
@@ -82,7 +82,7 @@ steps aside.
 Press **SUPER + SHIFT + D** and the bar splits in two. The halves run down the side edges of
 the screen like drops, meet at the bottom and close back into a dock — the
 same silhouette, mirrored. Press **SUPER + K** whenever you want to see every
-k4 shortcut and key binding in one place.
+k5 shortcut and key binding in one place.
 
 The top bar does not linger: it hands back the space it was reserving, and the
 dock takes its own, so the desktop reflows once and then follows the movement.
@@ -167,18 +167,18 @@ python3 tools/plugins.py --test mi-plugin  # opens it alone, not in your bar
 with no bar, no services and no notifications, so an infinite loop takes down
 a test window instead of your desktop.
 
-Then `quickshell ipc -p shell.qml call k4 pluginReload mi-plugin` swaps the
+Then `quickshell ipc -p shell.qml call k5 pluginReload mi-plugin` swaps the
 running code for what is on disk, without restarting anything.
 
 ### Or just ask your agent for one
 
-> **"Make me a k4 plugin that shows the train times to work."**
+> **"Make me a k5 plugin that shows the train times to work."**
 
-That works, and it is the point. k4 installs a skill for coding agents —
+That works, and it is the point. k5 installs a skill for coding agents —
 `./installer.sh` links it into `~/.claude/skills/` and `~/.config/agents/skills/`
 — so Claude Code, Codex and anything else that reads those already know:
 
-- that this machine runs k4, and that everything in the bar is a plugin;
+- that this machine runs k5, and that everything in the bar is a plugin;
 - the shape of a plugin, with the whole starter file in front of them;
 - which permissions exist, and that using an undeclared one makes it refuse to load;
 - to test with `--test` instead of restarting your bar;
@@ -193,9 +193,9 @@ python3 tools/agent.py             # where it is, and whether it's linked
 python3 tools/agent.py --install   # link it (./installer.sh does this for you)
 ```
 
-The skill is [`agents/skills/k4/`](agents/skills/k4/) — a page on writing a
+The skill is [`agents/skills/k5/`](agents/skills/k5/) — a page on writing a
 plugin and a page on driving the bar. It is linked, not copied, so it stays
-current when k4 updates.
+current when k5 updates.
 
 ### Publish it
 
@@ -257,15 +257,15 @@ exactly nothing. Turn one on in Settings when you want it.
 <details>
 <summary><b>Shortcuts</b></summary>
 
-Written to `~/.config/hypr/config/k4.lua` (or `k4.conf` on the legacy format).
-That file is owned by k4; put your overrides after it.
+Written to `~/.config/hypr/config/k5.lua` (or `k5.conf` on the legacy format).
+That file is owned by k5; put your overrides after it.
 
 | Shortcut | Action |
 |---|---|
 | `SUPER + Space` | Application launcher |
 | `SUPER + I` / `SUPER + X` | Control center |
 | `SUPER + N` / `SUPER + A` | Notifications |
-| `SUPER + Z` | k4 settings |
+| `SUPER + Z` | k5 settings |
 | `SUPER + Tab` | Window switcher |
 | `SUPER + Shift + D` | Dual mode: the bar becomes a dock |
 | `SUPER + Shift + W` | Hyprland theme |
@@ -287,8 +287,8 @@ That file is owned by k4; put your overrides after it.
 <summary><b>IPC</b></summary>
 
 ```sh
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml show   # every target
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4 toggleLauncher
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml show   # every target
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5 toggleLauncher
 ```
 
 `show` is the authoritative list — targets come and go with the plugins that
@@ -296,12 +296,12 @@ publish them.
 
 | Target | Examples |
 |---|---|
-| `k4` | `toggleLauncher`, `togglePanel`, `windows`, `settings`, `lock` |
-| `k4.panel` | `toggle`, `notifications`, `wifi`, `bluetooth`, `close` |
-| `k4.theme` | `toggle`, `tab`, `preset`, `wallpaper`, `apply`, `save` |
-| `k4.captura` | `menu`, `region`, `grabar`, `parar`, `grande` |
-| `k4.editor` | `abrir`, `editar`, `retomar`, `imagen`, `formato`, `silencios` |
-| `k4.term` | `isla`, `nueva`, `siguiente`, `anterior`, `irA`, `ejecutar` |
+| `k5` | `toggleLauncher`, `togglePanel`, `windows`, `settings`, `lock` |
+| `k5.panel` | `toggle`, `notifications`, `wifi`, `bluetooth`, `close` |
+| `k5.theme` | `toggle`, `tab`, `preset`, `wallpaper`, `apply`, `save` |
+| `k5.captura` | `menu`, `region`, `grabar`, `parar`, `grande` |
+| `k5.editor` | `abrir`, `editar`, `retomar`, `imagen`, `formato`, `silencios` |
+| `k5.term` | `isla`, `nueva`, `siguiente`, `anterior`, `irA`, `ejecutar` |
 
 Plugin management: `pluginEnable <id>`, `pluginDisable <id>`,
 `pluginToggle <id>`, `pluginReload <id>`, `pluginRefresh`, `pluginStatus`,
@@ -341,7 +341,7 @@ Codex integration.
 The Spanish flags this started with — `--seco`, `--si`, `--opcionales`,
 `--sin-paquetes`, `--sin-reiniciar` — still work and are not going away.
 
-**Update with the same script**: `~/.config/quickshell/k4/installer.sh`. It pulls
+**Update with the same script**: `~/.config/quickshell/k5/installer.sh`. It pulls
 with `--ff-only`, refreshes packages and shortcuts and offers to restart the
 bar. With uncommitted changes in the checkout it leaves the code alone and
 tells you so — nobody loses work to an update.
@@ -352,9 +352,9 @@ to look, then every six hours — whether `origin` has moved. If it has, a pill
 in the header says how many commits you are behind and runs the updater for
 you. With uncommitted changes it says that instead of offering the button: the
 installer would refuse anyway, and a button that does nothing is worse than no
-button. `quickshell ipc -p shell.qml call k4.settings version` prints the same
+button. `quickshell ipc -p shell.qml call k5.settings version` prints the same
 thing as JSON. Start it by hand with
-`~/.config/quickshell/k4/arrancar` — use the wrapper, so the `K4` QML module
+`~/.config/quickshell/k5/arrancar` — use the wrapper, so the `K5` QML module
 resolves.
 
 **[k4term](https://github.com/k4ditano/k4term)** is this project's own
@@ -371,7 +371,7 @@ turns itself on.
 ```text
 shell.qml       host, arbitration and layer surface
 core/           theme tokens, the K4Plugin contract, stateless widgets
-api/K4/         public plugin API
+api/K5/         public plugin API
 services/       persistent domain services and singletons
 widgets/        data-driven reusable widgets
 plugins/        one directory per built-in plugin

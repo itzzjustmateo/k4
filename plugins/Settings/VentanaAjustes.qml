@@ -13,7 +13,7 @@
 //  ── de dónde salen los datos ─────────────────────────────────────
 //
 //  De `Settings.definicion`, que ya trae los grupos propios concatenados con
-//  los que registran los plugins por `K4.Ajustes`. Esta ventana no declara ni
+//  los que registran los plugins por `K5.Ajustes`. Esta ventana no declara ni
 //  una opción: si mañana un plugin añade una sección, aparece aquí sola.
 //
 //  Y las filas son `FilaOpcion`, las mismas que pinta el panel de la island.
@@ -22,17 +22,17 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 import "../../widgets"
 
-K4.Ventana {
+K5.Ventana {
     id: ventana
 
     required property var plugin
 
-    nombre: "k4-ajustes"
+    nombre: "k5-ajustes"
 
     //  El teclado solo mientras el ratón esté aquí, y no en exclusiva para
     //  toda la sesión. Con `conTeclado` esta ventana abierta en un monitor
@@ -121,7 +121,7 @@ K4.Ventana {
     }
 
     //  Ir a una sección por su nombre: lo usa el resultado de búsqueda que
-    //  ofrece una sección entera, y también `k4 settingsSection <nombre>`.
+    //  ofrece una sección entera, y también `k5 settingsSection <nombre>`.
     //
     //  Vale el `id` de la sección, el de su vista o el nombre que se ve
     //  —«apariencia», «fondos» o «Apariencia»—, y sin distinguir mayúsculas:
@@ -145,7 +145,7 @@ K4.Ventana {
         }
     }
 
-    //  Aterrizar donde lo hayan pedido desde fuera (`k4 settingsSection`).
+    //  Aterrizar donde lo hayan pedido desde fuera (`k5 settingsSection`).
     //
     //  Se llama al abrir —la nota del plugin puede llegar ANTES de que la
     //  ventana exista— y cada vez que la nota cambia, porque también puede
@@ -328,7 +328,7 @@ K4.Ventana {
                     }
 
                     // ── las secciones ─────────────────────────────
-                    K4.Rodillo {
+                    K5.Rodillo {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
 
@@ -339,7 +339,7 @@ K4.Ventana {
                             Repeater {
                                 model: ventana.lateral
 
-                                //  Rectángulo pelado y no `K4.Baldosa`: la
+                                //  Rectángulo pelado y no `K5.Baldosa`: la
                                 //  Baldosa dibuja un borde interior SIEMPRE, y
                                 //  con dieciséis seguidas la lateral se
                                 //  convierte en una rejilla de cajas. Aquí lo
@@ -566,7 +566,7 @@ K4.Ventana {
                 }
 
                 // ── las opciones ──────────────────────────────────
-                K4.Rodillo {
+                K5.Rodillo {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
 
@@ -729,7 +729,7 @@ K4.Ventana {
                                 //  Una sección ofrecida por el buscador: se
                                 //  pulsa y te lleva. Sin esto la coincidencia
                                 //  se veía y no se podía seguir.
-                                K4.Baldosa {
+                                K5.Baldosa {
                                     Layout.fillWidth: true
                                     Layout.preferredHeight: visible ? 46 : 0
                                     visible: bloque.modelData.atajo !== undefined
@@ -957,7 +957,7 @@ K4.Ventana {
                             { nombre: Idioma.t("Plugins"), id: "tienda" }
                         ]
 
-                        delegate: K4.Baldosa {
+                        delegate: K5.Baldosa {
                             id: acceso
                             required property var modelData
 
@@ -1011,7 +1011,7 @@ K4.Ventana {
                               orden: ["pavucontrol"] }
                         ]
 
-                        delegate: K4.Baldosa {
+                        delegate: K5.Baldosa {
                             id: herramienta
                             required property var modelData
 
@@ -1021,7 +1021,7 @@ K4.Ventana {
                             radius: 13
 
                             onPulsada: {
-                                K4.Sistema.lanzar(herramienta.modelData.orden)
+                                K5.Sistema.lanzar(herramienta.modelData.orden)
                                 ventana.plugin.cerrarVentana()
                             }
 

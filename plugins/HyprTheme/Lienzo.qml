@@ -4,7 +4,7 @@
 //  deja fuera tres cosas a la vez: no hay transiciones —el propio módulo lo
 //  admitía en su pie, «instala awww para tenerlas»—, no hay vídeo, y la barra
 //  no sabe qué está enseñando, así que no puede sacarle los colores. Pintándolo
-//  aquí, en una K4.Ventana en la capa de abajo —que la API aprendió para esto—,
+//  aquí, en una K5.Ventana en la capa de abajo —que la API aprendió para esto—,
 //  el fondo pasa a estar DENTRO del mismo motor que dibuja la island.
 //
 //  Y sin una sola dependencia nueva: `AnimatedImage` viene en QtQuick y
@@ -37,10 +37,10 @@ import QtQuick
 import QtMultimedia
 import QtQuick.Effects
 import QtQuick.Shapes
-import K4 as K4
+import K5 as K5
 import "../../services"
 
-K4.PorPantalla {
+K5.PorPantalla {
     id: lienzo
 
     //  Quien sabe qué fondo va en cada pantalla. Se le pregunta en vez de
@@ -113,7 +113,7 @@ K4.PorPantalla {
     //  ahí y el id nunca llega a existir. Síntoma: `ReferenceError:
     //  mirarVentanas is not defined` y cero ventanas contadas, con el delegate
     //  funcionando igual porque su asignación explícita gana.
-    property var procVentanas: K4.Process {
+    property var procVentanas: K5.Process {
         //  Los dos de una vez y en un solo proceso: hacen falta las ventanas Y
         //  lo reservado, y dos procesos serían dos respuestas desacompasadas y
         //  una cuenta hecha con mitad de cada foto.
@@ -254,18 +254,18 @@ K4.PorPantalla {
         return "quieto"
     }
 
-    delegate: K4.Ventana {
+    delegate: K5.Ventana {
         id: tela
 
         required property var modelData
         screen: modelData
 
-        nombre: "k4-fondo"
+        nombre: "k5-fondo"
 
         //  Debajo de las ventanas. Y sin recoger un solo clic: sin `zonaActiva`
         //  el mask se queda en `null` y esta superficie se lleva TODOS los clics
         //  del escritorio — que en la capa de abajo significa un escritorio que
-        //  deja de responder y nadie sabe por qué (ver api/K4/Ventana.qml).
+        //  deja de responder y nadie sabe por qué (ver api/K5/Ventana.qml).
         capa: "fondo"
 
         //  Y a pantalla COMPLETA, saltándose las reservas ajenas.
@@ -521,7 +521,7 @@ K4.PorPantalla {
 
         //  De dónde sale el iris y hasta dónde tiene que crecer para tapar la
         //  pantalla: la esquina más lejana, que es la que manda.
-        readonly property var rectIsla: K4.Isla.rectEn(tela.cual)
+        readonly property var rectIsla: K5.Isla.rectEn(tela.cual)
         readonly property real focoX: rectIsla && rectIsla.ancho > 0
             ? rectIsla.x + rectIsla.ancho / 2 : tela.width / 2
         readonly property real focoY: rectIsla && rectIsla.alto > 0

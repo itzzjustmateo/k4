@@ -11,7 +11,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -64,14 +64,14 @@ FadeIn {
             }
             view.buscando = true
             buscador.running = false
-            buscador.command = ["python3", K4.Paths.guion("buscar.py"),
+            buscador.command = ["python3", K5.Paths.guion("buscar.py"),
                                 entrada.text, "--solo", "archivo",
                                 "--ext", view.extensiones, "--tope", "40"]
             buscador.running = true
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: buscador
         onSalida: function (texto) {
             view.buscando = false

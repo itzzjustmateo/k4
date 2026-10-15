@@ -5,7 +5,7 @@
 //  que lo convierte en un cajón de cosas que se pegan cien veces al día.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -98,8 +98,8 @@ K4Plugin {
     // queda fuera, se recorta en vez de apuntar a nada.
     onCountChanged: if (index >= count) index = Math.max(0, count - 1)
 
-    K4.Ipc {
-        target: "k4.clipboard"
+    K5.Ipc {
+        target: "k5.clipboard"
 
         function toggle(): void { self.toggle() }
         function open(): void { self.abrir() }

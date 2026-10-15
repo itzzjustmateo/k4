@@ -1721,7 +1721,7 @@ function puedeWarp(etapa, minutosEnEtapa, victorias, xp, errores) {
 //  como se pasa cualquier cosa entre dos personas: copiando y pegando.
 //
 //  Y se lee del portapapeles con un campo de texto, no con la API de
-//  portapapeles de k4: esa pide permiso a propósito —lleva contraseñas y
+//  portapapeles de k5: esa pide permiso a propósito —lleva contraseñas y
 //  tokens— y gastarlo en un juego sería desproporcionado. Un `TextInput`
 //  acepta Ctrl+V sin permiso ninguno.
 //

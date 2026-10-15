@@ -7,7 +7,7 @@
 
 import QtQuick
 import QtQuick.Layouts
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -213,7 +213,7 @@ FadeIn {
         // de dar: te quedarías sin saber si la contraseña valía.
         property bool limpiando: false
 
-        K4.Autenticacion {
+        K5.Autenticacion {
             id: auth
             onResuelto: function (correcto) {
                 // Se borra acierte o falle: una contraseña no tiene por qué

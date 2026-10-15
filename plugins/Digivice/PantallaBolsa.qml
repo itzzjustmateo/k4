@@ -16,7 +16,7 @@
 //  A recorre, B lo usa —se lo come o lo aplica, según lo que sea—.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -70,7 +70,7 @@ Item {
             Repeater {
                 model: Digivice.maxCorazones
 
-                K4.Glifo {
+                K5.Glifo {
                     id: corazon
                     required property int index
                     anchors.verticalCenter: parent.verticalCenter
@@ -85,7 +85,7 @@ Item {
             //  Lo que lleva puesto: veneno del que hay que curarse y vigor
             //  que se está gastando. Si no se vieran aquí, comer carne sería
             //  fe y comer basura sería un misterio.
-            K4.Glifo {
+            K5.Glifo {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: Digivice.envenenado
                 text: "\u{F00A7}"
@@ -93,7 +93,7 @@ Item {
                 color: "#9fe07a"
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: Digivice.vigor > 0
                 text: "\u{F141F}×" + Digivice.vigor
@@ -136,7 +136,7 @@ Item {
                     anchors.rightMargin: 5
                     spacing: 5
 
-                    K4.Glifo {
+                    K5.Glifo {
                         anchors.verticalCenter: parent.verticalCenter
                         text: fila.modelData.glifo
                         font.pixelSize: 15
@@ -151,7 +151,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         width: parent.width - 52
 
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             width: parent.width
                             text: Idioma.t(fila.modelData.nombre)
                             font.pixelSize: 12
@@ -161,7 +161,7 @@ Item {
                             elide: Text.ElideRight
                         }
 
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             width: parent.width
                             visible: fila.index === self.indice
                             text: Idioma.t(fila.modelData.nota)
@@ -171,7 +171,7 @@ Item {
                         }
                     }
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.verticalCenter: parent.verticalCenter
                         //  −1 es «infinita»: la ración no se cuenta.
                         text: fila.modelData.cuantas < 0
@@ -183,7 +183,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: self.elegida && self.elegida.clase === "objeto"

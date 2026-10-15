@@ -11,7 +11,7 @@ alguien la sigue al pie de la letra y no le funciona.
 
 Esto comprueba lo que se puede comprobar de verdad:
 
-  · cada `K4.Tipo.miembro` de la documentación existe en api/K4/Tipo.qml;
+  · cada `K5.Tipo.miembro` de la documentación existe en api/K5/Tipo.qml;
   · los permisos de la guía y los de tools/plugins.py son los mismos;
   · cada orden de IPC citada existe en algún IpcHandler;
   · cada opción `tools/X.py --opcion` la entiende ese guion;
@@ -19,7 +19,7 @@ Esto comprueba lo que se puede comprobar de verdad:
   · cada ejemplo en QML de la guía COMPILA, con qmllint y la API de verdad;
   · los números que la guía promete —64 px de icono, 1 MB, el alto máximo—
     son los que el código usa;
-  · cada atajo que se cita existe en hypr/k4.lua.
+  · cada atajo que se cita existe en hypr/k5.lua.
 
 Lo que NO comprueba —y conviene decirlo en vez de dar una falsa sensación de
 red— es si un párrafo en prosa describe bien lo que hace el código. Un ejemplo
@@ -34,7 +34,7 @@ import subprocess
 import sys
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
-API = RAIZ / "api" / "K4"
+API = RAIZ / "api" / "K5"
 
 #  Los documentos que hablan de la API y por tanto pueden mentir sobre ella.
 DOCUMENTOS = ["docs/PLUGINS.md", "docs/API.md", "api/LEEME.md", "README.md",
@@ -84,11 +84,11 @@ def revisar_miembros(doc, texto):
         declarados = miembros_de(tipo)
         if declarados is None:          # tipo desconocido o reexportación
             if not (API / (tipo + ".qml")).is_file():
-                fallos.append(f"{doc}: K4.{tipo} no existe")
+                fallos.append(f"{doc}: K5.{tipo} no existe")
             continue
         if miembro not in declarados and miembro not in HEREDADOS:
-            fallos.append(f"{doc}: K4.{tipo}.{miembro} no existe "
-                          f"(api/K4/{tipo}.qml no lo declara)")
+            fallos.append(f"{doc}: K5.{tipo}.{miembro} no existe "
+                          f"(api/K5/{tipo}.qml no lo declara)")
     return fallos
 
 
@@ -133,7 +133,7 @@ def revisar_permisos(doc, texto):
 def ordenes_ipc():
     """Todas las funciones que publica algún IpcHandler, por objetivo."""
     salida = {}
-    #  Los examples cuentan: la guía enseña `k4.hola toggle` y eso tiene que
+    #  Los examples cuentan: la guía enseña `k5.hola toggle` y eso tiene que
     #  seguir existiendo, que es justo lo que se copia y se pega.
     for f in (list((RAIZ / "plugins").rglob("*.qml"))
               + list((RAIZ / "examples").rglob("*.qml"))
@@ -161,11 +161,11 @@ def revisar_ipc(doc, texto):
     ordenes = ordenes_ipc()
     fallos = []
     ids = {p.name for p in (RAIZ / "plugins").iterdir() if p.is_dir()}
-    for objetivo, orden in re.findall(r"\bcall\s+(k4[\w.]*)\s+(\w+)", texto):
+    for objetivo, orden in re.findall(r"\bcall\s+(k5[\w.]*)\s+(\w+)", texto):
         conocidas = ordenes.get(objetivo)
         if conocidas is None:
             #  Un objetivo que no existe suele ser un ejemplo inventado
-            #  («k4.hello»), y avisar de eso es ruido. Lo que sí importa es un
+            #  («k5.hello»), y avisar de eso es ruido. Lo que sí importa es un
             #  objetivo REAL al que se le atribuyen órdenes que no tiene.
             continue
         if orden not in conocidas:
@@ -198,7 +198,7 @@ def revisar_rutas(doc, texto):
             continue
         if not (RAIZ / cita).exists():
             fallos.append(f"{doc}: cita {cita}, que no existe")
-    for cita in set(re.findall(r"`(examples/\w+|plugins/\w+|api/K4|tools)/?`",
+    for cita in set(re.findall(r"`(examples/\w+|plugins/\w+|api/K5|tools)/?`",
                                texto)):
         if not (RAIZ / cita).exists():
             fallos.append(f"{doc}: cita {cita}/, que no existe")
@@ -246,8 +246,8 @@ def revisar_numeros(doc, texto):
 
 
 def revisar_atajos(doc, texto):
-    """Los atajos que la guía promete tienen que estar en hypr/k4.lua."""
-    lua = (RAIZ / "hypr" / "k4.lua").read_text()
+    """Los atajos que la guía promete tienen que estar en hypr/k5.lua."""
+    lua = (RAIZ / "hypr" / "k5.lua").read_text()
     fallos = []
     for combo in set(re.findall(r"\bSUPER\+((?:SHIFT\+|ALT\+|CONTROL\+)*\w+)",
                                 texto)):
@@ -258,7 +258,7 @@ def revisar_atajos(doc, texto):
         esperado = " + ".join(mods + [tecla])
         if not re.search(r'mod \.\. " \+ %s"' % re.escape(esperado), lua):
             fallos.append(f"{doc}: promete el atajo SUPER+{combo} y "
-                          f"hypr/k4.lua no lo ata")
+                          f"hypr/k5.lua no lo ata")
     return fallos
 
 
@@ -295,7 +295,7 @@ def revisar_examples(doc, texto):
                           re.M)) > 1:
             continue
         if "import " not in cuerpo:
-            cuerpo = "import QtQuick\nimport QtQuick.Layouts\nimport K4 as K4\n\n" + cuerpo
+            cuerpo = "import QtQuick\nimport QtQuick.Layouts\nimport K5 as K5\n\n" + cuerpo
         tmp = RAIZ / "tools" / ".guia_tmp.qml"
         tmp.write_text(cuerpo)
         r = subprocess.run(["qmllint", "-I", str(RAIZ / "api"), str(tmp)],

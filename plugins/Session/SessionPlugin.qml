@@ -8,12 +8,12 @@
 //
 //  Cuidado con eso último: si quickshell se muere con el bloqueo puesto, el
 //  compositor deja la sesión bloqueada y sin nadie que la abra. La salida es un
-//  tty (Ctrl+Alt+F2) y matar Hyprland desde ahí. Por eso hay `k4.session
+//  tty (Ctrl+Alt+F2) y matar Hyprland desde ahí. Por eso hay `k5.session
 //  probar`: comprueba la contraseña con el mismo PAM que usa el bloqueo, pero
 //  sin bloquear nada, y así se puede verificar antes de fiarse.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -134,7 +134,7 @@ K4Plugin {
     onCountChanged: if (index >= count) index = Math.max(0, count - 1)
 
     // ── la pantalla de bloqueo ────────────────────────────────────
-    K4.BloqueoSesion {
+    K5.BloqueoSesion {
         id: cerradura
         surface: BloqueoSurface {}
     }
@@ -176,8 +176,8 @@ K4Plugin {
         }
     }
 
-    K4.Ipc {
-        target: "k4.session"
+    K5.Ipc {
+        target: "k5.session"
 
         function toggle(): void { self.toggle() }
         function open(): void { self.abrir() }

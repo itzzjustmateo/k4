@@ -14,7 +14,7 @@
 
 import QtQuick
 import QtQuick.Shapes
-import K4 as K4
+import K5 as K5
 
 Item {
     id: gota
@@ -51,7 +51,7 @@ Item {
     //  grosor EXACTO de la barra al partirse y al llegar —que es cuando tiene
     //  que empalmar con ella y con el dock— y solo se afina por el camino.
     readonly property real prisa: Math.sin(Math.PI * gota.t)
-    readonly property real grosor: K4.Tema.altoPlegado * (1 - 0.45 * prisa)
+    readonly property real grosor: K5.Tema.altoPlegado * (1 - 0.45 * prisa)
     readonly property real largoAhora: gota.largoTrozo * (1 + 0.40 * prisa)
 
     //  El radio con el que dobla las esquinas.
@@ -356,7 +356,7 @@ Item {
 
             ShapePath {
                 id: trazo
-                fillColor: K4.Tema.fondo
+                fillColor: K5.Tema.fondo
                 strokeWidth: 0
                 strokeColor: "transparent"
 

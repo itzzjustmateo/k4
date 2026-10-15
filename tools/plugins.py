@@ -5,7 +5,7 @@
     python3 tools/plugins.py --listar   emite el catálogo combinado en JSON
 
 El combinado es lo que carga la barra: los plugins del repo más los del
-usuario en ~/.config/k4/plugins/<id>/, cada uno con su plugin.json. La
+usuario en ~/.config/k5/plugins/<id>/, cada uno con su plugin.json. La
 validación vive AQUÍ y en ningún otro sitio: el gestor de QML consume lo que
 esto emite, y un manifiesto roto es un plugin marcado como no cargable con su
 motivo — nunca una barra que no arranca.
@@ -27,7 +27,7 @@ import time
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 CATALOGO = RAIZ / "plugins" / "catalog.json"
-DE_USUARIO = pathlib.Path.home() / ".config" / "k4" / "plugins"
+DE_USUARIO = pathlib.Path.home() / ".config" / "k5" / "plugins"
 
 RE_ID = re.compile(r"[a-z0-9][a-z0-9-]*")
 
@@ -43,11 +43,11 @@ RE_SHA = re.compile(r"[0-9a-f]{40}")
 #  ve qué declara el plugin antes de encenderlo — más un análisis que convierte
 #  el descuido y el engaño simple en un error de instalación.
 #  La línea la marca el efecto, no el módulo: mirar el volumen no le hace nada
-#  a nadie y cambiarlo sí, así que se vigila `ponerVolumen`, no `K4.Audio`. El
+#  a nadie y cambiarlo sí, así que se vigila `ponerVolumen`, no `K5.Audio`. El
 #  portapapeles es la excepción y va al revés — ahí lo delicado es LEER, que
 #  guarda contraseñas y tokens, así que basta con nombrarlo.
 PERMISOS = {
-    #  `K4.Terminal.ejecutar` y `.abrir` corren un guion; que lo lance otro
+    #  `K5.Terminal.ejecutar` y `.abrir` corren un guion; que lo lance otro
     #  por ti no lo hace menos correr un guion. Mirar qué terminal hay
     #  —`cual`, `enLaIsla`, `cierre`— no delata nada y va libre.
     "procesos": re.compile(r"\bK4\.Process\b|\bexecDetached\b"
@@ -68,7 +68,7 @@ PERMISOS = {
 #  Y QUÉ ES cada plugin: dónde se dibuja y por dónde se le llama.
 #
 #  Los permisos dicen qué puede TOCAR; esto dice qué OCUPA. Hasta ahora el host
-#  lo descubría por efectos secundarios —¿pone `view`? ¿crea una `K4.Ventana`?—
+#  lo descubría por efectos secundarios —¿pone `view`? ¿crea una `K5.Ventana`?—
 #  y eso tiene dos costes: Ajustes no puede contarte qué es un plugin sin
 #  cargarlo, y nadie puede negarle una superficie que no pidió.
 #
@@ -76,7 +76,7 @@ PERMISOS = {
 #  no dice nada. Quien lo declare, se compromete.
 #  ── reglas con nombre ────────────────────────────────────────────────
 #
-#  Los permisos dicen qué API de k4 toca un plugin. Esto es otra cosa: patrones
+#  Los permisos dicen qué API de k5 toca un plugin. Esto es otra cosa: patrones
 #  que, estén donde estén —en el QML, en un guion suyo—, hacen que el código
 #  que acabas ejecutando NO sea el que alguien miró.
 #
@@ -206,8 +206,8 @@ SUPERFICIES = {
 #  puede llamar desde fuera y los nombres de atajo que le pide al escritorio.
 #
 #  Se sacan del QML y no del manifiesto porque es lo que de verdad se registra:
-#  un manifiesto puede declarar misa, pero quien se queda `k4.notas` es el
-#  `K4.Ipc` que hay escrito. Es la misma idea que los permisos —mirar la fuente
+#  un manifiesto puede declarar misa, pero quien se queda `k5.notas` es el
+#  `K5.Ipc` que hay escrito. Es la misma idea que los permisos —mirar la fuente
 #  y no fiarse de lo declarado— aplicada a lo que se reparte entre plugins.
 #
 #  La ventana de 400 caracteres es un apaño consciente: en QML `target` y `name`
@@ -432,7 +432,7 @@ def validar_carpeta(d, ids_repo, version_host):
     """El veredicto sobre UNA carpeta de plugin: `{…, cargable, motivo}`.
 
     Vale para una ya instalada y para un clon recién bajado que todavía no ha
-    entrado en ~/.config/k4/plugins — que es justo lo que permite validar
+    entrado en ~/.config/k5/plugins — que es justo lo que permite validar
     ANTES de instalar, en vez de instalar y ver qué pasa.
     """
     item = {"id": d.name, "title": d.name, "externo": True,
@@ -568,7 +568,7 @@ def validar_carpeta(d, ids_repo, version_host):
     if set(reales) - declarados_qml:
         try:
             qmldir.write_text(
-                "#  Generado por k4 (tools/plugins.py): los tipos de esta\n"
+                "#  Generado por k5 (tools/plugins.py): los tipos de esta\n"
                 "#  carpeta, para que se resuelvan bajo el esquema qs:.\n\n"
                 + "".join(f"{n} 1.0 {n}.qml\n" for n in reales))
         except OSError:
@@ -581,7 +581,7 @@ def validar_carpeta(d, ids_repo, version_host):
 
 
 def cargar_usuario(ids_repo, version_host):
-    """Los de ~/.config/k4/plugins, cada uno con su veredicto.
+    """Los de ~/.config/k5/plugins, cada uno con su veredicto.
 
     Un plugin de usuario mal montado nunca es un fallo del repo: se lista como
     `cargable: false` con su motivo, para que Ajustes lo enseñe y el gestor no
@@ -773,7 +773,7 @@ def _traer(url, subcarpeta=None, commit=None):
     Cede un `Traido` mientras el temporal sigue vivo. Al salir se borra.
     """
     ids_repo, version_host = _contexto()
-    with tempfile.TemporaryDirectory(prefix="k4-plugin-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="k5-plugin-") as tmp:
         clon = pathlib.Path(tmp) / "clon"
         #  `--depth 1` solo para lo remoto: en un clon local git avisa de que
         #  la ignora, y ese aviso en medio de la pantalla de permisos parece
@@ -841,7 +841,7 @@ def instalar(url, sin_preguntar=False, subcarpeta=None, commit=None):
 
     El orden importa y es el único defendible: se clona a un temporal, se
     valida ENTERO ahí, y solo entonces se enseña lo que declara y se pide
-    permiso. Nada llega a ~/.config/k4/plugins sin haber pasado el mismo
+    permiso. Nada llega a ~/.config/k5/plugins sin haber pasado el mismo
     examen que pasan los ya instalados, así que no existe el estado «medio
     instalado y roto».
 
@@ -910,10 +910,10 @@ def instalar(url, sin_preguntar=False, subcarpeta=None, commit=None):
             print(f"  sigue en {traido[:12]}: no había nada nuevo.")
         #  Si estaba encendido, en la barra sigue corriendo el código viejo:
         #  el disco cambió, la instancia no.
-        print(f"  Si lo tenías encendido: `k4 pluginReload {ident}`.")
+        print(f"  Si lo tenías encendido: `k5 pluginReload {ident}`.")
     else:
         print(f"\ninstalado: {ident}. Enciéndelo en Ajustes"
-              f" (o `k4 pluginRefresh` y `k4 pluginEnable {ident}`).")
+              f" (o `k5 pluginRefresh` y `k5 pluginEnable {ident}`).")
     return 0
 
 
@@ -922,7 +922,7 @@ def actualizar(ident, sin_preguntar=False, commit=None):
 
     Lo de la carpeta no es un detalle: antes solo se guardaba la URL, así que
     actualizar un plugin que vive en una subcarpeta del repo —los examples de
-    k4, sin ir más lejos— volvía a adivinarla, y con más de un candidato ya no
+    k5, sin ir más lejos— volvía a adivinarla, y con más de un candidato ya no
     se podía. Ahora va apuntada.
 
     Sin `--commit`, actualizar es «tráeme la punta de la rama», que es lo que
@@ -942,7 +942,7 @@ def quitar(ident, sin_preguntar=False, con_estado=False):
     if not d.is_dir():
         print(f"{ident} no está instalado.", file=sys.stderr)
         return 1
-    estado = (pathlib.Path.home() / ".local" / "state" / "k4" / "plugins"
+    estado = (pathlib.Path.home() / ".local" / "state" / "k5" / "plugins"
               / ident)
     print(f"se borrará {d}")
     if con_estado and estado.is_dir():
@@ -1063,7 +1063,7 @@ def listar():
 #  El escaparate: un JSON público con lo que la comunidad publica. Vive en
 #  el propio repositorio para no depender de ningún servidor, y cualquiera
 #  puede apuntar a otro con --registro.
-REGISTRO = ("https://raw.githubusercontent.com/k4ditano/k4/main/"
+REGISTRO = ("https://raw.githubusercontent.com/k4ditano/k5/main/"
             "plugins/registro.json")
 
 
@@ -1379,7 +1379,7 @@ def main():
     return 0
 
 
-AYUDA = """k4's plugin catalog.
+AYUDA = """k5's plugin catalog.
 
     tools/plugins.py                    validate the repo and what's installed
     tools/plugins.py --new <id>         create one that already runs
@@ -1430,7 +1430,7 @@ PLANTILLA_MANIFIESTO = """{
 
 PLANTILLA_QML = """//  %(titulo)s
 //
-//  Un plugin de k4 es un objeto con nombre y vista. El host lo crea UNA vez y
+//  Un plugin de k5 es un objeto con nombre y vista. El host lo crea UNA vez y
 //  lo deja vivo; lo que aparece y desaparece es la vista. Por eso el estado se
 //  guarda aquí y sobrevive a cerrarla.
 //
@@ -1439,9 +1439,9 @@ PLANTILLA_QML = """//  %(titulo)s
 //      tools/plugins.py --test %(id)s
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Plugin {
+K5.Plugin {
     id: raiz
 
     name: "%(id)s"
@@ -1460,7 +1460,7 @@ K4.Plugin {
 
     view: Component {
         Item {
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.centerIn: parent
                 text: "Hola desde %(titulo)s"
                 font.pixelSize: 16
@@ -1489,7 +1489,7 @@ def nuevo(ident):
     print()
     print("  tools/plugins.py --test %s    opens it without touching your bar" % ident)
     print("  tools/plugins.py                 validates it")
-    print("  quickshell ipc -p shell.qml call k4 pluginEnable %s" % ident)
+    print("  quickshell ipc -p shell.qml call k5 pluginEnable %s" % ident)
     return 0
 
 
@@ -1498,14 +1498,14 @@ BANCO = """//  Banco de pruebas de un plugin. Lo genera `tools/plugins.py --test
 //  Carga UN plugin y nada más: ni barra, ni servicios, ni tus notificaciones.
 //  Si el plugin se cuelga, se cuelga esto y no tu escritorio.
 //
-//  Vive en la raíz de k4 a propósito: Quickshell no carga ficheros de fuera de
+//  Vive en la raíz de k5 a propósito: Quickshell no carga ficheros de fuera de
 //  la carpeta de la configuración, así que un banco en /tmp no podría abrir el
 //  plugin.
 
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
-import K4 as K4
+import K5 as K5
 
 ShellRoot {
     id: banco
@@ -1548,7 +1548,7 @@ ShellRoot {
 
         anchors { top: true; bottom: true; left: true; right: true }
         color: "transparent"
-        WlrLayershell.namespace: "k4-banco"
+        WlrLayershell.namespace: "k5-banco"
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
         exclusionMode: ExclusionMode.Ignore

@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import "../../services"
 import QtQuick.Layouts
-import K4 as K4
+import K5 as K5
 import "../../core"
 
 FadeIn {
@@ -186,17 +186,17 @@ FadeIn {
                     //  una imagen o un códice de la Nerd Font. Son dos cosas
                     //  distintas y por eso son dos piezas: la misma no sabe
                     //  pintar las dos. Manda quien tenga icono propio.
-                    K4.Icono {
+                    K5.Icono {
                         Layout.preferredWidth: 26
                         Layout.preferredHeight: 26
                         Layout.alignment: Qt.AlignVCenter
                         visible: appRow.modelData.isInstall !== true
                             && !appRow.propio
                         source: appRow.modelData.icon.length > 0
-                            ? K4.Apps.icono(appRow.modelData.icon, true) : ""
+                            ? K5.Apps.icono(appRow.modelData.icon, true) : ""
                     }
 
-                    K4.IconoPlugin {
+                    K5.IconoPlugin {
                         visible: appRow.propio
                         imagen: appRow.modelData._imagen || ""
                         glifo: appRow.modelData._glifo || 0

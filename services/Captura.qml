@@ -169,7 +169,7 @@ Singleton {
             // El número que sube no es un capricho: Qt cachea las imágenes por
             // ruta, y reutilizar el mismo nombre devuelve el fotograma de la
             // captura anterior.
-            const ruta = "/tmp/k4-captura/congelado-" + captura.serieCongelado + ".ppm"
+            const ruta = "/tmp/k5-captura/congelado-" + captura.serieCongelado + ".ppm"
             congelador.command = ["grim", "-t", "ppm", ruta]
             congelador.pendiente = ruta
             congelador.running = true

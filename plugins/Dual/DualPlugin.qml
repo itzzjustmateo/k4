@@ -17,16 +17,16 @@
 //  nada, es la misma facultad que usa el editor de vídeo para pasar de tira a
 //  pantalla grande.
 //
-//      quickshell ipc -p <shell.qml> call k4.dual toggle
+//      quickshell ipc -p <shell.qml> call k5.dual toggle
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Plugin {
+K5.Plugin {
     id: self
 
     name: "dual"
-    title: K4.Idioma.t("Modo dual")
+    title: K5.Idioma.t("Modo dual")
 
     //  "barra" · "encogiendo" · "bajando" · "dock" ·
 //  "recogiendo" · "subiendo" · "creciendo"
@@ -72,7 +72,7 @@ K4.Plugin {
     //  la misma curva que el dock (760 ms, sin rebote) y saliendo del tamaño de
     //  los trozos, arriba y abajo hacen por fin lo mismo.
     //
-    //  16 es el radio del ala: `K4.Isla.rect` mide la island CON alas y
+    //  16 es el radio del ala: `K5.Isla.rect` mide la island CON alas y
     //  `islandWidth` va sin ellas.
     readonly property int ala: 16
     property real anchoBarra: 0
@@ -129,7 +129,7 @@ K4.Plugin {
     //  el escritorio ACOMPAÑA al crecimiento en vez de pegar un salto al final.
     //  Al revés igual: no se recupera hasta que el dock ya se ha recogido.
     property int reservaBarra: (modo === "dock" || modo === "recogiendo")
-        ? 0 : K4.Tema.altoPlegado
+        ? 0 : K5.Tema.altoPlegado
 
     readonly property int altoMuelle: 76
 
@@ -182,7 +182,7 @@ K4.Plugin {
     //  Mientras se encoge o crece, la barra conserva su GROSOR y solo cambia
     //  de ancho: es lo que hace que se vea recogerse sobre los trozos en vez de
     //  desinflarse hacia arriba. Se va a cero cuando los trozos ya la tapan.
-    islandHeight: mandaIsla ? K4.Tema.altoPlegado : 0
+    islandHeight: mandaIsla ? K5.Tema.altoPlegado : 0
     view: null
 
     //  De dónde salen las gotas. Se CONGELA al arrancar: en cuanto se coge la
@@ -205,7 +205,7 @@ K4.Plugin {
         ? Qt.point(origenY, origenDerX) : Qt.point(origenDerX, origenY)
 
     //  Y en qué pantalla pasa todo. Con dos monitores esto no es un detalle:
-    //  `K4.Isla.rect` da la island de la pantalla PRINCIPAL, y si la barra que
+    //  `K5.Isla.rect` da la island de la pantalla PRINCIPAL, y si la barra que
     //  se va está en la otra, las gotas salían de un punto que ni siquiera cae
     //  dentro de la ventana —las coordenadas son locales a cada monitor—. No
     //  se veía mal: no se veía.
@@ -217,8 +217,8 @@ K4.Plugin {
         //  property de texto reventaba, y como la llamada va ANTES de mover el
         //  modo, el modo no cambiaba y el comando entero no hacía nada. Sin un
         //  error a la vista: simplemente no pasaba nada al pulsar.
-        pantalla = K4.Isla.pantalla || ""
-        const r = K4.Isla.rectEn(pantalla)
+        pantalla = K5.Isla.pantalla || ""
+        const r = K5.Isla.rectEn(pantalla)
 
         //  Los dos trozos juntos miden MENOS que la barra —un 62 %—, y salen
         //  centrados en ella. Eso es lo que deja ver la barra encogiéndose
@@ -274,7 +274,7 @@ K4.Plugin {
     //  delante un dock recargando el plugin mientras probaba.
     property bool cargado: false
 
-    K4.Guardado {
+    K5.Guardado {
         id: guardado
         plugin: "dual"
         onCargado: function (d) {
@@ -363,7 +363,7 @@ K4.Plugin {
     //  Y «completa» no es un cuarto estado sino una REGLA, igual que arriba:
     //  se resuelve a uno de los otros según si algo llena esta pantalla.
     readonly property string modoDock: reservaDock === "completa"
-        ? (K4.Escritorios.lleno(pantalla) ? "escondida" : "reserva")
+        ? (K5.Escritorios.lleno(pantalla) ? "escondida" : "reserva")
         : reservaDock
     readonly property bool dockReserva: modoDock === "reserva"
     readonly property bool dockSeEsconde: modoDock === "escondida"
@@ -441,7 +441,7 @@ K4.Plugin {
     property string ladoDockPedido: "abajo"
 
     readonly property string ladoBarra: {
-        const v = K4.Isla.posicion
+        const v = K5.Isla.posicion
         return (v === "abajo" || v === "izquierda" || v === "derecha")
             ? v : "arriba"
     }
@@ -476,30 +476,30 @@ K4.Plugin {
     readonly property real gotaCorte: 0.34      // se rompe el cuello
     readonly property real gotaSuelo: 0.86      // toca el borde de abajo
 
-    K4.Ajustes {
+    K5.Ajustes {
         plugin: "dual"
-        grupo: K4.Idioma.t("Modo dual")
+        grupo: K5.Idioma.t("Modo dual")
         opciones: [{
             id: "efecto",
             tipo: "eleccion",
-            nombre: K4.Idioma.t("Efecto del cambio"),
+            nombre: K5.Idioma.t("Efecto del cambio"),
             //  De una pieza y no partida con un `+`: el extractor de textos
             //  ve DOS literales y en marcha `t()` recibe la suma, que no casa
             //  con ninguno de los dos. La cadena se queda larga y se traduce.
-            desc: K4.Idioma.t("Bajando por los cantos, dejando caer una gota, o de golpe"),
+            desc: K5.Idioma.t("Bajando por los cantos, dejando caer una gota, o de golpe"),
             glifo: 0xF058C,   // md-water
             alternativas: [
-                { codigo: "viaje", nombre: K4.Idioma.t("Viaje") },
-                { codigo: "gota", nombre: K4.Idioma.t("Gota") },
-                { codigo: "seco", nombre: K4.Idioma.t("Seco") }
+                { codigo: "viaje", nombre: K5.Idioma.t("Viaje") },
+                { codigo: "gota", nombre: K5.Idioma.t("Gota") },
+                { codigo: "seco", nombre: K5.Idioma.t("Seco") }
             ]
         }, {
             id: "ambas",
             //  Esto modifica QUÉ ocurre al abrir el dock; no es el botón
             //  que lo abre. La redacción anterior parecía una orden y la
             //  gente la activaba esperando que el dock apareciese al instante.
-            nombre: K4.Idioma.t("Mantener la barra al abrir el dock"),
-            desc: K4.Idioma.t("Abre y cierra el dock con SUPER+SHIFT+D"),
+            nombre: K5.Idioma.t("Mantener la barra al abrir el dock"),
+            desc: K5.Idioma.t("Abre y cierra el dock con SUPER+SHIFT+D"),
             glifo: 0xF0BCB   // md-view_split_horizontal
         }, {
             id: "reservaDock",
@@ -508,32 +508,32 @@ K4.Plugin {
             //  Sin eso, esta fila y la de la barra se llaman casi igual, están
             //  en pantallas distintas de la misma lista, y el usuario cambió
             //  esta esperando que se escondiera la barra. Con razón.
-            nombre: K4.Idioma.t("Cómo ocupa el sitio el dock"),
-            desc: K4.Idioma.t("Solo el dock; el de la barra está en Island"),
+            nombre: K5.Idioma.t("Cómo ocupa el sitio el dock"),
+            desc: K5.Idioma.t("Solo el dock; el de la barra está en Island"),
             glifo: 0xF003E,   // md-arrange_bring_to_front
             alternativas: [
-                { codigo: "reserva",   nombre: K4.Idioma.t("Reservar sitio") },
-                { codigo: "completa",  nombre: K4.Idioma.t("Fuera a pantalla completa") },
-                { codigo: "encima",    nombre: K4.Idioma.t("Encima") },
-                { codigo: "escondida", nombre: K4.Idioma.t("Escondida") }
+                { codigo: "reserva",   nombre: K5.Idioma.t("Reservar sitio") },
+                { codigo: "completa",  nombre: K5.Idioma.t("Fuera a pantalla completa") },
+                { codigo: "encima",    nombre: K5.Idioma.t("Encima") },
+                { codigo: "escondida", nombre: K5.Idioma.t("Escondida") }
             ]
         }, {
             id: "ladoDock",
             tipo: "eleccion",
-            nombre: K4.Idioma.t("Dónde vive el dock"),
-            desc: K4.Idioma.t("Nunca en el mismo borde que la barra: si coinciden, el dock se va al de enfrente"),
+            nombre: K5.Idioma.t("Dónde vive el dock"),
+            desc: K5.Idioma.t("Nunca en el mismo borde que la barra: si coinciden, el dock se va al de enfrente"),
             glifo: 0xF10A9,
             alternativas: [
-                { codigo: "abajo", nombre: K4.Idioma.t("Abajo") },
-                { codigo: "arriba", nombre: K4.Idioma.t("Arriba") },
-                { codigo: "izquierda", nombre: K4.Idioma.t("Izquierda") },
-                { codigo: "derecha", nombre: K4.Idioma.t("Derecha") }
+                { codigo: "abajo", nombre: K5.Idioma.t("Abajo") },
+                { codigo: "arriba", nombre: K5.Idioma.t("Arriba") },
+                { codigo: "izquierda", nombre: K5.Idioma.t("Izquierda") },
+                { codigo: "derecha", nombre: K5.Idioma.t("Derecha") }
             ]
         }, {
             id: "alineacionDock",
             tipo: "numero",
-            nombre: K4.Idioma.t("Alineación del dock"),
-            desc: K4.Idioma.t("En qué punto del borde de abajo se coloca; también se arrastra en el croquis de la Island"),
+            nombre: K5.Idioma.t("Alineación del dock"),
+            desc: K5.Idioma.t("En qué punto del borde de abajo se coloca; también se arrastra en el croquis de la Island"),
             glifo: 0xF11C3,
             min: 0, max: 100, paso: 5, unidad: "%"
         }]
@@ -577,8 +577,8 @@ K4.Plugin {
 
     //  A qué aplicación pertenece una clase de ventana.
     function _appDeClase(c) {
-        for (let i = 0; i < K4.Apps.lista.length; ++i) {
-            const a = K4.Apps.lista[i]
+        for (let i = 0; i < K5.Apps.lista.length; ++i) {
+            const a = K5.Apps.lista[i]
             const id = String(a.id || "").toLowerCase()
             const nom = String(a.name || "").toLowerCase()
             if (c === id || c === nom || (c.length > 2 && id.indexOf(c) >= 0))
@@ -612,7 +612,7 @@ K4.Plugin {
     //  `true` que puso el primero y lo deje encendido para siempre.
     property string warpsDeCasa: ""
 
-    K4.Process {
+    K5.Process {
         command: ["sh", "-c",
             "hyprctl getoption cursor:no_warps | head -1 | awk '{print $2}'"]
         running: true
@@ -629,10 +629,10 @@ K4.Plugin {
             + direccion + '" })\' >/dev/null'
         //  Si ya lo tienes apagado, no hay nada que apagar: se enfoca y ya.
         if (warpsDeCasa === "true") {
-            K4.Sistema.lanzar(["sh", "-c", ir])
+            K5.Sistema.lanzar(["sh", "-c", ir])
             return
         }
-        K4.Sistema.lanzar(["sh", "-c",
+        K5.Sistema.lanzar(["sh", "-c",
             "hyprctl eval 'hl.config({ cursor = { no_warps = true } })' >/dev/null; "
             + ir + "; "
             + "hyprctl eval 'hl.config({ cursor = { no_warps = "
@@ -645,14 +645,14 @@ K4.Plugin {
     readonly property var apps: {
         const fuera = []
         for (let i = 0; i < idsDock.length; ++i) {
-            const a = K4.Apps.porId(idsDock[i])
+            const a = K5.Apps.porId(idsDock[i])
             if (a)
                 fuera.push(a)
         }
         for (let i = 0; i < idsAbiertos.length; ++i) {
             if (estaFijada(idsAbiertos[i]))
                 continue
-            const a = K4.Apps.porId(idsAbiertos[i])
+            const a = K5.Apps.porId(idsAbiertos[i])
             if (a)
                 fuera.push(a)
         }
@@ -664,7 +664,7 @@ K4.Plugin {
     readonly property int fijadas: {
         let n = 0
         for (let i = 0; i < idsDock.length; ++i)
-            if (K4.Apps.porId(idsDock[i]))
+            if (K5.Apps.porId(idsDock[i]))
                 n += 1
         return n
     }
@@ -680,7 +680,7 @@ K4.Plugin {
         onTriggered: if (!clientes.running) clientes.running = true
     }
 
-    K4.Process {
+    K5.Process {
         id: clientes
         command: ["hyprctl", "clients", "-j"]
         onSalida: function (texto) {
@@ -746,7 +746,7 @@ K4.Plugin {
         const visibles = []
         const huecos = []
         for (let i = 0; i < idsDock.length; ++i)
-            if (K4.Apps.porId(idsDock[i])) {
+            if (K5.Apps.porId(idsDock[i])) {
                 visibles.push(idsDock[i])
                 huecos.push(i)
             }
@@ -806,7 +806,7 @@ K4.Plugin {
         onTriggered: if (!conteo.running) conteo.running = true
     }
 
-    K4.Process {
+    K5.Process {
         id: conteo
         command: ["hyprctl", "clients", "-j"]
         onSalida: function (texto) {
@@ -840,12 +840,12 @@ K4.Plugin {
         //  Como el lanzador: `execute()` heredaría el directorio de trabajo de
         //  la barra y las terminales abrirían en la carpeta de configuración.
         const dir = app.workingDirectory && app.workingDirectory.length > 0
-            ? app.workingDirectory : K4.Sistema.entorno("HOME")
+            ? app.workingDirectory : K5.Sistema.entorno("HOME")
         if (!app.command || app.command.length === 0) {
             app.execute()
             return
         }
-        K4.Sistema.lanzar(["sh", "-c",
+        K5.Sistema.lanzar(["sh", "-c",
             "cd " + JSON.stringify(dir) + " && exec \"$@\"", "sh"]
             .concat(app.command))
     }
@@ -876,12 +876,12 @@ K4.Plugin {
 
         //  Y la pantalla se relee AHORA, no en `congelarOrigen`.
         //
-        //  `K4.Isla.pantalla` es la pantalla del módulo activo, y el host la
+        //  `K5.Isla.pantalla` es la pantalla del módulo activo, y el host la
         //  fija al activarse uno: preguntándola antes de coger la island venía
         //  vacía si nadie se había activado desde que arrancó la barra —recién
         //  recargado el plugin, por ejemplo—. Con la cadena vacía, `apartada`
         //  no casaba con ninguna pantalla y la barra no se iba.
-        pantalla = K4.Isla.pantalla || pantalla
+        pantalla = K5.Isla.pantalla || pantalla
 
         //  Sin efecto: ni encogerse ni gotas ni empalme. La barra se aparta y el
         //  dock ya está abajo.
@@ -914,7 +914,7 @@ K4.Plugin {
         if (modo !== "bajando" || !esGota)
             return
         if (ambasActiva) {
-            K4.Isla.efecto("dual", "tiron", 0.5)
+            K5.Isla.efecto("dual", "tiron", 0.5)
             return
         }
         cogiendoIsla = true
@@ -1040,7 +1040,7 @@ K4.Plugin {
     //  tampoco —un toast que llega solo no tiene por qué deshacerte el dock—.
     //  Lo que sí cuenta es un módulo que se abre porque has pulsado su atajo.
     readonly property bool islaPedida: {
-        const q = K4.Isla.ocupadaPor
+        const q = K5.Isla.ocupadaPor
         return q.length > 0 && q !== "idle" && q !== "dual" && q !== "toast"
     }
 
@@ -1133,8 +1133,8 @@ K4.Plugin {
     //  quitarle sitio a nadie: sin un borde libre no hay borde del que quitar y
     //  el compositor la ignora. Así que el hueco lo pide esta, que no pinta ni
     //  recoge un solo clic y solo existe mientras el dock está puesto.
-    K4.Ventana {
-        nombre: "k4-dual-hueco"
+    K5.Ventana {
+        nombre: "k5-dual-hueco"
         pantalla: self.pantalla
         visible: muelle.mostrando
         encima: false
@@ -1199,17 +1199,17 @@ K4.Plugin {
     }
 
     //  El atajo global. El nombre es lo único que se declara aquí: la tecla la
-    //  ata el compositor a `k4:dual`, que es como funcionan todos los de la
-    //  barra —ver `hypr/k4.conf`—. Así no hay que arrancar un proceso para
+    //  ata el compositor a `k5:dual`, que es como funcionan todos los de la
+    //  barra —ver `hypr/k5.conf`—. Así no hay que arrancar un proceso para
     //  alternar: la barra recibe la señal directamente.
-    K4.Atajo {
+    K5.Atajo {
         name: "dual"
         description: "Modo dual: la barra baja de gotas y se hace dock"
         onPressed: self.alternar()
     }
 
-    K4.Ipc {
-        target: "k4.dual"
+    K5.Ipc {
+        target: "k5.dual"
 
         //  Para poder mirarle las tripas desde la terminal: el modo, la
         //  pantalla y de dónde salen las gotas. Sin esto, depurar una
@@ -1222,7 +1222,7 @@ K4.Plugin {
                 cogiendoIsla: self.cogiendoIsla,
                 barraFuera: self.barraFuera,
                 pantalla: self.pantalla,
-                islaPantalla: K4.Isla.pantalla,
+                islaPantalla: K5.Isla.pantalla,
                 izq: Math.round(self.origenIzqX),
                 der: Math.round(self.origenDerX),
                 y: Math.round(self.origenY),
@@ -1237,7 +1237,7 @@ K4.Plugin {
                 dockHazteVer: muelle.hazteVer,
                 dockDespliegue: Math.round(muelle.despliegue * 1000) / 1000,
                 dockArrastre: muelle.arrastreDesde,
-                ocupante: K4.Isla.ocupadaPor,
+                ocupante: K5.Isla.ocupadaPor,
                 islaPedida: self.islaPedida,
                 selectorDe: muelle.selectorDe,
                 menuDe: muelle.menuDe

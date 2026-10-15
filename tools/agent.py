@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Put k4's skill where coding agents will find it.
+"""Put k5's skill where coding agents will find it.
 
     python3 tools/agent.py            where it is, and whether it's linked
     python3 tools/agent.py --install  link it
@@ -9,13 +9,13 @@
 (`--instalar` y `--quitar` siguen valiendo: las banderas van en inglés porque
 son la puerta, pero nadie tiene que reaprenderse las que ya usaba.)
 
-Un agente que trabaja en esta máquina no sabe que hay una barra llamada k4, ni
+Un agente que trabaja en esta máquina no sabe que hay una barra llamada k5, ni
 que todo lo suyo son plugins, ni que hay una orden para crear uno que ya
 arranca. Se lo puedes contar cada vez, o dejarlo escrito una vez donde lo lea
 solo. Esto es lo segundo.
 
 Se enlaza y no se copia: la habilidad vive en el repositorio, así que al
-actualizar k4 se actualiza también lo que lee el agente. Una copia se queda
+actualizar k5 se actualiza también lo que lee el agente. Una copia se queda
 vieja y nadie se entera hasta que le dice a alguien que haga algo que ya no
 existe.
 """
@@ -27,13 +27,13 @@ import pathlib
 import sys
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
-HABILIDAD = RAIZ / "agents" / "skills" / "k4"
+HABILIDAD = RAIZ / "agents" / "skills" / "k5"
 
 #  Dónde busca cada uno. Se ponen todos los que existan en la máquina: que
 #  esté para Claude y no para Codex es un despiste raro de diagnosticar.
 DESTINOS = [
-    pathlib.Path.home() / ".claude" / "skills" / "k4",
-    pathlib.Path.home() / ".config" / "agents" / "skills" / "k4",
+    pathlib.Path.home() / ".claude" / "skills" / "k5",
+    pathlib.Path.home() / ".config" / "agents" / "skills" / "k5",
 ]
 
 
@@ -78,7 +78,7 @@ def instalar():
         puestas += 1
     if puestas:
         print("\nLos agents que empiecen a partir de ahora sabrán que esto es"
-              " k4\ny cómo escribirle un plugin.")
+              " k5\ny cómo escribirle un plugin.")
     return 0
 
 

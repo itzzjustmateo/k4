@@ -23,14 +23,14 @@
 
 import QtQuick
 import QtQuick.Shapes
-import K4 as K4
+import K5 as K5
 
-K4.Ventana {
+K5.Ventana {
     id: escena
 
     required property var plugin
 
-    nombre: "k4-dual-viaje"
+    nombre: "k5-dual-viaje"
     encima: true
 
     //  En la pantalla de la barra que se va, no en la que el compositor
@@ -47,7 +47,7 @@ K4.Ventana {
     //  menos que un dock que no se puede pulsar.
     visible: escena.plugin.trozosFuera
 
-    //  No captura NADA. Ojo con dejarlo en `null`: K4.Ventana hace
+    //  No captura NADA. Ojo con dejarlo en `null`: K5.Ventana hace
     //  `mask: zonaActiva ? region : null`, y un mask nulo en una capa a pantalla
     //  completa se queda todos los clics del escritorio. Con una zona de 0×0 la
     //  región existe y está vacía, que es lo que se quiere.
@@ -77,7 +77,7 @@ K4.Ventana {
     //
     //  Y a RAS del canto —a medio grosor—, que es como iban por el borde: no
     //  centrados en lo hondo que sea el dock.
-    readonly property real ras: K4.Tema.altoPlegado / 2
+    readonly property real ras: K5.Tema.altoPlegado / 2
 
     readonly property point centroDock: {
         const p = escena.plugin
@@ -225,7 +225,7 @@ K4.Ventana {
 
         ShapePath {
             id: puente
-            fillColor: K4.Tema.fondo
+            fillColor: K5.Tema.fondo
             strokeWidth: 0
             strokeColor: "transparent"
 

@@ -14,7 +14,7 @@
 //
 //  ── de dónde sale la imagen ──────────────────────────────────────
 //
-//  De `K4.Miniatura`, que por debajo es una captura viva de UN toplevel
+//  De `K5.Miniatura`, que por debajo es una captura viva de UN toplevel
 //  (`hyprland-toplevel-export`). No es una foto del escritorio recortada: cada
 //  ventana se copia por separado, así que salen también las que están en otro
 //  escritorio o tapadas por completo. Eso es lo que hace que esto sea un mapa
@@ -22,19 +22,19 @@
 //
 //  ── y la geometría, de hyprctl ───────────────────────────────────
 //
-//  Un plugin no habla con el compositor: pide `hyprctl -j` por `K4.Process` y
+//  Un plugin no habla con el compositor: pide `hyprctl -j` por `K5.Process` y
 //  lee JSON. Se piden monitores y clientes de una vez y en un solo proceso —no
 //  dos— porque entre uno y otro te puede cambiar el escritorio activo debajo,
 //  y entonces la mitad de las ventanas se dibujarían donde ya no están.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Plugin {
+K5.Plugin {
     id: raiz
 
     name: "atalaya"
-    title: K4.Idioma.t("Atalaya")
+    title: K5.Idioma.t("Atalaya")
 
     //  No ocupa la island: esto vive en su propia ventana, a pantalla
     //  completa. Nunca se activa. (Ver `teclas`, mismo caso.)
@@ -49,7 +49,7 @@ K4.Plugin {
     property var ventanas: []
 
     //  El monitor sobre el que se abre y su tamaño lógico. Lógico y no físico:
-    //  lo que QML mide en una `K4.Ventana` son píxeles lógicos, y en una
+    //  lo que QML mide en una `K5.Ventana` son píxeles lógicos, y en una
     //  pantalla con escala los dos números no se parecen.
     property string monitor: ""
     property int monAncho: 1920
@@ -59,7 +59,7 @@ K4.Plugin {
     property string error: ""
 
     //  Cerrándose. La ventana tiene que seguir existiendo mientras las
-    //  tarjetas vuelven a su sitio: sin esto el `K4.Cargador` la destruye en
+    //  tarjetas vuelven a su sitio: sin esto el `K5.Cargador` la destruye en
     //  el mismo cuadro en que se pulsa ESC y el escritorio reaparece de golpe,
     //  que es peor que no animar la entrada.
     property bool saliendo: false
@@ -162,22 +162,22 @@ K4.Plugin {
         salto.running = true
     }
 
-    K4.Guardado {
+    K5.Guardado {
         id: guardado
         plugin: "atalaya"
         nombre: "ajustes"
         onCargado: function (d) { raiz.ruedaAlReves = d.ruedaAlReves === true }
     }
 
-    K4.Ajustes {
+    K5.Ajustes {
         plugin: "atalaya"
-        grupo: K4.Idioma.t("Atalaya")
-        desc: K4.Idioma.t("Todas las ventanas sobre un plano")
+        grupo: K5.Idioma.t("Atalaya")
+        desc: K5.Idioma.t("Todas las ventanas sobre un plano")
         glifo: 0xF0570
         opciones: [{
             id: "ruedaAlReves",
-            nombre: K4.Idioma.t("Rueda al revés"),
-            desc: K4.Idioma.t("Acercarse girando hacia abajo en vez de hacia arriba"),
+            nombre: K5.Idioma.t("Rueda al revés"),
+            desc: K5.Idioma.t("Acercarse girando hacia abajo en vez de hacia arriba"),
             glifo: 0xF1552
         }]
         valores: ({ ruedaAlReves: raiz.ruedaAlReves })
@@ -189,16 +189,16 @@ K4.Plugin {
         }
     }
 
-    K4.Process {
+    K5.Process {
         id: salto
         onTerminado: function (codigo) {
             if (codigo !== 0)
-                raiz.error = K4.Idioma.t("No se ha podido ir a esa ventana")
+                raiz.error = K5.Idioma.t("No se ha podido ir a esa ventana")
         }
     }
 
     // ── leer el escritorio ────────────────────────────────────────
-    K4.Process {
+    K5.Process {
         id: lector
 
         //  Los dos en un `printf` y no con `jq`: sale JSON válido igual, y no
@@ -213,7 +213,7 @@ K4.Plugin {
             try {
                 d = JSON.parse(texto)
             } catch (e) {
-                raiz.error = K4.Idioma.t("No se entiende la respuesta de hyprctl")
+                raiz.error = K5.Idioma.t("No se entiende la respuesta de hyprctl")
                 return
             }
             raiz.digerir(d)
@@ -243,7 +243,7 @@ K4.Plugin {
         if (!mon && mons.length > 0)
             mon = mons[0]
         if (!mon) {
-            error = K4.Idioma.t("Hyprland no da ningún monitor")
+            error = K5.Idioma.t("Hyprland no da ningún monitor")
             return
         }
 
@@ -306,27 +306,27 @@ K4.Plugin {
         ventanas = lista
         seleccion = lista.length > 0 ? 0 : -1
         if (lista.length === 0)
-            error = K4.Idioma.t("No hay ninguna ventana abierta")
+            error = K5.Idioma.t("No hay ninguna ventana abierta")
     }
 
     // ── la vista ──────────────────────────────────────────────────
     //
-    //  Con `K4.Cargador`: una ventana a pantalla completa con una captura viva
+    //  Con `K5.Cargador`: una ventana a pantalla completa con una captura viva
     //  por cada cosa que tengas abierta no puede existir mientras no se mira.
-    K4.Cargador {
+    K5.Cargador {
         active: raiz.abierto || raiz.saliendo
         Lienzo { plugin: raiz }
     }
 
     // ── por dónde se le llama ─────────────────────────────────────
-    K4.Atajo {
+    K5.Atajo {
         name: "atalaya"
         description: "Atalaya: todas las ventanas sobre un plano"
         onPressed: raiz.alternar()
     }
 
-    K4.Ipc {
-        target: "k4.atalaya"
+    K5.Ipc {
+        target: "k5.atalaya"
         function alternar(): void { raiz.alternar() }
         function abrir(): void { raiz.abrir() }
         function cerrar(): void { raiz.cerrar() }

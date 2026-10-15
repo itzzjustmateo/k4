@@ -137,9 +137,9 @@ jobs:
         run: |
           #  La identidad del bot de Actions, y NO una inventada.
           #
-          #  Puse `k4@users.noreply.github.com` pensando que era un correo sin
+          #  Puse `k5@users.noreply.github.com` pensando que era un correo sin
           #  dueño. GitHub mapea `<usuario>@users.noreply.github.com` a la
-          #  cuenta de ese usuario, y `k4` es una persona real: le atribuí un
+          #  cuenta de ese usuario, y `k5` es una persona real: le atribuí un
           #  commit y apareció como colaborador de un repo que no ha tocado en
           #  su vida. Un correo `noreply` no es un correo libre.
           git config user.name "github-actions[bot]"

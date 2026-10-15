@@ -26,8 +26,8 @@ BINDS = os.path.join(CONFIG, "binds.lua")
 def ficheros():
     """Los .lua que atan teclas, `binds.lua` primero.
 
-    No basta con leer `binds.lua`: desde que el instalador de k4 saca sus atajos
-    a `k4.lua` —para no escribir dentro del fichero del usuario— viven en otro
+    No basta con leer `binds.lua`: desde que el instalador de k5 saca sus atajos
+    a `k5.lua` —para no escribir dentro del fichero del usuario— viven en otro
     sitio, y este panel se los dejaba fuera. Así que se lee cualquier .lua de la
     carpeta que contenga `hl.bind`, y el orden es estable para que la lista no
     baile entre arranques.
@@ -51,7 +51,7 @@ def ficheros():
     rutas.sort(key=lambda r: (os.path.basename(r) != "binds.lua", r))
     return rutas
 
-# Anclados al final a propósito: sin el `$`, `local k4 = "a" .. raiz .. "b"` se
+# Anclados al final a propósito: sin el `$`, `local k5 = "a" .. raiz .. "b"` se
 # quedaba solo con el primer trozo y la orden salía descabalada.
 RE_LOCAL = re.compile(r'^\s*local\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*"([^"]*)"\s*(?:--.*)?$')
 RE_GLOBAL = re.compile(r'^\s*([A-Z_][A-Z0-9_]*)\s*=\s*"([^"]*)"\s*(?:--.*)?$')
@@ -61,7 +61,7 @@ RE_FOR = re.compile(r'^\s*for\s+(\w+)\s*=\s*(\w+)\s*,\s*(\w+)\s*do')
 # Dentro del bucle se suele hacer `local key = i % 10` y luego atar con `key`:
 # sin seguir ese alias, la combinación salía literalmente como «+ key».
 RE_ALIAS = re.compile(r'^\s*local\s+(\w+)\s*=\s*.*\b%s\b')
-# `local k4 = "quickshell ipc -p " .. raiz .. "/shell.qml call k4 "`
+# `local k5 = "quickshell ipc -p " .. raiz .. "/shell.qml call k5 "`
 RE_LOCAL_EXPR = re.compile(r'^\s*local\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+?)\s*$')
 
 #  Lo que hace cada despachador, en cristiano. Los que no estén salen con su
@@ -127,9 +127,9 @@ def variables():
                 if m:
                     vals[m.group(1)] = m.group(2)
                     continue
-                # Y las que se arman concatenando, que es como k4.lua construye
+                # Y las que se arman concatenando, que es como k5.lua construye
                 # sus tres llamadas de IPC a partir de la raíz. Sin esto la
-                # línea salía como «k4toggleLauncher» en vez de «k4 · lanzador».
+                # línea salía como «k4toggleLauncher» en vez de «k5 · lanzador».
                 m = RE_LOCAL_EXPR.match(linea)
                 if m:
                     valor = literal(m.group(2), vals)
@@ -193,7 +193,7 @@ def hasta_cierre(texto):
     """Lo que hay dentro del paréntesis, hasta el que lo cierra.
 
     Recortar con `rstrip(")")` no vale cuando detrás viene otro argumento: en
-    `hl.dsp.exec_cmd(k4 .. "togglePlay"), { locked = true })` se colaba el
+    `hl.dsp.exec_cmd(k5 .. "togglePlay"), { locked = true })` se colaba el
     `{ locked = true }` dentro de la orden.
     """
     hondo = 0
@@ -239,14 +239,14 @@ def describir(accion, vals):
         orden = resolver(dentro, vals).strip()
         # los tres prefijos largos que aparecen una y otra vez
         if "quickshell ipc" in orden:
-            # `call k4 abrir`, pero también `call k4.editor abrir`: cada módulo
-            # publica su propio objetivo y cortar por «call k4 » a secas dejaba
+            # `call k5 abrir`, pero también `call k5.editor abrir`: cada módulo
+            # publica su propio objetivo y cortar por «call k5 » a secas dejaba
             # esos con la orden entera, ruta incluida.
-            m3 = re.search(r'call\s+k4(?:\.(\w+))?\s+(.*)$', orden)
+            m3 = re.search(r'call\s+k5(?:\.(\w+))?\s+(.*)$', orden)
             if m3:
                 modulo = (m3.group(1) + " ") if m3.group(1) else ""
-                return "", "k4 · " + modulo + m3.group(2).strip(), ""
-            return "", "k4 · " + orden.split("call k4 ")[-1].strip(), ""
+                return "", "k5 · " + modulo + m3.group(2).strip(), ""
+            return "", "k5 · " + orden.split("call k5 ")[-1].strip(), ""
         if orden.startswith("noctalia msg "):
             return "", "noctalia · " + orden[len("noctalia msg "):].strip(), ""
         #  «Abrir» sí es prosa, así que va de frase con su hueco.

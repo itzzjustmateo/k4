@@ -17,7 +17,7 @@ o dibujados para este proyecto y llevarán una ficha de procedencia.
 - Arena con capas: fondo, suelo, plataformas, unidades y efectos.
 - Efectos breves pero visibles: carga, impacto, destrucción de pieza,
   Medaforce, victoria y derrota.
-- UI propia del juego, no un conjunto de tarjetas de k4 con texto añadido.
+- UI propia del juego, no un conjunto de tarjetas de k5 con texto añadido.
 
 ## Paquetes previstos
 
@@ -42,7 +42,7 @@ colección enorme de imágenes sin integrarlas en juego.
    lectura a tamaño pequeño.
 2. Generar hojas de poses o piezas sobre un color plano, con una cuadrícula
    explícita y el mismo sujeto/escala en todas las celdas.
-3. Partirlas con el utilitario que ya trae k4:
+3. Partirlas con el utilitario que ya trae k5:
 
    ```bash
    python3 tools/spritesheet.py hoja-poses.png \

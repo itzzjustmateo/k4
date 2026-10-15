@@ -4,7 +4,7 @@ pragma Singleton
 //
 //  Esto vivía dentro de services/Captura.qml, y estar ahí decía algo que ya no
 //  es verdad: que editar es lo que pasa DESPUÉS de grabar. Se puede abrir un
-//  vídeo que no haya grabado k4, y entonces el grabador no pinta nada.
+//  vídeo que no haya grabado k5, y entonces el grabador no pinta nada.
 //
 //  El estado vive en un singleton y no en el plugin por el motivo de siempre: un
 //  plugin solo existe mientras es el módulo activo, y aquí se puede apartar el
@@ -1958,16 +1958,16 @@ Singleton {
     //
     //  Las mismas cuentas que `carpeta_de()` en tools/editar.py, y aquí no
     //  estaban: se quitaban cinco letras SIEMPRE, que era lo correcto cuando el
-    //  plan se llamaba `<vídeo>.k4.json` y dejó de serlo al pasar a `.k4v`. Con
+    //  plan se llamaba `<vídeo>.k5.json` y dejó de serlo al pasar a `.k4v`. Con
     //  el nombre de hoy daba `<víde>` —el nombre del vídeo con una letra
-    //  comida— en vez de `<vídeo>.k4`, así que los dos lados discrepaban sobre
+    //  comida— en vez de `<vídeo>.k5`, así que los dos lados discrepaban sobre
     //  dónde vive el SRT y el texto de los rótulos.
     readonly property string carpetaAdjunta:
         rutaPlan.endsWith(".k4v")
             ? rutaPlan.substring(0, rutaPlan.length - 1)
         : rutaPlan.endsWith(".json")
             ? rutaPlan.substring(0, rutaPlan.length - 5)
-        : rutaPlan.length > 0 ? rutaPlan + ".k4" : ""
+        : rutaPlan.length > 0 ? rutaPlan + ".k5" : ""
 
     //  Cada línea del transcriptor: estados intermedios, el fallo con su
     //  remedio, o el fin con los segmentos.
@@ -2834,10 +2834,10 @@ Singleton {
     //  El plan se llama como el vídeo pero con otra extensión, así que abrir dos
     //  veces el mismo fichero recupera lo que dejaste editado.
     //
-    //  `.k4v` es el proyecto de k4: un JSON por dentro, pero con nombre propio
+    //  `.k4v` es el proyecto de k5: un JSON por dentro, pero con nombre propio
     //  para que se vea de un vistazo en la carpeta que eso es un montaje y no
     //  un fichero suelto de datos. Los proyectos guardados con el nombre viejo
-    //  —`.k4.json`— se renombran solos al abrirlos, en python.
+    //  —`.k5.json`— se renombran solos al abrirlos, en python.
     //  Si lo que te han dado es el proyecto y no el vídeo.
     //
     //  Desde que el selector lista `.k4v` se puede abrir un montaje guardado
@@ -3325,7 +3325,7 @@ Singleton {
         //  El fichero que sale se llama como el PROYECTO, no como el vídeo.
         //
         //  Salía con el nombre del vídeo, así que renombrar el montaje a «Tutorial
-        //  del island» y exportarlo daba `grabacion-20260805-165407-k4.mp4`. El
+        //  del island» y exportarlo daba `grabacion-20260805-165407-k5.mp4`. El
         //  nombre se le pone al montaje precisamente para no tener que reconocer
         //  cuál era por su marca de tiempo.
         //
@@ -3334,7 +3334,7 @@ Singleton {
         rutaRenderizada = (rutaPlan.length > 4
                             ? rutaPlan.replace(/\.k4v$/, "")
                             : rutaVideo.replace(/\.[^./]+$/, ""))
-                          + (salidaVertical ? "-shorts." : "-k4.")
+                          + (salidaVertical ? "-shorts." : "-k5.")
                           + formatoSalida
         progreso = 0
         estado = "renderizando"

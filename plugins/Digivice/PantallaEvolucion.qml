@@ -8,7 +8,7 @@
 //  las que PUEDES hacer: enseñar la tabla entera sería un catálogo.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -73,7 +73,7 @@ Item {
         anchors.margins: 5
         spacing: 2
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: Digivice.puedeEvolucionar() ? Idioma.t("¡LISTO PARA EVOLUCIONAR!")
@@ -112,21 +112,21 @@ Item {
                 required property var modelData
                 width: parent.width
 
-                K4.Glifo {
+                K5.Glifo {
                     anchors.verticalCenter: parent.verticalCenter
                     width: 16
                     text: linea.modelData.falta === 0 ? "\u{F012C}" : "\u{F0766}"
                     font.pixelSize: 12
                     color: linea.modelData.falta === 0 ? "#7de08a" : "#5f8f6c"
                 }
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.verticalCenter: parent.verticalCenter
                     width: parent.width * 0.45
                     text: linea.modelData.k
                     font.pixelSize: 12
                     color: "#8fbf9c"
                 }
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.verticalCenter: parent.verticalCenter
                     width: parent.width * 0.45 - 16
                     horizontalAlignment: Text.AlignRight
@@ -139,7 +139,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             visible: !Digivice.falta
             horizontalAlignment: Text.AlignHCenter
@@ -155,7 +155,7 @@ Item {
         //  Todas en la misma lista y con A se pasan: normal, Warp, Armor, X y
         //  Jogress. Antes solo estaba la normal y las fusiones, y las tres
         //  especiales existían en los datos sin que hubiera manera de usarlas.
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             text: self.totalVias > 0
                 ? Idioma.f(Idioma.t("Vía %1/%2 · A pasa"),
@@ -165,7 +165,7 @@ Item {
             color: "#5f8f6c"
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             visible: self.via !== null
             text: self.via ? self.via.texto : ""
@@ -195,7 +195,7 @@ Item {
                 especie: Digivice.especie
                 lado: 34
             }
-            K4.Glifo {
+            K5.Glifo {
                 anchors.verticalCenter: parent.verticalCenter
                 text: self.via && self.via.via === "jogress" ? "\u{F0415}" : "\u{F0054}"
                 font.pixelSize: 13
@@ -214,7 +214,7 @@ Item {
                 }
                 lado: 34
             }
-            K4.Glifo {
+            K5.Glifo {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: self.via !== null && self.via.via === "jogress"
                 text: "\u{F0054}"
@@ -228,7 +228,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             visible: self.via !== null && self.via.via !== "normal"
             text: self.via ? Digivice.nombreDe(self.via.da) + "   ·   "
@@ -242,7 +242,7 @@ Item {
         //  Lo que CUESTA cada vía. Es lo que no puede faltar: un Armor gasta
         //  el digimental que te costó un jefe, y un Jogress se lleva a los
         //  dos. Enterarse después no es enterarse.
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             visible: self.via !== null
             text: {

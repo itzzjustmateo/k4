@@ -9,7 +9,7 @@
 //  pinchándola.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -64,14 +64,14 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 6
 
-                    K4.Glifo {
+                    K5.Glifo {
                         anchors.verticalCenter: parent.verticalCenter
                         text: String.fromCodePoint(self.descripcion[fila.modelData].glifo)
                         font.pixelSize: 13
                         color: fila.alTope ? "#e8b45a" : "#9fd8ae"
                     }
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.verticalCenter: parent.verticalCenter
                         width: 74
                         text: self.descripcion[fila.modelData].nombre
@@ -102,7 +102,7 @@ Item {
                     }
                 }
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.right: parent.right
                     anchors.rightMargin: 6
                     anchors.verticalCenter: parent.verticalCenter
@@ -123,7 +123,7 @@ Item {
             border.width: 1
             border.color: "#7de08a"
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.centerIn: parent
                 text: Idioma.t("Dificultad") + ": " + self.nombreDificultad
                 font.pixelSize: 12
@@ -145,7 +145,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: Idioma.f(Idioma.t("B: %1  ·  ×%2"),

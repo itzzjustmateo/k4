@@ -6,7 +6,7 @@
 //  **Los hosts viven en `~/.ssh/config`, no en una base de datos nuestra.**
 //  Es lo que hace que guardar aquí sirva también para `ssh` a pelo, `scp`,
 //  `git`, `rsync` y cualquier cosa que hable ssh. Un vault propio sería más
-//  fácil de escribir y te dejaría preso de k4.
+//  fácil de escribir y te dejaría preso de k5.
 //
 //  **Contraseñas, ninguna.** Ni en claro ni cifradas por nosotros: se conecta
 //  con claves y agente, que es como se hace. Si no tienes clave, esto te la
@@ -17,7 +17,7 @@
 //  y que no tiene por qué ensuciar una configuración que leen otros programas.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -149,14 +149,14 @@ K4Plugin {
         permisos.running = true
     }
 
-    property K4.Process permisos: K4.Process {
+    property K5.Process permisos: K5.Process {
         command: ["sh", "-c", "mkdir -p ~/.ssh && chmod 700 ~/.ssh"]
         onTerminado: running = false
     }
 
     //  Y el fichero, solo para ti. No lleva secretos, pero dice a qué máquinas
     //  entras y con qué usuario, que tampoco es cosa de nadie.
-    property K4.Process cerrarFichero: K4.Process {
+    property K5.Process cerrarFichero: K5.Process {
         command: ["sh", "-c", "chmod 600 ~/.ssh/config 2>/dev/null"]
         onTerminado: running = false
     }
@@ -183,20 +183,20 @@ K4Plugin {
     //  opciones que admite ssh solo se leen las cinco que sirven para
     //  enseñar y conectar. Lo demás se respeta sin tocarlo — este fichero es
     //  del usuario, no nuestro.
-    readonly property string rutaSsh: K4.Sistema.entorno("HOME") + "/.ssh/config"
-    readonly property string rutaExtras: K4.Sistema.entorno("HOME") + "/.config/k4term/hosts.json"
+    readonly property string rutaSsh: K5.Sistema.entorno("HOME") + "/.ssh/config"
+    readonly property string rutaExtras: K5.Sistema.entorno("HOME") + "/.config/k4term/hosts.json"
 
     property var guardados: []
     property var extras: ({})
 
-    property K4.Fichero fSsh: K4.Fichero {
+    property K5.Fichero fSsh: K5.Fichero {
         path: self.rutaSsh
         onLoaded: self.guardados = self.leerSsh()
         //  Sin fichero no hay nada que leer, y es lo normal la primera vez.
         onLoadFailed: self.guardados = []
     }
 
-    property K4.Fichero fExtras: K4.Fichero {
+    property K5.Fichero fExtras: K5.Fichero {
         path: self.rutaExtras
         onLoaded: {
             try {
@@ -215,11 +215,11 @@ K4Plugin {
     //  en claro, con el mismo trato que una clave privada sin frase — en este
     //  equipo no hay servicio de secretos que funcione, y el día que lo haya
     //  esto es lo único que cambia.
-    readonly property string rutaClaves: K4.Sistema.entorno("HOME") + "/.config/k4term/claves.json"
+    readonly property string rutaClaves: K5.Sistema.entorno("HOME") + "/.config/k4term/claves.json"
 
     property var contrasenas: ({})
 
-    property K4.Fichero fClaves: K4.Fichero {
+    property K5.Fichero fClaves: K5.Fichero {
         path: self.rutaClaves
         onLoaded: {
             try {
@@ -254,7 +254,7 @@ K4Plugin {
 
     //  El fichero recién escrito sale con los permisos de todo el mundo, y
     //  esto no es un fichero cualquiera.
-    property K4.Process cerrarClaves: K4.Process {
+    property K5.Process cerrarClaves: K5.Process {
         command: ["sh", "-c",
                   "chmod 700 ~/.config/k4term 2>/dev/null; " +
                   "chmod 600 ~/.config/k4term/claves.json 2>/dev/null"]
@@ -392,7 +392,7 @@ K4Plugin {
     //  ── conectar ──────────────────────────────────────────────────
     //
     //  El mandato se compone igual para los dos sitios; lo único que cambia es
-    //  dónde sale. En la isla va por `K4.Terminal`, que abre pestaña nueva —lo
+    //  dónde sale. En la isla va por `K5.Terminal`, que abre pestaña nueva —lo
     //  que quieres, para no pisar lo que tuvieras a medias.
     function mandato(h) {
         if (!h)
@@ -434,7 +434,7 @@ K4Plugin {
             //  que se cierra sola con el «connection refused» a medio leer no
             //  sirve de nada. Solo si falla — al salir de una sesión buena,
             //  cerrarse es lo que uno espera.
-            K4.Sistema.lanzar(Consola.orden(guion + " || { " + Consola.cierre + " }"))
+            K5.Sistema.lanzar(Consola.orden(guion + " || { " + Consola.cierre + " }"))
         } else {
             //  Que la terminal sepa que lo que viene es una conexión y pinte
             //  el camino mientras tanto.
@@ -442,7 +442,7 @@ K4Plugin {
                                 ? h.usuario + "@" + h.host : h.alias,
                                 h.tinte || "",
                                 h.rapido ? "" : claveDe(h.alias))
-            K4.Terminal.ejecutar(guion)
+            K5.Terminal.ejecutar(guion)
         }
 
         cerrar()
@@ -611,7 +611,7 @@ K4Plugin {
     //  teclear tú, no un diálogo nuestro.
     property int cuantasClaves: -1
 
-    property K4.Process claves: K4.Process {
+    property K5.Process claves: K5.Process {
         command: ["sh", "-c", "ls -1 ~/.ssh/*.pub 2>/dev/null | wc -l"]
         onSalida: function (texto) { self.cuantasClaves = parseInt(texto.trim(), 10) || 0 }
         onTerminado: running = false
@@ -623,7 +623,7 @@ K4Plugin {
         const h = lista[indice]
         const destino = h ? (h.rapido && h.usuario ? h.usuario + "@" + h.host : h.alias) : ""
         const crear = "ssh-keygen -t ed25519 -C k4term"
-        K4.Terminal.ejecutar(destino ? crear + " && ssh-copy-id " + destino : crear)
+        K5.Terminal.ejecutar(destino ? crear + " && ssh-copy-id " + destino : crear)
         cerrar()
     }
 
@@ -632,23 +632,23 @@ K4Plugin {
     //  Un agente que corre en la terminal ya tiene tu shell, así que puede
     //  lanzar `ssh` él solo; lo que no puede es teclear una contraseña. Darle
     //  la tuya sería darle TODO, así que se le da otra cosa: una clave propia
-    //  (`~/.ssh/k4-agents`), un alias propio (`casa-agents`) y, en el
+    //  (`~/.ssh/k5-agents`), un alias propio (`casa-agents`) y, en el
     //  servidor, lo que tú quieras dejarle en su `authorized_keys`. Se revoca
     //  borrando una línea allí, sin tocar nada tuyo.
     //
     //  Lo que hace falta hacer ALLÍ —mandar la clave, o quitarla— se corre en
     //  la terminal, a la vista: pide tu contraseña y toca su fichero, y esas
     //  dos cosas no se hacen a escondidas.
-    readonly property string claveAgentes: K4.Sistema.entorno("HOME") + "/.ssh/k4-agents"
+    readonly property string claveAgentes: K5.Sistema.entorno("HOME") + "/.ssh/k5-agents"
 
     //  El sello de la clave, que es lo que permite quitarla del servidor sin
     //  adivinar: se busca esa marca en su `authorized_keys` y se borra la
     //  línea. TIENE que salir igual aquí y en la ventana —el mismo fichero,
     //  no `$HOSTNAME`, que en la sesión de la barra viene vacío y dejaba dos
     //  sellos distintos: el puesto por un lado no lo encontraba el otro.
-    property string nombreEquipo: "k4"
+    property string nombreEquipo: "k5"
 
-    property K4.Fichero fEquipo: K4.Fichero {
+    property K5.Fichero fEquipo: K5.Fichero {
         path: "/etc/hostname"
         onLoaded: {
             const t = String(fEquipo.text() || "").trim()
@@ -657,7 +657,7 @@ K4Plugin {
         }
     }
 
-    readonly property string marcaAgentes: "k4-agents@" + nombreEquipo
+    readonly property string marcaAgentes: "k5-agents@" + nombreEquipo
 
     function aliasAgentes(alias) { return String(alias || "") + "-agents" }
 
@@ -687,7 +687,7 @@ K4Plugin {
             relee.restart()
             //  Y allí: fuera la línea de esa clave. Se busca por su marca, que
             //  para eso la lleva.
-            K4.Terminal.ejecutar("ssh " + h.alias
+            K5.Terminal.ejecutar("ssh " + h.alias
                 + " \"sed -i '/" + marca + "/d' ~/.ssh/authorized_keys\"")
             cerrar()
             return
@@ -717,7 +717,7 @@ K4Plugin {
         cerrarFichero.running = true
         relee.restart()
 
-        K4.Terminal.ejecutar(
+        K5.Terminal.ejecutar(
             "[ -f " + claveAgentes + " ] || ssh-keygen -t ed25519 -N '' -C '"
             + marca + "' -f " + claveAgentes
             + "; ssh-copy-id -i " + claveAgentes + ".pub " + h.alias)
@@ -808,7 +808,7 @@ K4Plugin {
             //  minuto.
             property int intentos: 0
 
-            property var proceso: K4.Process {
+            property var proceso: K5.Process {
                 command: ["ssh", "-N", tunel.bandera, tunel.spec, tunel.destino]
                 running: true
                 onTerminado: {
@@ -823,12 +823,12 @@ K4Plugin {
                 onTriggered: tunel.proceso.running = true
             }
 
-            Component.onCompleted: K4.Pildora.registrar(
+            Component.onCompleted: K5.Pildora.registrar(
                 tunel.clave, tunel.mote, 0xF0BBB, Theme.green, 27, true)
             Component.onDestruction: {
                 tunel.reintento.stop()
                 tunel.proceso.running = false
-                K4.Pildora.quitar(tunel.clave)
+                K5.Pildora.quitar(tunel.clave)
             }
         }
     }
@@ -870,14 +870,14 @@ K4Plugin {
                 "done'; " +
             "echo '→ listo: vuelve a entrar y los bloques funcionarán también allí'"
 
-        K4.Terminal.ejecutar(guion + K4.Terminal.cierre)
+        K5.Terminal.ejecutar(guion + K5.Terminal.cierre)
         cerrar()
     }
 
     //  Pulsar la píldora de un túnel lo cierra: es lo que uno espera de algo
     //  que está ahí precisamente para recordarte que sigue abierto.
     property Connections clicsPildora: Connections {
-        target: K4.Pildora
+        target: K5.Pildora
         function onInvocado(id) {
             const marca = "terminal.tunel."
             if (String(id).indexOf(marca) !== 0)
@@ -892,8 +892,8 @@ K4Plugin {
         }
     }
 
-    K4.Ipc {
-        target: "k4.ssh"
+    K5.Ipc {
+        target: "k5.ssh"
 
         //  El selector, que es para lo que se abre esto.
         function abrir(): void { self.abrir() }

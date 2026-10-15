@@ -50,7 +50,7 @@ LAYOUTS = ("RowLayout", "ColumnLayout", "GridLayout", "StackLayout")
 #  esto lo llevaba y no casaba nunca nada: daba cero en un repo que tenía ocho.
 GEOM = re.compile(r"(x|y|width|height|anchors)\s*[:.]")
 
-#  Un elemento: `Tipo {`, admitiendo nombres cualificados como `K4.Process`.
+#  Un elemento: `Tipo {`, admitiendo nombres cualificados como `K5.Process`.
 ELEM = re.compile(r"([A-Z][A-Za-z0-9_]*(?:\.[A-Z][A-Za-z0-9_]*)*)\s*\{")
 
 

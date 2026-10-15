@@ -5,10 +5,10 @@
 //  avisa de que borra—. Repetir eso once veces es como acaban discrepando.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 
-K4.Baldosa {
+K5.Baldosa {
     id: boton
 
     property string texto: ""

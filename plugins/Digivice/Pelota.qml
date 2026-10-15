@@ -4,16 +4,16 @@
 //  la sueltas donde quieras de la pantalla, y el bicho SALE de la carcasa,
 //  cruza el escritorio por encima de tus ventanas, la recoge y vuelve.
 //
-//  Se apoya en `K4.Ventana`, que es una capa transparente a pantalla
+//  Se apoya en `K5.Ventana`, que es una capa transparente a pantalla
 //  completa —la barra la usa para el selector de captura— y en
-//  `K4.Isla.rect`, que dice dónde está la island para que el bicho salga
+//  `K5.Isla.rect`, que dice dónde está la island para que el bicho salga
 //  justo de ella y no de un punto cualquiera.
 //
 //  Es entrenamiento de verdad: cada carrera cansa y da esfuerzo, y la
 //  distancia decide cuánto. Tirarla lejos entrena más.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -34,7 +34,7 @@ Item {
     //  `height`. Usar los de QML devuelve `undefined` y toda la escena se
     //  coloca en NaN: el cartel salía cortado en la esquina y la pelota no
     //  aparecía.
-    readonly property var isla: K4.Isla.rect
+    readonly property var isla: K5.Isla.rect
     readonly property real casaX: isla ? isla.x + isla.ancho / 2 : 400
     readonly property real casaY: isla ? isla.y + isla.alto : 60
 
@@ -76,7 +76,7 @@ Item {
     Timer { id: cierre; interval: 700; onTriggered: self.terminado(self.logrados) }
 
     // ── la capa que cubre la pantalla ─────────────────────────────
-    K4.Ventana {
+    K5.Ventana {
         nombre: "digivice-pelota"
         //  Sin teclado: esto se juega con el ratón y robarle las teclas al
         //  escritorio para tirar una pelota sería excesivo.
@@ -101,11 +101,11 @@ Item {
                 width: texto.implicitWidth + 24
                 height: 30
                 radius: 15
-                color: K4.Tema.superficie
+                color: K5.Tema.superficie
                 border.width: 1
-                border.color: K4.Tema.carril
+                border.color: K5.Tema.carril
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     id: texto
                     anchors.centerIn: parent
                     text: self.fase === "espera"
@@ -246,7 +246,7 @@ Item {
         width: parent.width - 16
         spacing: 6
 
-        K4.Glifo {
+        K5.Glifo {
             anchors.horizontalCenter: parent.horizontalCenter
             text: String.fromCodePoint(0xF04B8)
             font.pixelSize: 30
@@ -260,7 +260,7 @@ Item {
             }
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.WordWrap
@@ -269,7 +269,7 @@ Item {
             color: "#8fbf9c"
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: (self.ronda + 1) + " / " + self.rondas

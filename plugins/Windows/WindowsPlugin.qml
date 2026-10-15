@@ -5,7 +5,7 @@
 //  lleva a la anterior, que es el 90% de las veces lo que quieres.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -77,8 +77,8 @@ K4Plugin {
 
     onCountChanged: if (index >= count) index = Math.max(0, count - 1)
 
-    K4.Ipc {
-        target: "k4.windows"
+    K5.Ipc {
+        target: "k5.windows"
 
         function toggle(): void { self.toggle() }
         function open(): void { self.abrir() }

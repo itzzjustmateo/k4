@@ -11,7 +11,7 @@ pragma Singleton
 //  plugin, que es quien habla con `awww`/`swww` y quien sabe de
 //  transiciones: eso es hacer, no mirar, y se moverá cuando toque.
 //
-//  Un servicio no puede usar `K4.Process` ni `K4.Sistema` —esa es la API de
+//  Un servicio no puede usar `K5.Process` ni `K5.Sistema` —esa es la API de
 //  plugins— así que aquí se habla con Quickshell directamente, que es lo que
 //  hacen los demás servicios.
 
@@ -37,7 +37,7 @@ Singleton {
 
     //  Y lo que NO cuenta como fondo aunque esté ahí dentro.
     //
-    //  «Capturas» es donde el propio k4 guarda las fotos y grabaciones de
+    //  «Capturas» es donde el propio k5 guarda las fotos y grabaciones de
     //  pantalla, así que la rejilla se llenaba de capturas de la barra: en esta
     //  máquina, de 120 imágenes encontradas la inmensa mayoría eran pantallazos
     //  de terminales. Un selector de fondos que enseña tus capturas es un
@@ -105,7 +105,7 @@ Singleton {
     }
 
     // ── cómo se ven ───────────────────────────────────────────────
-    readonly property string cache: casa + "/.cache/k4/fondos"
+    readonly property string cache: casa + "/.cache/k5/fondos"
 
     //  Lo de `gif|webp|apng` cuenta como QUIETO aunque se mueva: eso lo pinta un
     //  AnimatedImage y no el reproductor, así que para las miniaturas vale la
@@ -170,7 +170,7 @@ Singleton {
     }
 
     FileView {
-        path: (Quickshell.env("HOME") || "") + "/.local/state/k4/hyprtheme.json"
+        path: (Quickshell.env("HOME") || "") + "/.local/state/k5/hyprtheme.json"
         watchChanges: true
         onFileChanged: reload()
         onLoaded: {

@@ -19,7 +19,7 @@
 //  sustituye solo.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -128,7 +128,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 5
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width * 0.42
                 text: self.ficha ? Idioma.t("N.º ") + ("000" + self.ficha.id).slice(-3) : ""
                 font.pixelSize: 12
@@ -138,7 +138,7 @@ Item {
             //  Criado se marca con estrella y la estrella ASOMA al cambiar de
             //  ficha: es la diferencia entre un registro y una colección, y
             //  una colección tiene que celebrarse aunque sea un poco.
-            K4.Etiqueta {
+            K5.Etiqueta {
                 id: sello
                 width: parent.width * 0.58
                 horizontalAlignment: Text.AlignRight
@@ -182,7 +182,7 @@ Item {
             anchors.topMargin: 4
             spacing: 0
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 text: self.ficha ? self.ficha.d.n : ""
                 font.pixelSize: 15
@@ -193,7 +193,7 @@ Item {
 
             //  Etapa, atributo y familia en UNA línea: en tres ocupaban tres
             //  renglones para decir tres palabras.
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 text: {
                     if (!self.ficha) return ""
@@ -207,7 +207,7 @@ Item {
                 elide: Text.ElideRight
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 visible: self.ficha && self.ficha.d.sk && self.ficha.d.sk.length > 0
                 text: self.ficha && self.ficha.d.sk && self.ficha.d.sk.length
@@ -221,7 +221,7 @@ Item {
             //  de alto para una fuente de 10 —o sea, sitio para una línea y
             //  tres cuartos— y siempre acababa en «…» al final de la primera,
             //  con el tercio de abajo del cristal vacío.
-            K4.Etiqueta {
+            K5.Etiqueta {
                 width: parent.width
                 text: self.ficha ? (Digivice.descripciones[self.ficha.id] || "") : ""
                 font.pixelSize: 10
@@ -233,7 +233,7 @@ Item {
         }
 
         //  El nombre de la zona: pie de foto entre la ficha y el suelo.
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: pie
             anchors.top: panel.bottom
             anchors.topMargin: 2
@@ -274,7 +274,7 @@ Item {
         color: "#0a1410"
         opacity: 0.75
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: cuenta
             anchors.centerIn: parent
             text: (self.indice + 1) + " / " + self.total
@@ -284,7 +284,7 @@ Item {
         }
     }
 
-    K4.Etiqueta {
+    K5.Etiqueta {
         anchors.centerIn: parent
         width: parent.width - 20
         horizontalAlignment: Text.AlignHCenter

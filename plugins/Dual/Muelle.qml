@@ -10,9 +10,9 @@
 
 import QtQuick
 import QtQuick.Shapes
-import K4 as K4
+import K5 as K5
 
-K4.Ventana {
+K5.Ventana {
     id: muelle
 
     required property var plugin
@@ -39,7 +39,7 @@ K4.Ventana {
     readonly property real xCuerpo: plugin.xDock(marco.width, muelle.anchoLleno)
     readonly property real centroDock: xCuerpo + muelle.anchoLleno / 2
 
-    nombre: "k4-dual-muelle"
+    nombre: "k5-dual-muelle"
 
     //  El dock vive en la capa `Top`, que es la de un panel: por encima de las
     //  ventanas normales pero por debajo de lo que se pone delante de todo.
@@ -114,7 +114,7 @@ K4.Ventana {
     //
     //  Lo que se pierde al soltar el borde de arriba es poder reservar sitio
     //  —sin un borde libre el compositor ignora la reserva—, y eso lo hace
-    //  ahora una franja aparte que no pinta ni recoge nada: ver `k4-dual-hueco`
+    //  ahora una franja aparte que no pinta ni recoge nada: ver `k5-dual-hueco`
     //  en el plugin.
     //
     //  `reserva: -1` no es reservar del revés: es saltarse las reservas de los
@@ -206,11 +206,11 @@ K4.Ventana {
     readonly property var listaCajon: {
         const q = _llano(busqueda)
         if (q.length === 0)
-            return K4.Apps.lista
+            return K5.Apps.lista
 
         const casan = []
-        for (let i = 0; i < K4.Apps.lista.length; ++i) {
-            const a = K4.Apps.lista[i]
+        for (let i = 0; i < K5.Apps.lista.length; ++i) {
+            const a = K5.Apps.lista[i]
             const n = _llano(a.name)
             const donde = n.indexOf(q)
             if (donde < 0)
@@ -243,8 +243,8 @@ K4.Ventana {
     readonly property real anchoAhora: semilla
         + Math.max(0, (anchoLleno - semilla) * despliegue)
     //  El alto de la FRANJA del dock —la de los iconos—, sin el cajón.
-    readonly property real altoDock: K4.Tema.altoPlegado
-        + Math.max(0, (alto - K4.Tema.altoPlegado) * despliegue)
+    readonly property real altoDock: K5.Tema.altoPlegado
+        + Math.max(0, (alto - K5.Tema.altoPlegado) * despliegue)
 
     //  Y el alto total de la silueta: el cajón no es un panel aparte, es el
     //  propio dock creciendo hacia arriba. Por eso no lleva borde ni fondo
@@ -535,7 +535,7 @@ K4.Ventana {
 
         ShapePath {
             id: trazo
-            fillColor: K4.Tema.fondo
+            fillColor: K5.Tema.fondo
             strokeWidth: 0
             strokeColor: "transparent"
 
@@ -724,7 +724,7 @@ K4.Ventana {
                         anchors.verticalCenter: parent.verticalCenter
                         width: 1
                         height: muelle.base * 0.7
-                        color: K4.Tema.carril
+                        color: K5.Tema.carril
                         opacity: 0.6
                     }
 
@@ -750,7 +750,7 @@ K4.Ventana {
                         width: 17
                         height: 17
                         radius: 9
-                        color: K4.Tema.azul
+                        color: K5.Tema.azul
                         //  Entra creciendo desde nada: aparece al abrir la
                         //  segunda ventana, y un salto seco ahí se nota.
                         scale: ranura.cuantas > 1 ? 1 : 0
@@ -762,7 +762,7 @@ K4.Ventana {
                             }
                         }
 
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.centerIn: parent
                             text: ranura.cuantas
                             color: "#ffffff"
@@ -780,7 +780,7 @@ K4.Ventana {
                         width: 4
                         height: 4
                         radius: 2
-                        color: K4.Tema.tinta
+                        color: K5.Tema.tinta
                         opacity: 0.75
                     }
 
@@ -821,7 +821,7 @@ K4.Ventana {
                         PauseAnimation { duration: 260 }
                     }
 
-                    K4.Icono {
+                    K5.Icono {
                         id: icono
 
                         //  Crece de TAMAÑO, no con `scale`.
@@ -849,19 +849,19 @@ K4.Ventana {
                         anchors.bottomMargin: 8 + 10 * ranura.cerca + ranura.salto
                         source: ranura.modelData && ranura.modelData.icon
                             && String(ranura.modelData.icon).length > 0
-                            ? K4.Apps.icono(ranura.modelData.icon, true) : ""
+                            ? K5.Apps.icono(ranura.modelData.icon, true) : ""
                         //  El hueco de origen se atenúa mientras el icono va
                         //  con el ratón: así se ve dónde va a caer.
                         opacity: raton.arrastrando ? 0.3 : 1
                     }
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         rotation: -marco.giro
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.bottom: icono.top
                         anchors.bottomMargin: 10 + 12 * ranura.cerca
                         text: ranura.modelData ? (ranura.modelData.name || "") : ""
-                        color: K4.Tema.tinta
+                        color: K5.Tema.tinta
                         font.pixelSize: 11
                         opacity: ranura.cerca > 0.82 ? 1 : 0
                         Behavior on opacity { NumberAnimation { duration: 120 } }
@@ -1076,7 +1076,7 @@ K4.Ventana {
                             //  El negro de la island, no el gris de superficie:
                             //  esto cuelga del dock y tiene que ser la misma
                             //  materia, no un cuadro claro pegado encima.
-                            color: K4.Tema.fondo
+                            color: K5.Tema.fondo
 
                             //  Crece desde el borde de ABAJO —el que toca el
                             //  icono— para que se lea como que sale de él.
@@ -1135,7 +1135,7 @@ K4.Ventana {
 
                                         //  La ventana, ocupando la tarjeta
                                         //  entera: es lo que se viene a mirar.
-                                        K4.Miniatura {
+                                        K5.Miniatura {
                                             id: mini
                                             anchors.fill: parent
                                             anchors.margins: 6
@@ -1147,7 +1147,7 @@ K4.Ventana {
                                         //  fotograma —o si la ventana está en
                                         //  otro escritorio y no la hay— algo
                                         //  tiene que haber ahí.
-                                        K4.Icono {
+                                        K5.Icono {
                                             visible: !mini.hasContent
                                             width: 44
                                             height: 44
@@ -1155,7 +1155,7 @@ K4.Ventana {
                                             source: ranura.modelData
                                                 && ranura.modelData.icon
                                                 && String(ranura.modelData.icon).length > 0
-                                                ? K4.Apps.icono(
+                                                ? K5.Apps.icono(
                                                     ranura.modelData.icon, true) : ""
                                         }
 
@@ -1174,12 +1174,12 @@ K4.Ventana {
                                             height: 26
                                             color: Qt.rgba(0, 0, 0, 0.68)
 
-                                            K4.Etiqueta {
+                                            K5.Etiqueta {
                                                 anchors.fill: parent
                                                 anchors.leftMargin: 8
                                                 anchors.rightMargin: 8
                                                 text: modelData.titulo
-                                                color: K4.Tema.tinta
+                                                color: K5.Tema.tinta
                                                 font.pixelSize: 10
                                                 elide: Text.ElideRight
                                                 verticalAlignment: Text.AlignVCenter
@@ -1221,7 +1221,7 @@ K4.Ventana {
                         //  Sin borde y con el negro de la island: en esta barra
                         //  nada lleva marco, y lo que cuelga del dock es la
                         //  misma materia que él, no un cuadro más claro encima.
-                        color: K4.Tema.fondo
+                        color: K5.Tema.fondo
 
                         //  Y crece desde el borde de abajo, el que toca el
                         //  icono, igual que el selector de ventanas.
@@ -1264,12 +1264,12 @@ K4.Ventana {
                                 //  «quitar del dock» —no está puesta—, lo que
                                 //  se le hace es fijarla.
                                 model: [
-                                    { texto: K4.Idioma.t("Abrir"), quitar: false },
+                                    { texto: K5.Idioma.t("Abrir"), quitar: false },
                                     {
                                         texto: muelle.plugin.estaFijada(
                                             muelle.plugin.idDe(ranura.modelData))
-                                            ? K4.Idioma.t("Quitar del dock")
-                                            : K4.Idioma.t("Mantener en el dock"),
+                                            ? K5.Idioma.t("Quitar del dock")
+                                            : K5.Idioma.t("Mantener en el dock"),
                                         quitar: true
                                     }
                                 ]
@@ -1287,13 +1287,13 @@ K4.Ventana {
                                         ColorAnimation { duration: 110 }
                                     }
 
-                                    K4.Etiqueta {
+                                    K5.Etiqueta {
                                         anchors.verticalCenter: parent.verticalCenter
                                         anchors.left: parent.left
                                         anchors.leftMargin: 10
                                         text: modelData.texto
                                         color: modelData.quitar
-                                            ? K4.Tema.rojo : K4.Tema.tinta
+                                            ? K5.Tema.rojo : K5.Tema.tinta
                                         font.pixelSize: 12
                                     }
 
@@ -1335,7 +1335,7 @@ K4.Ventana {
                     anchors.centerIn: parent
                     width: 1
                     height: muelle.base * 0.7
-                    color: K4.Tema.carril
+                    color: K5.Tema.carril
                     opacity: 0.6
                 }
             }
@@ -1353,7 +1353,7 @@ K4.Ventana {
                 //  y abajo, así que salía más pequeño que los iconos y apoyado
                 //  más abajo. Dándole la misma caja que ellos y centrándolo
                 //  dentro, se alinea solo.
-                K4.Glifo {
+                K5.Glifo {
                     id: glifoCajon
                     width: muelle.base * (1 + 0.62 * cajonRaton.cerca)
                     height: width
@@ -1367,15 +1367,15 @@ K4.Ventana {
                     //  por nombre; de memoria salen mal.
                     text: String.fromCodePoint(0xF003B)
                     font.pixelSize: glifoCajon.height * 0.88
-                    color: K4.Tema.tinta
+                    color: K5.Tema.tinta
                 }
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: glifoCajon.top
                     anchors.bottomMargin: 10
-                    text: K4.Idioma.t("Aplicaciones")
-                    color: K4.Tema.tinta
+                    text: K5.Idioma.t("Aplicaciones")
+                    color: K5.Tema.tinta
                     font.pixelSize: 11
                     opacity: (!muelle.cajon && cajonRaton.cerca > 0.82) ? 1 : 0
                     Behavior on opacity { NumberAnimation { duration: 120 } }
@@ -1452,17 +1452,17 @@ K4.Ventana {
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width * 0.82
             height: 1
-            color: K4.Tema.carril
+            color: K5.Tema.carril
             opacity: 0.55
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: tituloCajon
             anchors.top: parent.top
             anchors.topMargin: 14
             anchors.horizontalCenter: parent.horizontalCenter
-            text: K4.Idioma.t("Arrastra al dock la que quieras tener a mano")
-            color: K4.Tema.apagado
+            text: K5.Idioma.t("Arrastra al dock la que quieras tener a mano")
+            color: K5.Tema.apagado
             font.pixelSize: 11
             //  Se calla en cuanto se escribe: su sitio lo ocupa la búsqueda.
             opacity: muelle.busqueda.length > 0 ? 0 : 1
@@ -1486,7 +1486,7 @@ K4.Ventana {
             width: Math.min(parent.width - 40, 420)
             height: 30
             radius: height / 2
-            color: K4.Tema.superficie
+            color: K5.Tema.superficie
 
             transform: Scale {
                 origin.x: buscador.width / 2
@@ -1495,11 +1495,11 @@ K4.Ventana {
                 yScale: 0.4 + 0.6 * buscador.escala
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.centerIn: parent
                 width: parent.width - 28
                 text: muelle.busqueda
-                color: K4.Tema.tinta
+                color: K5.Tema.tinta
                 font.pixelSize: 12
                 elide: Text.ElideLeft
                 horizontalAlignment: Text.AlignHCenter
@@ -1581,7 +1581,7 @@ K4.Ventana {
                             }
                         }
 
-                        K4.Icono {
+                        K5.Icono {
                             id: icoCelda
                             width: 38
                             height: 38
@@ -1590,17 +1590,17 @@ K4.Ventana {
                             anchors.topMargin: 8
                             source: celda.modelData && celda.modelData.icon
                                 && String(celda.modelData.icon).length > 0
-                                ? K4.Apps.icono(celda.modelData.icon, true) : ""
+                                ? K5.Apps.icono(celda.modelData.icon, true) : ""
                             opacity: tirar.arrastrando ? 0.35 : 1
                         }
 
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.top: icoCelda.bottom
                             anchors.topMargin: 6
                             anchors.horizontalCenter: parent.horizontalCenter
                             width: parent.width - 6
                             text: celda.modelData ? (celda.modelData.name || "") : ""
-                            color: K4.Tema.apagado
+                            color: K5.Tema.apagado
                             font.pixelSize: 10
                             elide: Text.ElideRight
                             horizontalAlignment: Text.AlignHCenter
@@ -1663,7 +1663,7 @@ K4.Ventana {
     }
 
     //  Lo que se ve viajando con el dedo mientras se arrastra.
-    K4.Icono {
+    K5.Icono {
         id: fantasma
         property var fuente: null
         visible: fuente !== null
@@ -1673,7 +1673,7 @@ K4.Ventana {
         z: 10
         opacity: 0.92
         source: fuente && fuente.icon && String(fuente.icon).length > 0
-            ? K4.Apps.icono(fuente.icon, true) : ""
+            ? K5.Apps.icono(fuente.icon, true) : ""
     }
 
     property real ratonX: -9999

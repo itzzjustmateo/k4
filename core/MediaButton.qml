@@ -1,8 +1,8 @@
-//  Capa fina sobre K4.Boton — ver core/IconGlyph.qml. Solo traduce nombres.
+//  Capa fina sobre K5.Boton — ver core/IconGlyph.qml. Solo traduce nombres.
 
-import K4 as K4
+import K5 as K5
 
-K4.Boton {
+K5.Boton {
     id: control
 
     property alias glyph: control.glifo

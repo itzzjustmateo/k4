@@ -4,7 +4,7 @@
 //  justo lo que hace que valga la pena mirarlo.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -129,7 +129,7 @@ Item {
 
         //  El renglón, dentro de la misma columna: así el hueco lo reparte
         //  el layout y no dos anclajes que no se conocen.
-        K4.Etiqueta {
+        K5.Etiqueta {
             id: renglon
             width: parent.width
             horizontalAlignment: Text.AlignHCenter

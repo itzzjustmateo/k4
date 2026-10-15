@@ -1,17 +1,17 @@
 //  Snake en la island: la prueba de que con la API pública se hacen juegos.
 //
-//  Todo el juego está escrito contra K4 y QtQuick, nada más: el tablero es un
+//  Todo el juego está escrito contra K5 y QtQuick, nada más: el tablero es un
 //  estado en el plugin, el tick un Timer, el control las flechas —con el
-//  teclado en exclusiva solo mientras se juega— y el récord un K4.Guardado.
+//  teclado en exclusiva solo mientras se juega— y el récord un K5.Guardado.
 //
-//      cp -r examples/snake ~/.config/k4/plugins/
-//      quickshell ipc -p …/shell.qml call k4 pluginEnable snake
-//      quickshell ipc -p …/shell.qml call k4.snake toggle
+//      cp -r examples/snake ~/.config/k5/plugins/
+//      quickshell ipc -p …/shell.qml call k5 pluginEnable snake
+//      quickshell ipc -p …/shell.qml call k5.snake toggle
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Plugin {
+K5.Plugin {
     id: self
 
     name: "snake"
@@ -51,7 +51,7 @@ K4.Plugin {
 
     view: Component { SnakeView { plugin: self } }
 
-    property var guardado: K4.Guardado {
+    property var guardado: K5.Guardado {
         plugin: "snake"
         onCargado: function (d) { self.record = d.record || 0 }
     }
@@ -128,8 +128,8 @@ K4.Plugin {
         onTriggered: self.tick()
     }
 
-    K4.Ipc {
-        target: "k4.snake"
+    K5.Ipc {
+        target: "k5.snake"
         function toggle(): void { self.abierto = !self.abierto }
         function close(): void { self.abierto = false; self.enMarcha = false }
         //  Para poder probar el juego sin ratón ni ventana: empezar, girar y

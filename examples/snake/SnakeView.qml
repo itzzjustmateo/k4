@@ -5,7 +5,7 @@
 //  mirando el estado — sin repintados a mano ni contexto 2D.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
 Item {
     id: vista
@@ -44,17 +44,17 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 18
 
-            K4.Etiqueta {
-                text: K4.Idioma.f(K4.Idioma.t("Puntos %1"),
+            K5.Etiqueta {
+                text: K5.Idioma.f(K5.Idioma.t("Puntos %1"),
                                   vista.plugin.puntos)
                 font.pixelSize: 13
                 font.weight: Font.DemiBold
             }
 
-            K4.Etiqueta {
-                text: K4.Idioma.f(K4.Idioma.t("Récord %1"),
+            K5.Etiqueta {
+                text: K5.Idioma.f(K5.Idioma.t("Récord %1"),
                                   vista.plugin.record)
-                color: K4.Tema.apagado
+                color: K5.Tema.apagado
                 font.pixelSize: 13
             }
         }
@@ -64,7 +64,7 @@ Item {
             width: vista.plugin.ancho * vista.celda + 2
             height: vista.plugin.alto * vista.celda + 2
             radius: 6
-            color: K4.Tema.superficie
+            color: K5.Tema.superficie
             border.width: 1
             border.color: Qt.rgba(1, 1, 1, 0.1)
 
@@ -83,13 +83,13 @@ Item {
                     height: vista.celda - 2
                     radius: 5
 
-                    color: puesto === 0 ? K4.Tema.verde
+                    color: puesto === 0 ? K5.Tema.verde
                          : puesto > 0
                            //  El cuerpo se apaga hacia la cola: se ve por
                            //  dónde va sin tener que adivinarlo.
-                           ? Qt.darker(K4.Tema.verde,
+                           ? Qt.darker(K5.Tema.verde,
                                        1 + puesto / vista.plugin.serpiente.length)
-                         : index === vista.plugin.comida ? K4.Tema.rojo
+                         : index === vista.plugin.comida ? K5.Tema.rojo
                          : "transparent"
 
                     visible: color !== "transparent"
@@ -107,20 +107,20 @@ Item {
                     anchors.centerIn: parent
                     spacing: 6
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: vista.plugin.muerto
-                            ? K4.Idioma.f(K4.Idioma.t("Fin · %1 puntos"),
+                            ? K5.Idioma.f(K5.Idioma.t("Fin · %1 puntos"),
                                           vista.plugin.puntos)
                             : "Snake"
                         font.pixelSize: 18
                         font.weight: Font.Bold
                     }
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: K4.Idioma.t("Espacio para jugar · flechas o WASD")
-                        color: K4.Tema.apagado
+                        text: K5.Idioma.t("Espacio para jugar · flechas o WASD")
+                        color: K5.Tema.apagado
                         font.pixelSize: 11
                     }
                 }

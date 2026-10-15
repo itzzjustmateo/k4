@@ -267,14 +267,14 @@ Singleton {
 
     // ── persistencia ──────────────────────────────────────────────
     //  El depósito sobrevive a reiniciar la barra: lo gastaste, es tuyo.
-    readonly property string ruta: Quickshell.env("HOME") + "/.local/state/k4/tokens.json"
+    readonly property string ruta: Quickshell.env("HOME") + "/.local/state/k5/tokens.json"
     property bool cargado: false
     property bool sucio: false
 
     FileView { id: vista; path: tokens.ruta; blockLoading: true }
 
     Process {
-        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k4"]
+        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k5"]
         running: true
         onExited: tokens.cargar()
     }

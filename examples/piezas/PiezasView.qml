@@ -1,12 +1,12 @@
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Aparicion {
+K5.Aparicion {
     id: vista
 
     required property var plugin
 
-    K4.Rodillo {
+    K5.Rodillo {
         anchors.fill: parent
         anchors.margins: 14
 
@@ -14,8 +14,8 @@ K4.Aparicion {
             width: parent.width
             spacing: 14
 
-            K4.Etiqueta {
-                text: K4.Idioma.t("Piezas de la API")
+            K5.Etiqueta {
+                text: K5.Idioma.t("Piezas de la API")
                 font.pixelSize: 15
                 font.weight: Font.Bold
             }
@@ -25,20 +25,20 @@ K4.Aparicion {
                 width: parent.width
                 spacing: 10
 
-                K4.Glifo {
+                K5.Glifo {
                     text: "󰛨"  // md-lightbulb_on
-                    color: vista.plugin.encendido ? K4.Tema.amarillo
-                                                  : K4.Tema.tenue
+                    color: vista.plugin.encendido ? K5.Tema.amarillo
+                                                  : K5.Tema.tenue
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
-                K4.Etiqueta {
-                    text: K4.Idioma.t("Interruptor")
+                K5.Etiqueta {
+                    text: K5.Idioma.t("Interruptor")
                     width: parent.width - 100
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
-                K4.Interruptor {
+                K5.Interruptor {
                     marcado: vista.plugin.encendido
                     anchors.verticalCenter: parent.verticalCenter
                     //  No cambia solo: manda el plugin.
@@ -47,9 +47,9 @@ K4.Aparicion {
             }
 
             // ── Deslizador ────────────────────────────────────────
-            K4.Deslizador {
+            K5.Deslizador {
                 width: parent.width
-                etiqueta: K4.Idioma.t("Deslizador")
+                etiqueta: K5.Idioma.t("Deslizador")
                 valor: vista.plugin.nivel
                 sufijo: "%"
                 onMovido: function (v) { vista.plugin.nivel = v }
@@ -61,26 +61,26 @@ K4.Aparicion {
                 width: parent.width
                 spacing: 10
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     width: 70
                     anchors.verticalCenter: parent.verticalCenter
-                    text: K4.Idioma.t("Medidor")
-                    color: K4.Tema.apagado
+                    text: K5.Idioma.t("Medidor")
+                    color: K5.Tema.apagado
                     font.pixelSize: 11
                 }
 
-                K4.Medidor {
+                K5.Medidor {
                     width: parent.width - 118
                     anchors.verticalCenter: parent.verticalCenter
                     valor: vista.plugin.nivel
                     maximo: 100
-                    tono: valor >= 85 ? K4.Tema.rojo
-                        : valor >= 60 ? K4.Tema.amarillo : K4.Tema.verde
+                    tono: valor >= 85 ? K5.Tema.rojo
+                        : valor >= 60 ? K5.Tema.amarillo : K5.Tema.verde
                     //  Con 3, un valor diminuto se sigue viendo.
                     minimo: 3
                 }
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     width: 38
                     anchors.verticalCenter: parent.verticalCenter
                     text: Math.round(vista.plugin.nivel) + "%"
@@ -93,7 +93,7 @@ K4.Aparicion {
             Row {
                 spacing: 10
 
-                K4.Baldosa {
+                K5.Baldosa {
                     width: 150
                     height: 66
                     activa: vista.plugin.baldosaActiva
@@ -103,31 +103,31 @@ K4.Aparicion {
                         anchors.centerIn: parent
                         spacing: 2
 
-                        K4.Glifo {
+                        K5.Glifo {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "󰖩"  // md-wifi
                             font.pixelSize: 20
-                            color: vista.plugin.baldosaActiva ? K4.Tema.azul
-                                                              : K4.Tema.apagado
+                            color: vista.plugin.baldosaActiva ? K5.Tema.azul
+                                                              : K5.Tema.apagado
                         }
-                        K4.Etiqueta {
+                        K5.Etiqueta {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: vista.plugin.baldosaActiva
-                                ? K4.Idioma.t("Activa") : K4.Idioma.t("Baldosa")
+                                ? K5.Idioma.t("Activa") : K5.Idioma.t("Baldosa")
                             font.pixelSize: 11
                         }
                     }
                 }
 
-                K4.Baldosa {
+                K5.Baldosa {
                     width: 150
                     height: 66
                     pulsable: false
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.centerIn: parent
-                        text: K4.Idioma.t("No pulsable")
-                        color: K4.Tema.apagado
+                        text: K5.Idioma.t("No pulsable")
+                        color: K5.Tema.apagado
                         font.pixelSize: 11
                     }
                 }
@@ -137,25 +137,25 @@ K4.Aparicion {
             Row {
                 spacing: 4
 
-                K4.Boton {
+                K5.Boton {
                     glifo: "󰒮"  // md-skip_previous
                     activo: false                  // apagado, no escondido
                 }
-                K4.Boton {
+                K5.Boton {
                     glifo: "󰐊"  // md-play
                     tamano: 24
                     onPulsado: vista.plugin.pulsaciones += 1
                 }
-                K4.Boton {
+                K5.Boton {
                     glifo: "󰒭"  // md-skip_next
                     onPulsado: vista.plugin.pulsaciones += 1
                 }
 
-                K4.Etiqueta {
+                K5.Etiqueta {
                     anchors.verticalCenter: parent.verticalCenter
-                    text: K4.Idioma.f(K4.Idioma.t("%1 pulsaciones"),
+                    text: K5.Idioma.f(K5.Idioma.t("%1 pulsaciones"),
                                       vista.plugin.pulsaciones)
-                    color: K4.Tema.apagado
+                    color: K5.Tema.apagado
                     font.pixelSize: 11
                 }
             }
@@ -164,44 +164,44 @@ K4.Aparicion {
             //
             //  Va de `cursorDelegate` y ya: el campo lo coloca, la pieza
             //  decide cómo se pinta. Escribe aquí y mira el rastro.
-            K4.Etiqueta {
-                text: K4.Idioma.t("Estela — escribe y mira el cursor")
+            K5.Etiqueta {
+                text: K5.Idioma.t("Estela — escribe y mira el cursor")
                 font.pixelSize: 11
-                color: K4.Tema.apagado
+                color: K5.Tema.apagado
             }
 
             Rectangle {
                 width: parent.width
                 height: 34
                 radius: 10
-                color: K4.Tema.superficie
+                color: K5.Tema.superficie
 
                 TextInput {
                     anchors.fill: parent
                     anchors.leftMargin: 12
                     anchors.rightMargin: 12
                     verticalAlignment: TextInput.AlignVCenter
-                    color: K4.Tema.tinta
+                    color: K5.Tema.tinta
                     font.pixelSize: 13
                     selectByMouse: true
                     cursorVisible: true
-                    cursorDelegate: K4.Estela {}
-                    text: K4.Idioma.t("escribe algo")
+                    cursorDelegate: K5.Estela {}
+                    text: K5.Idioma.t("escribe algo")
                 }
             }
 
             // ── Relleno, para que haya algo que rodar ─────────────
             Repeater {
                 model: 6
-                delegate: K4.Baldosa {
+                delegate: K5.Baldosa {
                     required property int index
                     width: parent.width
                     height: 44
 
-                    K4.Etiqueta {
+                    K5.Etiqueta {
                         anchors.verticalCenter: parent.verticalCenter
                         x: 12
-                        text: K4.Idioma.f(K4.Idioma.t("Fila %1 · mueve la rueda"),
+                        text: K5.Idioma.f(K5.Idioma.t("Fila %1 · mueve la rueda"),
                                           index + 1)
                         font.pixelSize: 12
                     }

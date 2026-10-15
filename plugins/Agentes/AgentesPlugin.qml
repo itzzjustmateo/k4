@@ -16,7 +16,7 @@
 //  cada medio minuto toda la sesión para eso no se paga.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -139,11 +139,11 @@ K4Plugin {
     //  que es correcta pero va con horas de retraso.
     property bool enVivo: true
 
-    K4.Process {
+    K5.Process {
         id: lector
         command: self.enVivo
-            ? ["python3", K4.Paths.guion("agents.py")]
-            : ["python3", K4.Paths.guion("agents.py"), "--sin-red"]
+            ? ["python3", K5.Paths.guion("agents.py")]
+            : ["python3", K5.Paths.guion("agents.py"), "--sin-red"]
 
         onSalida: function (texto) {
             try {
@@ -190,12 +190,12 @@ K4Plugin {
     function pintarAviso() {
         if (!aprieta) {
             if (_avisoPuesto) {
-                K4.Pildora.quitar("agents.limite")
+                K5.Pildora.quitar("agents.limite")
                 _avisoPuesto = false
             }
             return
         }
-        K4.Pildora.registrar("agents.limite", Math.round(apurado.pct) + "%",
+        K5.Pildora.registrar("agents.limite", Math.round(apurado.pct) + "%",
                              0xF06A9,
                              apurado.pct >= 95 ? Theme.red : Theme.yellow,
                              75, true)
@@ -206,7 +206,7 @@ K4Plugin {
     onApuradoChanged: pintarAviso()
 
     Connections {
-        target: K4.Pildora
+        target: K5.Pildora
         function onInvocado(id) {
             if (id === "agents.limite" && !self.abierto)
                 self.toggle()
@@ -215,7 +215,7 @@ K4Plugin {
 
     // ── lo que el usuario decide ──────────────────────────────────
 
-    property var guardado: K4.Guardado {
+    property var guardado: K5.Guardado {
         plugin: "agents"
         onCargado: function (d) {
             if (d.avisar !== undefined) self.avisar = d.avisar === true
@@ -228,7 +228,7 @@ K4Plugin {
         guardado.guardar({ avisar: avisar, umbral: umbral, enVivo: enVivo })
     }
 
-    K4.Ajustes {
+    K5.Ajustes {
         plugin: "agents"
         grupo: Idioma.t("Agentes")
         opciones: [
@@ -260,8 +260,8 @@ K4Plugin {
         }
     }
 
-    K4.Ipc {
-        target: "k4.agents"
+    K5.Ipc {
+        target: "k5.agents"
         function toggle(): void { self.toggle() }
         function close(): void { self.close() }
         function refrescar(): void { self.refrescar() }
@@ -269,7 +269,7 @@ K4Plugin {
 
     //  Buscar «claude» o «límites» en el lanzador tiene que traer esto: es lo
     //  que uno escribe cuando la pregunta es «¿cuánto me queda?».
-    K4.Lanzador {
+    K5.Lanzador {
         plugin: "agents"
         onBuscando: function (texto) {
             const t = texto.toLowerCase()

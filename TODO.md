@@ -1,6 +1,6 @@
 # TODO
 
-Possible additions and polish for k4. Items are unordered; pick whatever looks fun.
+Possible additions and polish for k5. Items are unordered; pick whatever looks fun.
 
 ## Wallpaper / backgrounds
 

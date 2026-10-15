@@ -29,7 +29,7 @@ import subprocess
 import sys
 import time
 
-BASE = os.path.expanduser("~/.local/state/k4/portapapeles")
+BASE = os.path.expanduser("~/.local/state/k5/portapapeles")
 DATOS = os.path.join(BASE, "datos")
 INDICE = os.path.join(BASE, "indice.json")
 

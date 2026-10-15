@@ -45,7 +45,7 @@ APARATOS = DATOS / "sprites-aparatos.json"
 SALIDA = DATOS / "sprites.json"
 
 BASE = "https://wikimon.net/images/"
-AGENTE = "k4-digivice/1.0 (herramienta de mantenimiento; solo lectura)"
+AGENTE = "k5-digivice/1.0 (herramienta de mantenimiento; solo lectura)"
 
 #  A partir de qué proporción de píxeles con cromatismo se considera color.
 #  Los monocromos miden 0.0 clavado y los de color pasan del 40 %, así que

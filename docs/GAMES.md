@@ -1,6 +1,6 @@
 # Creating a game plugin
 
-A k4 game is a visual plugin backed by a persistent simulation. Keep the game
+A k5 game is a visual plugin backed by a persistent simulation. Keep the game
 state separate from the interface:
 
 ```text
@@ -23,7 +23,7 @@ Declare the service as a singleton in `services/MyGame.qml`:
 ```qml
 pragma Singleton
 import QtQuick
-import K4 as K4
+import K5 as K5
 import Quickshell
 import Quickshell.Io
 
@@ -34,7 +34,7 @@ Singleton {
     property int gold: 0
     property bool running: false
     property real lastTick: 0
-    readonly property string path: K4.Paths.estado + "/my-game.json"
+    readonly property string path: K5.Paths.estado + "/my-game.json"
 
     signal waveCleared(int number)
 
@@ -57,7 +57,7 @@ Singleton {
         }, null, 2))
     }
 
-    K4.Fichero { id: state; path: game.path; blockLoading: true }
+    K5.Fichero { id: state; path: game.path; blockLoading: true }
 }
 ```
 
@@ -78,7 +78,7 @@ The plugin opens and closes the UI but does not contain the rules:
 
 ```qml
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -102,8 +102,8 @@ K4Plugin {
             panel.close()
     }
 
-    K4.Ipc {
-        target: "k4.my-game"
+    K5.Ipc {
+        target: "k5.my-game"
         function toggle(): void { self.toggle() }
         function nueva(): void { MyGame.nuevaPartida() }
         function ver(name: string): void {
@@ -147,7 +147,7 @@ The simulation must remain deterministic and independent from QML animations.
 An idle game should report progress while closed:
 
 ```qml
-Component.onCompleted: K4.Pildora.registrar(
+Component.onCompleted: K5.Pildora.registrar(
     "my-game.status", "wave 1", 0xF04E5, "#bf5af2", 64, true)
 ```
 
@@ -158,11 +158,11 @@ in `services/Settings.qml`, not in the view.
 ## Stage effects
 
 A game earns a lot of feel from the bar itself. Tint the ambience for a boss
-or a season (`K4.Tema.tintar`), shake the island on a critical hit or tug it
-when a fish bites (`K4.Isla.efecto`), or let something physically peek out
-of the island with a `K4.Ventana` anchored to `K4.Isla.rect` — and slide the
-whole island along its edge for a scene with `K4.Isla.colocar`. Read
-`K4.Isla.posicion` instead of assuming the bar lives at the top.
+or a season (`K5.Tema.tintar`), shake the island on a critical hit or tug it
+when a fish bites (`K5.Isla.efecto`), or let something physically peek out
+of the island with a `K5.Ventana` anchored to `K5.Isla.rect` — and slide the
+whole island along its edge for a scene with `K5.Isla.colocar`. Read
+`K5.Isla.posicion` instead of assuming the bar lives at the top.
 
 Spend these at the moments that matter. The bar is sober the rest of the
 time, and that restraint is what makes the effect land.

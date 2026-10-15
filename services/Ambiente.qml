@@ -22,7 +22,7 @@ import "../core"
 Singleton {
     id: ambiente
 
-    readonly property string carpeta: Quickshell.env("HOME") + "/.local/state/k4"
+    readonly property string carpeta: Quickshell.env("HOME") + "/.local/state/k5"
     readonly property string ruta: carpeta + "/tema.json"
 
     //  Un solo centinela para todo el ambiente: los cuatro colores del andamio

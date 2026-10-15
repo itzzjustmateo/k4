@@ -2,7 +2,7 @@
   "_meta": {
     "idioma": "Russian",
     "codigo": "ru",
-    "traducido por": "k4",
+    "traducido por": "k5",
     "cómo": "Пустые значения заменяются исходным текстом на испанском."
   },
   " GB": " ГБ",
@@ -283,7 +283,7 @@
   "Golpea y se cura con ello": "Наносит удар и исцеляется",
   "Golpes certeros": "Точные удары",
   "Golpes que saltan de uno a otro": "Удары, перескакивающие от одного к другому",
-  "Guardado en config/k4-theme.lua · sobrevive al reinicio": "Сохранено в config/k4-theme.lua · останется после перезагрузки",
+  "Guardado en config/k5-theme.lua · sobrevive al reinicio": "Сохранено в config/k5-theme.lua · останется после перезагрузки",
   "Guardar": "Сохранить",
   "Guardián": "Страж",
   "Hacia el borde izquierdo o el derecho de la pantalla": "К левому или правому краю экрана",

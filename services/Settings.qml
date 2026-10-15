@@ -13,7 +13,7 @@ import Quickshell.Io
 Singleton {
     id: ajustes
 
-    readonly property string ruta: Quickshell.env("HOME") + "/.local/state/k4/ajustes.json"
+    readonly property string ruta: Quickshell.env("HOME") + "/.local/state/k5/ajustes.json"
 
     // ── idioma ────────────────────────────────────────────────────
     // "auto" sigue al del sistema. services/Idioma.qml lo lee.
@@ -42,7 +42,7 @@ Singleton {
     property bool juegoPorTokens: false
 
     // ── datos personales ──────────────────────────────────────────
-    //  La doble llave de K4.Huella: el plugin declara `datos-personales` en
+    //  La doble llave de K5.Huella: el plugin declara `datos-personales` en
     //  su manifiesto Y el usuario enciende aquí cada fuente. TODO apagado de
     //  fábrica: los datos personales no se presumen.
     property bool huellaActiva: false
@@ -82,14 +82,14 @@ Singleton {
     // ── barra ─────────────────────────────────────────────────────
     //  En qué borde vive la barra. shell.qml ancla la ventana, voltea la
     //  silueta y orienta los gestos con esto; los plugins lo leen por
-    //  K4.Isla.posicion para adaptar lo que pinten fuera.
+    //  K5.Isla.posicion para adaptar lo que pinten fuera.
     //  En los laterales la píldora se pone de canto: gira su contenido un
     //  cuarto de vuelta en vez de reinventarlo. Las vistas que se ABREN no
     //  giran nunca — ver `colocacionVistas`.
     property string posicionBarra: "arriba"     // arriba · abajo · izquierda · derecha
     //  En qué punto del borde se centra la island, en tanto por ciento del
     //  ancho libre: 50 es el centro de siempre. Un plugin puede desplazarla
-    //  TEMPORALMENTE con K4.Isla.colocar; esto es la base a la que vuelve.
+    //  TEMPORALMENTE con K5.Isla.colocar; esto es la base a la que vuelve.
     property int alineacionBarra: 50            // 15 · 50 · 85
     //  Qué hace la barra con el sitio del escritorio.
     //
@@ -125,7 +125,7 @@ Singleton {
     }
 
     //  −1 cuando la vista no dice nada: entonces manda la de la barra, con lo
-    //  que un plugin pueda estar pidiendo por `K4.Isla.colocar`.
+    //  que un plugin pueda estar pidiendo por `K5.Isla.colocar`.
     function alineacionDe(id) {
         const c = colocacionVistas[id]
         if (!c || c.alineacion === undefined)
@@ -196,7 +196,7 @@ Singleton {
         {
             //  El asa ESTABLE de cada sección, la que no cambia de
             //  idioma. `grupo` se traduce, así que atar una tecla a él
-            //  («k4 settingsSection Apariencia») deja de funcionar en
+            //  («k5 settingsSection Apariencia») deja de funcionar en
             //  cuanto la barra habla otra lengua: con la barra en inglés
             //  el grupo se llama «Appearance» y el atajo no abría nada.
             //  Esto no se enseña, solo se nombra.
@@ -456,7 +456,7 @@ Singleton {
             vista: "plugins",
             opciones: PluginManager.opcionesAjustes
         }
-    //  Y al final, lo que aporten los plugins con K4.Ajustes. Van los
+    //  Y al final, lo que aporten los plugins con K5.Ajustes. Van los
     //  últimos a propósito: lo de la barra primero, y lo instalado después,
     //  que es el orden en que la gente busca.
     ].concat(Enganches.gruposAjustes)
@@ -602,7 +602,7 @@ Singleton {
     FileView { id: vista; path: ajustes.ruta; blockLoading: true }
 
     Process {
-        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k4"]
+        command: ["mkdir", "-p", Quickshell.env("HOME") + "/.local/state/k5"]
         running: true
         onExited: ajustes.cargar()
     }

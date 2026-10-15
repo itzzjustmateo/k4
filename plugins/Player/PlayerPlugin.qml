@@ -3,7 +3,7 @@
 //  asoma solo unos segundos cuando cambia la canción.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -91,7 +91,7 @@ K4Plugin {
     //  comportamiento de siempre.
     function close() { self.asomando = false }
 
-    K4.Ajustes {
+    K5.Ajustes {
         plugin: "player"
         grupo: Idioma.t("Reproductor")
         opciones: [
@@ -109,7 +109,7 @@ K4Plugin {
         }
     }
 
-    property var guardado: K4.Guardado {
+    property var guardado: K5.Guardado {
         plugin: "player"
         onCargado: function (d) {
             if (d && d.asomarAlCambiar !== undefined)

@@ -10,7 +10,7 @@
 //  se ha mudado es traer, actualizar y quitar.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -34,7 +34,7 @@ K4Plugin {
     //
     //  Es lo mismo que declaran Ajustes, Portapapeles y Sistema, y por la
     //  misma razón: esto se abre, se mira y se cierra. Está escrito en
-    //  `tecladoOpcional`, en api/K4/Plugin.qml, y aun así me lo salté.
+    //  `tecladoOpcional`, en api/K5/Plugin.qml, y aun así me lo salté.
     grabKeyboard: abierto
 
     //  Grande a propósito: se listan plugins con descripción, permisos y
@@ -50,8 +50,8 @@ K4Plugin {
     //  Sin `close()` el ESC no cierra: el host cierra llamándola.
     function close() { abierto = false }
 
-    K4.Ipc {
-        target: "k4.tienda"
+    K5.Ipc {
+        target: "k5.tienda"
         function toggle(): void { self.toggle() }
         function abrir(): void { self.abrir() }
         function close(): void { self.close() }

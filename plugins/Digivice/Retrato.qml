@@ -7,7 +7,7 @@
 //  "todavía no", que es la verdad.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -29,15 +29,15 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: 12
-        color: K4.Tema.superficieAlta
+        color: K5.Tema.superficieAlta
         visible: retrato.status !== Image.Ready
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.centerIn: parent
             text: self.ficha ? self.ficha.n.charAt(0) : "?"
             font.pixelSize: self.lado * 0.4
             font.weight: Font.Bold
-            color: K4.Tema.tenue
+            color: K5.Tema.tenue
         }
     }
 

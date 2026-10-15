@@ -23,7 +23,7 @@
 //  Uno cada vez se pasan con A. B se lo cambia al que lleva.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -101,14 +101,14 @@ Item {
         spacing: 6
         visible: self.total > 0
 
-        K4.Glifo {
+        K5.Glifo {
             anchors.verticalCenter: parent.verticalCenter
             text: "\u{F0827}"
             font.pixelSize: 13
             color: "#7de08a"
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.verticalCenter: parent.verticalCenter
             text: Idioma.f(Idioma.t("Guardería  ·  %1 dentro"), self.total)
             font.pixelSize: 12
@@ -238,7 +238,7 @@ Item {
         spacing: 0
         visible: self.ficha !== null
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: self.ficha ? self.ficha.n : ""
@@ -248,7 +248,7 @@ Item {
             elide: Text.ElideRight
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             //  Lo que de verdad interesa de uno que está en la banca: en qué
@@ -260,7 +260,7 @@ Item {
             color: "#9fd8ae"
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: (self.indice + 1) + " / " + self.total
@@ -277,14 +277,14 @@ Item {
         spacing: 6
         visible: self.ficha === null
 
-        K4.Glifo {
+        K5.Glifo {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "\u{F0827}"
             font.pixelSize: 30
             color: "#2f5a3c"
         }
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.WordWrap

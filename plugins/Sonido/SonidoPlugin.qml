@@ -13,7 +13,7 @@
 //  cacharro, que Pipewire no publica—, una vez al abrir.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -60,8 +60,8 @@ K4Plugin {
 
     function close() { abierto = false }
 
-    K4.Ipc {
-        target: "k4.sonido"
+    K5.Ipc {
+        target: "k5.sonido"
         function toggle(): void { self.toggle() }
         function close(): void { self.close() }
     }

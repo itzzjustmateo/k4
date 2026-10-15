@@ -15,7 +15,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import K4 as K4
+import K5 as K5
 import "../../core"
 import "../../services"
 
@@ -209,7 +209,7 @@ FadeIn {
             Repeater {
                 model: [Idioma.t("Instalados"), Idioma.t("Descubrir")]
 
-                K4.Baldosa {
+                K5.Baldosa {
                     required property int index
                     required property string modelData
 
@@ -301,7 +301,7 @@ FadeIn {
                     }
 
                     //  Borrar lo escrito sin tener que mantener el borrado.
-                    K4.Baldosa {
+                    K5.Baldosa {
                         visible: campo.text.length > 0
                         Layout.preferredWidth: 20
                         Layout.preferredHeight: 20
@@ -325,7 +325,7 @@ FadeIn {
 
             //  Refrescar. En «Descubrir» vuelve a pedir el registro; en
             //  «Instalados», a preguntar si hay algo más nuevo.
-            K4.Baldosa {
+            K5.Baldosa {
                 Layout.preferredWidth: 30
                 Layout.preferredHeight: 30
                 radius: 15
@@ -423,7 +423,7 @@ FadeIn {
 
             ScrollBar.vertical: IslandScrollBar {}
 
-            delegate: K4.Baldosa {
+            delegate: K5.Baldosa {
                 id: fila
                 required property var modelData
 

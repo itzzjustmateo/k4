@@ -242,7 +242,7 @@ Item {
                     //
                     //  Se intentó por el nodo de Pipewire, que sí pasa de 1, y se
                     //  descartó: WirePlumber PERSISTE el volumen por aplicación,
-                    //  así que dejar los nodos de k4 a 3× los deja a 3× también
+                    //  así que dejar los nodos de k5 a 3× los deja a 3× también
                     //  en el próximo arranque. Matar la barra con la ganancia
                     //  puesta —que aquí se hace a diario— la grababa para siempre.
                     //  Y por último el agachado, que multiplica: primero

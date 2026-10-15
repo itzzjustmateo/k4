@@ -34,21 +34,21 @@
 //  ratón señalaría un sitio y pulsaría otro.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "lente.js" as Lente
 
-K4.Ventana {
+K5.Ventana {
     id: capa
 
     required property var plugin
 
-    nombre: "k4-atalaya"
+    nombre: "k5-atalaya"
     pantalla: plugin.monitor
     capa: "encima"
 
     //  El teclado, mientras esté delante.
     //
-    //  Y a diferencia de un juego, esto NO se ata a `K4.Isla.aLaVista`: la
+    //  Y a diferencia de un juego, esto NO se ata a `K5.Isla.aLaVista`: la
     //  island no pinta nada de aquí, así que si está retirada —el modo oculto
     //  es un ajuste, no una avería— no dice nada sobre esta ventana, y atarlo
     //  dejaría el selector sin ESC justo en ese modo. La red de seguridad es
@@ -430,7 +430,7 @@ K4.Ventana {
 
     Component.onCompleted: {
         //  El plugin no puede alcanzar la vista por su cuenta —vive dentro de
-        //  un `K4.Cargador`— así que la vista se presenta. Es lo que permite
+        //  un `K5.Cargador`— así que la vista se presenta. Es lo que permite
         //  que `elegir` por IPC haga exactamente lo mismo que un clic, y no
         //  una segunda versión de lo mismo que se desincroniza.
         plugin.lienzo = capa
@@ -472,7 +472,7 @@ K4.Ventana {
         property real luzY: capa.ratonY
         property real onda: capa.onda
         //  Del tema del usuario, no de aquí.
-        property color luzColor: K4.Tema.azul
+        property color luzColor: K5.Tema.azul
     }
 
     // ── 2. el plano, y 3. la lente encima ─────────────────────────
@@ -719,30 +719,30 @@ K4.Ventana {
             anchors.centerIn: parent
             spacing: 10
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: plugin.cargando || rotulo.hayError
-                text: plugin.cargando ? K4.Idioma.t("Mirando…") : plugin.error
-                color: rotulo.hayError ? K4.Tema.rojo : K4.Tema.apagado
+                text: plugin.cargando ? K5.Idioma.t("Mirando…") : plugin.error
+                color: rotulo.hayError ? K5.Tema.rojo : K5.Tema.apagado
                 font.pixelSize: 13
             }
 
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: rotulo.escribiendo
                 text: plugin.filtro
-                color: K4.Tema.tinta
+                color: K5.Tema.tinta
                 font.pixelSize: 14
                 font.bold: true
             }
 
             //  Cuántas quedan. Es la mitad útil de escribir: dice cuándo has
             //  tecleado suficiente para que quede una sola.
-            K4.Etiqueta {
+            K5.Etiqueta {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: rotulo.escribiendo
                 text: capa.cuantasCasan + " / " + plugin.ventanas.length
-                color: capa.cuantasCasan === 0 ? K4.Tema.rojo : K4.Tema.azul
+                color: capa.cuantasCasan === 0 ? K5.Tema.rojo : K5.Tema.azul
                 font.pixelSize: 12
             }
         }
@@ -762,11 +762,11 @@ K4.Ventana {
         border.color: Qt.rgba(1, 1, 1, 0.12)
         opacity: capa.apertura * contenido.opacity
 
-        K4.Etiqueta {
+        K5.Etiqueta {
             anchors.centerIn: parent
             text: "✕"
             font.pixelSize: 15
-            color: K4.Tema.tinta
+            color: K5.Tema.tinta
         }
 
         MouseArea {

@@ -22,7 +22,7 @@ Singleton {
     id: huella
 
     readonly property string carpeta:
-        Quickshell.env("HOME") + "/.local/state/k4/huella"
+        Quickshell.env("HOME") + "/.local/state/k5/huella"
 
     //  Lo que cada fuente contestó (el JSON del lector, ya agregado).
     property var steam: ({})

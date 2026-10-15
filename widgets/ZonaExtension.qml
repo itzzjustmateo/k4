@@ -1,5 +1,5 @@
 //  Las extensiones de flanco de la píldora: lo que los plugins han declarado
-//  por `K4.Capsula`, pintado en la punta de la cápsula que ha crecido para
+//  por `K5.Capsula`, pintado en la punta de la cápsula que ha crecido para
 //  ellos. La vista de reposo pone una instancia en cada extremo de su fila, y
 //  cada una pinta las extensiones registradas para su lado.
 //

@@ -14,10 +14,10 @@
 //  un plugin de fuera entra solo con declararlo en su manifiesto.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
-K4.Plugin {
+K5.Plugin {
     id: self
 
     name: "apps"
@@ -110,7 +110,7 @@ K4.Plugin {
     //  Así que se anuncian: dos cajones, una sola búsqueda que encuentra
     //  todo. Y lo hace este módulo y no cada plugin, porque el que sabe qué
     //  es una «aplicación de la barra» es este.
-    property var enElLanzador: K4.Lanzador {
+    property var enElLanzador: K5.Lanzador {
         plugin: "apps"
 
         onBuscando: function (texto) {
@@ -132,7 +132,7 @@ K4.Plugin {
                     //  un icono del escritorio, y ninguna aplicación de la
                     //  barra tiene uno: salían todas sin icono.
                     return { id: a.id, titulo: a.nombre,
-                             desc: K4.Idioma.t("Aplicación de la barra"),
+                             desc: K5.Idioma.t("Aplicación de la barra"),
                              imagen: a.imagen, glifo: a.glifo }
                 })
         }
@@ -140,8 +140,8 @@ K4.Plugin {
         onElegido: function (id) { PluginManager.abrirAplicacion(id) }
     }
 
-    K4.Ipc {
-        target: "k4.apps"
+    K5.Ipc {
+        target: "k5.apps"
         function toggle(): void { self.toggle() }
         function open(): void { self.abrirse() }
         function close(): void { self.cerrar() }

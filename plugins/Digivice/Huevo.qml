@@ -14,7 +14,7 @@
 //  quedarse en blanco por un asset que falte.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 import "../../services"
 
 Item {
@@ -96,7 +96,7 @@ Item {
     }
 
     //  El respaldo, por si el asset no está.
-    K4.Glifo {
+    K5.Glifo {
         anchors.centerIn: parent
         visible: !self.hayHoja
         text: "\u{F0AAF}"

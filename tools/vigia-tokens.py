@@ -29,7 +29,7 @@ import os
 import sys
 import time
 
-ESTADO = os.path.expanduser("~/.local/state/k4/tokens-vigia.json")
+ESTADO = os.path.expanduser("~/.local/state/k5/tokens-vigia.json")
 INTERVALO = 3.0
 
 # Peso de cada clase de token, en proporción a lo que cuesta.

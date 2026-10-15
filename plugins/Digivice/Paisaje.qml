@@ -14,7 +14,7 @@
 //  lo que hace el bucle infinito sin cargar nada y sin costuras.
 
 import QtQuick
-import K4 as K4
+import K5 as K5
 
 Item {
     id: self

@@ -4,7 +4,7 @@ pragma Singleton
 //  borde de la pantalla, con el nombre de lo que un plugin tenga entre manos.
 //
 //  Esto es la mitad ÁRBITRA de una API pública. Un plugin no toca nunca la
-//  geometría de la píldora: declara su extensión por `K4.Capsula` y a partir
+//  geometría de la píldora: declara su extensión por `K5.Capsula` y a partir
 //  de ahí manda este servicio — mide el texto con la fuente de la propia
 //  píldora, capa el ancho por el `largoMaximo` que pida el plugin Y por el
 //  hueco que quede hasta el borde de la pantalla, y publica lo que ha ganado
@@ -13,7 +13,7 @@ pragma Singleton
 //  las pinta.
 //
 //  Por qué un servicio y no la cuenta de cada plugin: la píldora es UNA y sus
-//  contribuyentes son muchos. Los indicadores ya se arbitran así —K4.Pildora →
+//  contribuyentes son muchos. Los indicadores ya se arbitran así —K5.Pildora →
 //  Indicadores → PluginPildora— para las cápsulas pequeñas de dentro; esto es
 //  la misma idea para los flancos, donde el ancho no es cosmético porque mueve
 //  la island.

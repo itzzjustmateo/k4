@@ -1,20 +1,20 @@
 # Creating a plugin
 
-k4 loads plugins from two places: the repository's (`plugins/`) and the
-user's in **`~/.config/k4/plugins/<id>/`**. This guide is for the latter:
+k5 loads plugins from two places: the repository's (`plugins/`) and the
+user's in **`~/.config/k5/plugins/<id>/`**. This guide is for the latter:
 you do not need to touch the repository to write one.
 
 The complete example for this guide lives in `examples/hola/` and can be
 copied as is:
 
 ```sh
-cp -r examples/hola ~/.config/k4/plugins/
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4 pluginEnable hola
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4.hola toggle
+cp -r examples/hola ~/.config/k5/plugins/
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5 pluginEnable hola
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5.hola toggle
 ```
 
-> **You may not need to read this.** k4 installs a skill for coding agents
-> (`agents/skills/k4/`, linked by `./installer.sh`), so Claude Code, Codex and
+> **You may not need to read this.** k5 installs a skill for coding agents
+> (`agents/skills/k5/`, linked by `./installer.sh`), so Claude Code, Codex and
 > anything else that reads `~/.claude/skills/` or `~/.config/agents/skills/`
 > already know everything on this page. Asking for the plugin you want is a
 > legitimate way to get one — this guide is here for when you want to know
@@ -54,7 +54,7 @@ repository", which is a promise nobody can keep.
 
 ### Named rules
 
-Beyond permissions — which say which *k4 API* a plugin touches — the checker
+Beyond permissions — which say which *k5 API* a plugin touches — the checker
 looks for patterns that make the code you end up running **not** the code
 someone reviewed. Each one carries why it matters and how to fix it, because
 a warning that doesn't say what to do gets ignored:
@@ -120,9 +120,9 @@ publishes today, and tells you which ones have something new upstream — and
 which ones were installed before any of this existed, so their commit is
 simply unknown.
 
-With the bar running, `k4 pluginRefresh` makes it re-read the catalog: what
+With the bar running, `k5 pluginRefresh` makes it re-read the catalog: what
 you just installed appears and what you removed disappears without
-restarting anything. And after updating an enabled one, `k4 pluginReload
+restarting anything. And after updating an enabled one, `k5 pluginReload
 <id>` swaps the running code — the old one stays alive in the bar until you
 say so.
 
@@ -140,7 +140,7 @@ commands that come next. The rest of this page explains what it wrote.
 ## 1 · The directory and the manifest
 
 ```text
-~/.config/k4/plugins/hola/
+~/.config/k5/plugins/hola/
 ├── plugin.json
 ├── HolaPlugin.qml
 └── HolaView.qml
@@ -169,7 +169,7 @@ commands that come next. The rest of this page explains what it wrote.
   without loading it.
 - `id`: lowercase, no spaces, and it **must match the directory name**. If
   it collides with one of the bar's plugins, yours loses.
-- `entry`: the file that inherits from `K4.Plugin`, inside the directory
+- `entry`: the file that inherits from `K5.Plugin`, inside the directory
   itself.
 - `host`: the minimum bar version you need (`>=x.y.z`).
 - `icono`: your icon, of one of these two kinds:
@@ -203,9 +203,9 @@ only paints, and only exists while the plugin holds the island.
 ```qml
 // HolaPlugin.qml
 import QtQuick
-import K4 as K4
+import K5 as K5
 
-K4.Plugin {
+K5.Plugin {
     id: self
     name: "hola"                 // el mismo id del manifiesto
     priority: 65
@@ -217,8 +217,8 @@ K4.Plugin {
 
     view: Component { HolaView { plugin: self } }
 
-    K4.Ipc {
-        target: "k4.hola"
+    K5.Ipc {
+        target: "k5.hola"
         function toggle(): void { self.abierto = !self.abierto }
         function close(): void { self.abierto = false }
     }
@@ -228,13 +228,13 @@ K4.Plugin {
 ```qml
 // HolaView.qml
 import QtQuick
-import K4 as K4
+import K5 as K5
 
 Item {
     required property var plugin
-    K4.Etiqueta {
+    K5.Etiqueta {
         anchors.centerIn: parent
-        text: K4.Idioma.t("Hola desde un plugin de fuera")
+        text: K5.Idioma.t("Hola desde un plugin de fuera")
     }
 }
 ```
@@ -276,18 +276,18 @@ depending on what it is doing. The bar's video editor does exactly that.
 
 ```qml
 islandWidth:  modo === "mini" ? 200 : 980
-islandHeight: modo === "mini" ? 150 : K4.Isla.altoMaximo
+islandHeight: modo === "mini" ? 150 : K5.Isla.altoMaximo
 ```
 
-The height ceiling is `K4.Isla.altoMaximo` (880 today). Asking for more
+The height ceiling is `K5.Isla.altoMaximo` (880 today). Asking for more
 breaks nothing but does not grow either: the excess is clipped, and a
 screen that cannot be seen whole is worse than a smaller one. If your
-content can grow without limit, put it in a `K4.Rodillo` and keep the
+content can grow without limit, put it in a `K5.Rodillo` and keep the
 height fixed.
 
 Rules the bar enforces:
 
-- **A plugin imports QtQuick and K4. Nothing else.** From your directory
+- **A plugin imports QtQuick and K5. Nothing else.** From your directory
   there is no path to the internal services, and that is on purpose: the
   public API is the contract that does not break under your feet on update.
 - The root id should be `self`: a view with `required property var plugin`
@@ -297,7 +297,7 @@ If you declare yourself `aplicacion`, the bar will open you by calling
 them already have; redefine it if you need something else — for example
 always opening instead of toggling.
 
-- Processes, timers and IPC go as children of the `K4.Plugin`, not of the
+- Processes, timers and IPC go as children of the `K5.Plugin`, not of the
   view: the view is destroyed every time you lose the island.
 
 ### An animation nobody sees still runs
@@ -307,7 +307,7 @@ visible.** It keeps running, and while it runs the whole scene keeps
 repainting — at the refresh rate, on every monitor, for as long as its
 condition holds.
 
-That is not a warning from the manual. k4's own pill had a five-pixel dot
+That is not a warning from the manual. k5's own pill had a five-pixel dot
 pulsing whenever the dungeon had unopened chests:
 
 ```qml
@@ -329,10 +329,10 @@ So an animation with `loops: Animation.Infinite` asks whether anyone can see
 it:
 
 ```qml
-running: hayAlgoQueContar && K4.Isla.aLaVista
+running: hayAlgoQueContar && K5.Isla.aLaVista
 ```
 
-`K4.Isla.aLaVista` is false while the island is retracted (the *Hidden* mode
+`K5.Isla.aLaVista` is false while the island is retracted (the *Hidden* mode
 in Settings), while a capture or a system dialog has it out of the way, and on
 a monitor whose bar is not showing. It is published per screen, so with two
 monitors the answer is "yes" when any of them shows it. With no bar behind it
@@ -342,7 +342,7 @@ to notice than one that never starts.
 Your view is destroyed when you lose the island, so an animation that lives
 inside it goes away with it and costs nothing. The trap is everything drawn
 where the view survives: what you contribute to the pill, your own
-`K4.Ventana`, anything you hang in a place that is not yours.
+`K5.Ventana`, anything you hang in a place that is not yours.
 
 The same reasoning covers anything that repeats without an end: a `Timer` with
 `repeat: true`, a `Canvas` that repaints itself, an `AnimatedImage`. If it
@@ -354,70 +354,70 @@ Your plugin knows where it lives. `carpeta` is its directory on disk, filled in
 by the host when it creates you, and `fichero(...)` builds a path inside it:
 
 ```qml
-K4.Process {
+K5.Process {
     command: ["python3", fichero("tools/mine.py")]
 }
 ```
 
 That is what lets you **ship your own things** — a script, a binary, a model, a
 data file. `Qt.resolvedUrl("assets/x.png")` was already enough to *paint* an
-image, but a `Process` wants a path, not a URL, and `K4.Paths.raiz` is the
+image, but a `Process` wants a path, not a URL, and `K5.Paths.raiz` is the
 bar's directory, not yours.
 
 ## 3 · What the API gives you
 
 | Type | What for |
 |---|---|
-| `K4.Plugin` | the contract: island, priority, keyboard, view |
-| `K4.Tema` | the palette (`tinta`, `superficie`, `apagado`…) and the fonts |
-| `K4.Etiqueta` | text with the bar's defaults |
-| `K4.Glifo` | a Nerd Font icon (find them with `tools/glifos.py`) |
-| `K4.Icono` | a desktop-theme icon, by name |
-| `K4.Miniatura` | the live thumbnail of an open window, by its address |
-| `K4.Interruptor` | the bar's switch; it notifies, it does not flip itself |
-| `K4.Deslizador` | slider with label and value |
-| `K4.Medidor` | a bar that measures and is not touched: volume, progress, how much of a quota is gone |
-| `K4.Baldosa` | the control center's pressable card |
-| `K4.Boton` | round one-glyph button |
-| `K4.Rodillo` | a scrolling area **that actually obeys the wheel**, house scroll bar included |
-| `K4.Desplazador` | the house scroll bar — thin, fades away; attach it to your own lists |
-| `K4.Estela` | the house caret, with the trail k4term leaves — use it as `cursorDelegate` |
-| `K4.Aparicion` | enters with a fade instead of popping |
-| `K4.FocoInicial` | moves the cursor to your text field on open |
-| `K4.Idioma` | `t()` and `f()` — with no dictionary they return the text as is |
-| `K4.Guardado` | your state as JSON, in YOUR directory, with `cargado`/`guardar` |
-| `K4.Ipc` | your IPC target (`k4.<id>`) |
-| `K4.Process` | external processes — requires the `procesos` permission |
-| `K4.Terminal` | the house terminal: run a script where it best fits, open one — `ejecutar`/`abrir` require `procesos` |
-| `K4.Sonido` | a short sound — requires the `sonido` permission |
-| `K4.Fichero` | reading and writing files — requires `ficheros` |
-| `K4.Pildora` | an indicator on the folded pill |
-| `K4.Capsula` | a flank extension: the capsule grows toward a screen edge with your text |
-| `K4.Submapas` | the Hyprland submap in force right now, read only |
-| `K4.Paths` | paths: `estadoDe(id)` is your state directory |
-| `K4.IconoPlugin` | a plugin's icon: its image if it brings one, its glyph if not |
+| `K5.Plugin` | the contract: island, priority, keyboard, view |
+| `K5.Tema` | the palette (`tinta`, `superficie`, `apagado`…) and the fonts |
+| `K5.Etiqueta` | text with the bar's defaults |
+| `K5.Glifo` | a Nerd Font icon (find them with `tools/glifos.py`) |
+| `K5.Icono` | a desktop-theme icon, by name |
+| `K5.Miniatura` | the live thumbnail of an open window, by its address |
+| `K5.Interruptor` | the bar's switch; it notifies, it does not flip itself |
+| `K5.Deslizador` | slider with label and value |
+| `K5.Medidor` | a bar that measures and is not touched: volume, progress, how much of a quota is gone |
+| `K5.Baldosa` | the control center's pressable card |
+| `K5.Boton` | round one-glyph button |
+| `K5.Rodillo` | a scrolling area **that actually obeys the wheel**, house scroll bar included |
+| `K5.Desplazador` | the house scroll bar — thin, fades away; attach it to your own lists |
+| `K5.Estela` | the house caret, with the trail k4term leaves — use it as `cursorDelegate` |
+| `K5.Aparicion` | enters with a fade instead of popping |
+| `K5.FocoInicial` | moves the cursor to your text field on open |
+| `K5.Idioma` | `t()` and `f()` — with no dictionary they return the text as is |
+| `K5.Guardado` | your state as JSON, in YOUR directory, with `cargado`/`guardar` |
+| `K5.Ipc` | your IPC target (`k5.<id>`) |
+| `K5.Process` | external processes — requires the `procesos` permission |
+| `K5.Terminal` | the house terminal: run a script where it best fits, open one — `ejecutar`/`abrir` require `procesos` |
+| `K5.Sonido` | a short sound — requires the `sonido` permission |
+| `K5.Fichero` | reading and writing files — requires `ficheros` |
+| `K5.Pildora` | an indicator on the folded pill |
+| `K5.Capsula` | a flank extension: the capsule grows toward a screen edge with your text |
+| `K5.Submapas` | the Hyprland submap in force right now, read only |
+| `K5.Paths` | paths: `estadoDe(id)` is your state directory |
+| `K5.IconoPlugin` | a plugin's icon: its image if it brings one, its glyph if not |
 
 And what you need when yours grows past the island:
 
 | Type | What for |
 |---|---|
-| `K4.Ventana` | a window of your own, apart from the island: a full-screen picker, an editor, something worth real space |
-| `K4.PorPantalla` | one copy of yours per monitor — with two screens almost nothing wants to exist once |
-| `K4.Cargador` | loads the expensive part only when needed and drops it when not |
-| `K4.Atajo` | a global shortcut, the kind that works no matter who has focus. Here you declare the name; binding it to a key belongs to the compositor's configuration |
-| `K4.Apps` | the installed applications: name, icon, how to launch them |
-| `K4.Sistema` | the loose ends: launching things, reading the environment, finding icons |
-| `K4.MenuBandeja` | the menu a tray icon publishes |
-| `K4.BloqueoSesion` | locking the session for real (`ext-session-lock`) |
-| `K4.SuperficieBloqueo` | what is drawn while locked, one per monitor |
-| `K4.Autenticacion` | checking that whoever is in front is who they claim, via PAM |
+| `K5.Ventana` | a window of your own, apart from the island: a full-screen picker, an editor, something worth real space |
+| `K5.PorPantalla` | one copy of yours per monitor — with two screens almost nothing wants to exist once |
+| `K5.Cargador` | loads the expensive part only when needed and drops it when not |
+| `K5.Atajo` | a global shortcut, the kind that works no matter who has focus. Here you declare the name; binding it to a key belongs to the compositor's configuration |
+| `K5.Apps` | the installed applications: name, icon, how to launch them |
+| `K5.Sistema` | the loose ends: launching things, reading the environment, finding icons |
+| `K5.MenuBandeja` | the menu a tray icon publishes |
+| `K5.BloqueoSesion` | locking the session for real (`ext-session-lock`) |
+| `K5.SuperficieBloqueo` | what is drawn while locked, one per monitor |
+| `K5.Autenticacion` | checking that whoever is in front is who they claim, via PAM |
 
 The last four are for replacing pieces of the bar — a lock screen of your
 own, another tray — more than for an ordinary plugin. They are here because
 the built-in modules use them and the rule is the same for everyone: if a
 repository plugin can, an outside one can too.
 
-(`K4.Puente` also exists and **is not for you**: it is how the bar hands
+(`K5.Puente` also exists and **is not for you**: it is how the bar hands
 the API what it needs. Only someone implementing the API on another host
 touches it.)
 
@@ -425,14 +425,14 @@ And the live system data:
 
 | Type | What it gives | Writing requires |
 |---|---|---|
-| `K4.Audio` | volume, mute | `audio` |
-| `K4.Medios` | what is playing: title, artist, artwork, position | `medios` |
-| `K4.Notificaciones` | the ones that arrive, with the `llego()` signal | `notificaciones` |
-| `K4.Red` | Wi‑Fi and Bluetooth — **read-only, no exceptions** | — |
-| `K4.Escritorios` | which ones exist and which one you are on | — |
-| `K4.Portapapeles` | the history — **just reading already requires** `portapapeles` | `portapapeles` |
-| `K4.Reloj` | the time, from the bar's single clock | — |
-| `K4.Huella` | the user's personal footprint, AGGREGATED (Steam library, package inventory) — double-keyed: your `datos-personales` permission AND the user turning each source on in Settings, everything off by default | `datos-personales` |
+| `K5.Audio` | volume, mute | `audio` |
+| `K5.Medios` | what is playing: title, artist, artwork, position | `medios` |
+| `K5.Notificaciones` | the ones that arrive, with the `llego()` signal | `notificaciones` |
+| `K5.Red` | Wi‑Fi and Bluetooth — **read-only, no exceptions** | — |
+| `K5.Escritorios` | which ones exist and which one you are on | — |
+| `K5.Portapapeles` | the history — **just reading already requires** `portapapeles` | `portapapeles` |
+| `K5.Reloj` | the time, from the bar's single clock | — |
+| `K5.Huella` | the user's personal footprint, AGGREGATED (Steam library, package inventory) — double-keyed: your `datos-personales` permission AND the user turning each source on in Settings, everything off by default | `datos-personales` |
 
 The line is drawn by the effect, not the module: looking at the volume does
 nothing to anyone, raising it does. The clipboard goes the other way
@@ -441,7 +441,7 @@ reading. And connecting to a network or pairing a device does not open even
 with a permission: a mistake there costs your connectivity or hands your
 laptop to a stranger, and no plugin idea makes up for that.
 
-`K4.Medios.posicion` only advances if someone is watching: call
+`K5.Medios.posicion` only advances if someone is watching: call
 `seguirPosicion()` when your view mounts and `dejarPosicion()` when you
 drop it, or the timer does not run.
 
@@ -450,9 +450,9 @@ a rectangle: `examples/piezas/` is the showcase, copyable and runnable. And
 a warning that saves you an afternoon: if you put your list in a plain
 `Flickable` and its rows have hover or click, **the wheel will not work** —
 a MouseArea accepts the wheel whether it handles it or not — and no error
-will be raised. That is why `K4.Rodillo` exists.
+will be raised. That is why `K5.Rodillo` exists.
 
-For a game: `K4.Guardado` is the save and the high score,
+For a game: `K5.Guardado` is the save and the high score,
 `tecladoAlPasar: true` gives you the keys while the pointer is over the
 island and hands them back when it leaves, and a `Timer` is the tick. Use
 `grabKeyboard` only for something you open, look at and close: a game stays
@@ -464,11 +464,11 @@ by shortcut never sees a keystroke.
 And the second half of the keyboard, which is a separate problem: the layer
 having the keys does not mean your view receives one. The island's root also
 claims focus — that is where ESC lives — so claim it back with
-`K4.FocoInicial`, and not only on open: with `tecladoAlPasar` the keys arrive
+`K5.FocoInicial`, and not only on open: with `tecladoAlPasar` the keys arrive
 when the pointer enters, and by then `FocoInicial` has already given up.
 
 ```qml
-property var foco: K4.FocoInicial { objetivo: raiz }
+property var foco: K5.FocoInicial { objetivo: raiz }
 Component.onCompleted: foco.reclamar()
 HoverHandler { onHoveredChanged: if (hovered) raiz.foco.reclamar() }
 ```
@@ -501,11 +501,11 @@ invent a screen, a button to open it and a way to save them — and the user
 had to learn a new place for every plugin.
 
 ```qml
-K4.Ajustes {
+K5.Ajustes {
     plugin: "hola"
-    grupo: K4.Idioma.t("Hola")
-    opciones: [{ id: "saludar", nombre: K4.Idioma.t("Saludar al abrir"),
-                 desc: K4.Idioma.t("Si no, solo enseña el contador"),
+    grupo: K5.Idioma.t("Hola")
+    opciones: [{ id: "saludar", nombre: K5.Idioma.t("Saludar al abrir"),
+                 desc: K5.Idioma.t("Si no, solo enseña el contador"),
                  glifo: 0xF1821 }]
     valores: ({ saludar: self.saludar })
     onCambiado: function (id, valor) { self.saludar = valor; self.apuntar() }
@@ -520,16 +520,16 @@ A switch per option is the default; `tipo` unlocks the other two:
 
 ```qml
 opciones: [
-    { id: "modelo", tipo: "eleccion", nombre: K4.Idioma.t("Modelo"),
-      desc: K4.Idioma.t("Con cuál contesta"), glifo: 0xF06A9,
-      alternativas: [{ codigo: "rapido", nombre: K4.Idioma.t("Rápido") },
-                     { codigo: "capaz",  nombre: K4.Idioma.t("Capaz") }] },
+    { id: "modelo", tipo: "eleccion", nombre: K5.Idioma.t("Modelo"),
+      desc: K5.Idioma.t("Con cuál contesta"), glifo: 0xF06A9,
+      alternativas: [{ codigo: "rapido", nombre: K5.Idioma.t("Rápido") },
+                     { codigo: "capaz",  nombre: K5.Idioma.t("Capaz") }] },
     { id: "clave", tipo: "texto", secreto: true,
-      nombre: K4.Idioma.t("Clave de API"),
-      desc: K4.Idioma.t("Se guarda donde tú digas; la barra no la retiene"),
+      nombre: K5.Idioma.t("Clave de API"),
+      desc: K5.Idioma.t("Se guarda donde tú digas; la barra no la retiene"),
       pista: "sk-…", glifo: 0xF0306 },
-    { id: "ancho", tipo: "numero", nombre: K4.Idioma.t("Ancho"),
-      desc: K4.Idioma.t("Hasta dónde puede crecer"), glifo: 0xF046D,
+    { id: "ancho", tipo: "numero", nombre: K5.Idioma.t("Ancho"),
+      desc: K5.Idioma.t("Hasta dónde puede crecer"), glifo: 0xF046D,
       min: 60, max: 1200, paso: 20, unidad: "px" }
 ]
 ```
@@ -560,21 +560,21 @@ keystroke by keystroke. With this, a plugin that talks to a service, an AI
 or a CLI configures itself in Settings like everything else, without
 inventing a screen of its own.
 
-**The pill's flank, and the capsule growing.** `K4.Pildora` gives you an
+**The pill's flank, and the capsule growing.** `K5.Pildora` gives you an
 indicator *inside* the pill — a glyph and a few characters, arbitrated with
-everyone else's. When that is too small to read at a glance, `K4.Capsula`
+everyone else's. When that is too small to read at a glance, `K5.Capsula`
 grows the capsule itself toward a screen edge carrying your text: for a
 thing that is GOING ON and that the user must not have to remember — a mode
 that grabbed the keyboard, a recording running, a long job in flight.
 
 ```qml
-K4.Capsula {
+K5.Capsula {
     plugin: "rec"
     extension: grabando ? ({
         lado: "derecha",            // "izquierda" · "derecha"
-        texto: K4.Idioma.t("Grabando"),
+        texto: K5.Idioma.t("Grabando"),
         glifo: 0xF037E,             // md-record_circle_outline
-        color: K4.Tema.rojo,
+        color: K5.Tema.rojo,
         largoMaximo: 300            // px it may grow to
     }) : null
 }
@@ -596,12 +596,12 @@ While a deployed view owns the island — the control center, the launcher —
 the extension folds away with the pill and comes back when the pill does.
 That rule is the capsule's, not yours.
 
-`K4.Submapas.actual` is the first customer and a useful one on its own: the
+`K5.Submapas.actual` is the first customer and a useful one on its own: the
 Hyprland submap in force right now, `""` when there is none. A plugin may
 not reach for Hyprland's event socket itself, so the bar listens and
 publishes it. `plugins/Submap/` is the whole worked example — it imports
-`QtQuick` and `K4`, nothing else, and could be dropped into
-`~/.config/k4/plugins` as it stands.
+`QtQuick` and `K5`, nothing else, and could be dropped into
+`~/.config/k5/plugins` as it stands.
 
 **Your results, in the launcher.** You answer when you can; if yours is
 expensive — a network query — you block nobody. Yours shows up **below**
@@ -609,11 +609,11 @@ the system's applications: that panel is theirs, and you are there to be
 findable, not to compete.
 
 ```qml
-K4.Lanzador {
+K5.Lanzador {
     plugin: "hola"
     onBuscando: function (texto) {
         resultados = texto.length < 2 ? []
-            : [{ id: "abrir", titulo: K4.Idioma.t("Abrir Hola"), desc: "…" }]
+            : [{ id: "abrir", titulo: K5.Idioma.t("Abrir Hola"), desc: "…" }]
     }
     onElegido: function (id) { self.abierto = true }
 }
@@ -623,7 +623,7 @@ K4.Lanzador {
 
 Three pieces turn the bar into part of the game, not just its frame.
 
-**Tinting the ambience.** `K4.Tema.tintar(tuId, color, fuerza, duracionMs)`
+**Tinting the ambience.** `K5.Tema.tintar(tuId, color, fuerza, duracionMs)`
 tints the whole neutral scaffold — island, surfaces, tracks — and
 everything painted with the theme recolors itself. The ink and the colors
 with meaning (green, red…) are not touched, so text stays readable and an
@@ -632,42 +632,42 @@ alert stays an alert. Strength is capped at 0.45 by the host; `duracionMs`
 untints on its own.
 
 ```qml
-K4.Tema.tintar("mi-juego", "#26324f", 0.35, 4000)   // abismo, 4 segundos
+K5.Tema.tintar("mi-juego", "#26324f", 0.35, 4000)   // abismo, 4 segundos
 ```
 
-**Asking for gestures.** `K4.Isla.efecto(tuId, nombre, fuerza)` moves the
+**Asking for gestures.** `K5.Isla.efecto(tuId, nombre, fuerza)` moves the
 island like a physical object: `"sacudida"` (a hit), `"empujon"` (something
 heavy lands on it), `"tiron"` (something pulls at it, like a fish on the
 line). The host animates and arbitrates: one gesture every half second at
 most. The rare effect impresses because the bar is sober the rest of the
 time — ask for it at the moment that matters and let it breathe.
 
-**Painting outside.** `K4.Isla.rect` gives the island's real on-screen
+**Painting outside.** `K5.Isla.rect` gives the island's real on-screen
 geometry (`{ x, y, ancho, alto }`, the primary one if there are several);
-with several monitors, `K4.Isla.rectEn(name)` gives each screen's own, and
-a `K4.Ventana` picks its monitor with `pantalla`.
-With a transparent `K4.Ventana` above everything and that rect, anything
+with several monitors, `K5.Isla.rectEn(name)` gives each screen's own, and
+a `K5.Ventana` picks its monitor with `pantalla`.
+With a transparent `K5.Ventana` above everything and that rect, anything
 can peek over the edge, fall off the bar or stroll across it — a waving
 hand, the pet climbing down. `examples/efectos/` ships all three pieces
 working, hand included.
 
 And since the bar no longer lives only at the top — the edge is chosen in
-Settings — `K4.Isla.posicion` says which one it is (`"arriba"` or
+Settings — `K5.Isla.posicion` says which one it is (`"arriba"` or
 `"abajo"`). The host takes care of its side (anchoring, flipped silhouette,
 gestures pointing into the screen); your side is reading `rect` and
 `posicion` instead of assuming up is up.
 
 **Sliding it along the edge.** The island is not nailed to the center
 either: the user picks its alignment in Settings, and a plugin can move it
-TEMPORARILY with `K4.Isla.colocar(tuId, fraccion, duracionMs)` — 0 flush
+TEMPORARILY with `K5.Isla.colocar(tuId, fraccion, duracionMs)` — 0 flush
 left, 1 flush right, animated with the same spring as opening. It returns
 to the user's base on its own: on timeout, with `soltar(tuId)`, or when
 your plugin is disabled. It is for what a scene lasts — the island dodging
 a hit, playing paddle, stepping aside to show something behind — not for
-staying: the permanent position belongs to the user. `K4.Isla.colocacion`
+staying: the permanent position belongs to the user. `K5.Isla.colocacion`
 tells the effective fraction right now.
 
-**And `K4.Isla`** to know whether you are on display: `abierta`,
+**And `K5.Isla`** to know whether you are on display: `abierta`,
 `ocupadaPor`, `raton`, `altoMaximo`. Read-only — who holds the island is
 decided by the host comparing priorities, which is the only way two plugins
 do not fight over the screen. Use it to skip animating and polling when
@@ -679,8 +679,8 @@ that calls a dead plugin cannot exist.
 
 ## 3b · Commands: IPC targets and shortcuts
 
-An `K4.Ipc` target and a `K4.Atajo` name are **shared between every plugin
-on the bar**. Two plugins cannot hold `k4.notes`: the compositor and
+An `K5.Ipc` target and a `K5.Atajo` name are **shared between every plugin
+on the bar**. Two plugins cannot hold `k5.notes`: the compositor and
 Quickshell hand it to whoever registered first, and the loser stays loaded,
 without errors, simply not answering. That failure is invisible — it only
 shows up in the log, and only for IPC; duplicate shortcut names say nothing
@@ -693,7 +693,7 @@ everything already installed. Whoever asks for a taken command is listed as
 not loadable, with the reason:
 
 ```
-  - notas: el comando k4.launcher ya lo registra «launcher»
+  - notas: el comando k5.launcher ya lo registra «launcher»
 ```
 
 Repo plugins come first in the combined catalog, so an outside plugin never
@@ -705,7 +705,7 @@ anything on.
 Two things this does not do yet, and it is better to know: the scan looks
 for `target` and `name` in the first 400 characters of the block, so a
 target hidden far below is not seen; and a shortcut **name** is not a key —
-the key lives in the compositor's config (`hypr/k4.conf`), so a plugin
+the key lives in the compositor's config (`hypr/k5.conf`), so a plugin
 installed from the store declares its shortcut but nobody presses it until
 that binding exists.
 
@@ -715,18 +715,18 @@ The manifest declares what you use; the bar checks it **before listing**:
 
 | Permission | What betrays it |
 |---|---|
-| `procesos` | `K4.Process`, `K4.Terminal.ejecutar`, `K4.Terminal.abrir` |
+| `procesos` | `K5.Process`, `K5.Terminal.ejecutar`, `K5.Terminal.abrir` |
 | `red` | `XMLHttpRequest`, `WebSocket` |
-| `ficheros` | `K4.Fichero` |
-| `sonido` | `K4.Sonido` |
-| `audio` | `K4.Audio.ponerVolumen`, `K4.Audio.alternarSilencio` |
-| `medios` | `K4.Medios.alternarPausa`, `.siguiente`, `.anterior`, `.buscar` |
-| `notificaciones` | `K4.Notificaciones.limpiar` |
-| `portapapeles` | `K4.Portapapeles` — **even just reading it** |
-| `datos-personales` | `K4.Huella` — **just naming it**: there is no innocent read of personal data |
+| `ficheros` | `K5.Fichero` |
+| `sonido` | `K5.Sonido` |
+| `audio` | `K5.Audio.ponerVolumen`, `K5.Audio.alternarSilencio` |
+| `medios` | `K5.Medios.alternarPausa`, `.siguiente`, `.anterior`, `.buscar` |
+| `notificaciones` | `K5.Notificaciones.limpiar` |
+| `portapapeles` | `K5.Portapapeles` — **even just reading it** |
+| `datos-personales` | `K5.Huella` — **just naming it**: there is no innocent read of personal data |
 
 All nine, and note where the line falls: `ponerVolumen` is watched and
-`K4.Audio` is not, because looking at the volume does nothing to anyone and
+`K5.Audio` is not, because looking at the volume does nothing to anyone and
 changing it does. The clipboard is the only one reversed, because there the
 delicate part is reading.
 
@@ -741,7 +741,7 @@ author.
 ## 5 · The lifecycle
 
 1. Outside plugins arrive **disabled**: they are turned on in Settings (or
-   `k4 pluginEnable <id>`), seeing description and permissions first.
+   `k5 pluginEnable <id>`), seeing description and permissions first.
 2. Disabled = **not instantiated**: your IPC does not even exist.
 3. If your QML does not compile, the bar starts without you and Settings
    shows the error with file and line; "retry" reloads from disk after you
@@ -759,14 +759,14 @@ tools/plugins.py --test hola
 
 That opens **only your plugin**, in a separate Quickshell instance: no bar, no
 services, no notifications, none of your session. If it hangs, it hangs there.
-Click outside to leave. It works for plugins written against the K4 API — which
+Click outside to leave. It works for plugins written against the K5 API — which
 is every plugin from outside — because the API falls back to sane defaults when
 there is no bar behind it.
 
 When you do want it in the real bar:
 
 ```sh
-quickshell ipc -p ~/.config/quickshell/k4/shell.qml call k4 pluginReload hola
+quickshell ipc -p ~/.config/quickshell/k5/shell.qml call k5 pluginReload hola
 ```
 
 It destroys your plugin and recreates it from disk: edit, reload, look. It
@@ -777,7 +777,7 @@ reason and the "retry" in Settings; the rest of the bar does not even
 notice.
 
 An honest warning: reloading destroys your object. Whatever holds state in
-memory and was not saved with `K4.Guardado` is lost — which for development
+memory and was not saved with `K5.Guardado` is lost — which for development
 is usually exactly what you want.
 
 ## Repository plugins

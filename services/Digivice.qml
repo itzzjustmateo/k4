@@ -23,7 +23,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
-import K4 as K4
+import K5 as K5
 import "DigiviceReglas.js" as Reglas
 
 Singleton {
@@ -77,11 +77,11 @@ Singleton {
     //  entere: baila con tu música, se pone nervioso con veinte ventanas
     //  abiertas y se sienta tranquilo cuando llevas un rato concentrado.
     //
-    //  `K4.Medios` se puede LEER sin permiso —la API solo lo pide para
+    //  `K5.Medios` se puede LEER sin permiso —la API solo lo pide para
     //  controlar la música— y aquí no se mira ni el título ni el artista ni la
     //  aplicación: solo si suena algo. La promesa de no leer nada de tu
     //  escritorio sigue en pie.
-    readonly property bool sonandoMusica: K4.Medios.hay && K4.Medios.sonando
+    readonly property bool sonandoMusica: K5.Medios.hay && K5.Medios.sonando
 
     //  Muchas ventanas abiertas: el escritorio hecho un lío.
     readonly property int ventanasAbiertas: _cuantasVentanas
@@ -918,10 +918,10 @@ Singleton {
         return spriteDe(id) !== null
     }
 
-    //  A mano y no con K4.Paths porque los servicios no importan la API: la
+    //  A mano y no con K5.Paths porque los servicios no importan la API: la
     //  usan los plugins. Es el mismo directorio que daría `estadoDe`.
     readonly property string dirEstado: Quickshell.env("HOME")
-                                      + "/.local/state/k4/plugins/digivice"
+                                      + "/.local/state/k5/plugins/digivice"
     readonly property string dirImagenes: dirEstado + "/img"
 
     //  El fichero local, se haya descargado o no. La vista lo pide y pinta lo
@@ -2527,7 +2527,7 @@ Singleton {
 
     // ── imágenes, en la caché del usuario ─────────────────────────
     //  No se empaquetan porque no son nuestras: se piden a la API la primera
-    //  vez y se quedan en ~/.local/state/k4/plugins/digivice/img.
+    //  vez y se quedan en ~/.local/state/k5/plugins/digivice/img.
     property var _cola: []
     property bool _bajando: false
     property int imagenesListas: 0
@@ -2546,7 +2546,7 @@ Singleton {
         const id = _cola[0]
         _bajando = true
         _bajada.command = ["curl", "-s", "--max-time", "20", "-f",
-                           "-A", "k4-digivice/1.0", "-o",
+                           "-A", "k5-digivice/1.0", "-o",
                            rutaCruda(id), urlImagen(id)]
         _bajada.running = true
     }
