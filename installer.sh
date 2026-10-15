@@ -804,6 +804,16 @@ paso_reiniciar() {
         done
     fi
 
+    #  La recarga de Hyprland puede re-lanzar su `exec-once` un poco
+    #  después: dejar reposar antes del recuento.
+    _i=0
+    while [ "$_i" -lt 20 ]; do
+        _n=$(pgrep -c -x quickshell 2>/dev/null || printf '0')
+        [ "$_n" -le 1 ] && break
+        sleep 0.5
+        _i=$((_i + 1))
+    done
+
     #  Si hubiera quedado alguna extra por algún resquicio, dejarlas caer antes
     #  de contar.
     _n=$(pgrep -c -x quickshell 2>/dev/null || printf '0')
