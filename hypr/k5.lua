@@ -139,3 +139,9 @@ hl.bind(mod .. " + ALT + E",     hl.dsp.exec_cmd(editor .. "retomar"))
 -- eso el ratón dejaría de funcionar en cuanto se cargara esta configuración.
 hl.bind("mouse:272", hl.dsp.global("k5:clic"),        { non_consuming = true })
 hl.bind("mouse:273", hl.dsp.global("k5:clicDerecho"), { non_consuming = true })
+
+----------------------------------------------------------------------------
+-- Desplazar los escritorios con SUPER + la rueda del ratón
+----------------------------------------------------------------------------
+hl.bind(mod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
