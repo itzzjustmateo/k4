@@ -19,6 +19,7 @@ import Quickshell
 
 Singleton {
     id: registro
+    Component.onCompleted: _recalcularGruposAjustes()
 
     // ── ajustes aportados ─────────────────────────────────────────
     //
@@ -73,13 +74,23 @@ Singleton {
         const quedan = ajustes.filter(function (x) { return x.plugin !== plugin })
         if (quedan.length !== ajustes.length)
             ajustes = quedan
+        _recalcularGruposAjustes()
         const quedanL = lanzador.filter(function (x) { return x.plugin !== plugin })
         if (quedanL.length !== lanzador.length)
             lanzador = quedanL
     }
 
     //  Lo que Ajustes añade al final de su lista de grupos.
-    readonly property var gruposAjustes: {
+    property var gruposAjustes: []
+
+    function _recalcularGruposAjustes() {
+        const salida = []
+        for (let i = 0; i < ajustes.length; ++i) {
+            const a = ajustes[i]
+            if (!a.opciones || a.opciones.length === 0)
+                continue
+            salida.push({
+                grupo: a.grupo || a.plugin,
         const salida = []
         for (let i = 0; i < ajustes.length; ++i) {
             const a = ajustes[i]
@@ -112,8 +123,6 @@ Singleton {
             })
         }
         return salida
-    }
-
     function valorAjuste(id) {
         const p = _partes(id)
         if (!p)

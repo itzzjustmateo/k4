@@ -41,10 +41,16 @@ else
     NEGRITA=''; APAGADO=''; VERDE=''; AMBAR=''; ROJO=''; FIN=''
 fi
 
+#  Iconos de la Nerd Font que instala k4 (Meslo Nerd). Se meten en octal para
+#  no depender de printf \u, que no todos los sh entienden.
+CHECK=$(printf '\357\200\214')
+CROSS=$(printf '\357\200\215')
+WARN=$(printf '\357\201\261')
+
 titulo() { printf '\n%s%s%s\n' "$NEGRITA" "$1" "$FIN"; }
-bien()   { printf '  %s✓%s %s\n' "$VERDE" "$FIN" "$1"; }
-aviso()  { printf '  %s!%s %s\n' "$AMBAR" "$FIN" "$1"; }
-mal()    { printf '  %s✗%s %s\n' "$ROJO" "$FIN" "$1"; }
+bien()   { printf '  %s%s%s %s\n' "$VERDE" "$CHECK" "$FIN" "$1"; }
+aviso()  { printf '  %s%s%s %s\n' "$AMBAR" "$WARN" "$FIN" "$1"; }
+mal()    { printf '  %s%s%s %s\n' "$ROJO" "$CROSS" "$FIN" "$1"; }
 nota()   { printf '    %s%s%s\n' "$APAGADO" "$1" "$FIN"; }
 morir()  { printf '\n%s✗ %s%s\n\n' "$ROJO" "$1" "$FIN" >&2; exit 1; }
 
@@ -778,9 +784,15 @@ paso_reiniciar() {
         # symptom is a double island.
         pkill -x quickshell || true
         _i=0
-        while pgrep -x quickshell >/dev/null 2>&1 && [ "$_i" -lt 20 ]; do
+        while pgrep -x quickshell >/dev/null 2>&1 && [ "$_i" -lt 50 ]; do
             sleep 0.2; _i=$((_i + 1))
         done
+        #  Si alguno sigue en pie, forzar. Nadie quiere dos islands por el
+        #  mismo precio, y un quickshell colgado no obedece a la paciencia.
+        if pgrep -x quickshell >/dev/null 2>&1; then
+            pkill -9 -x quickshell || true
+            sleep 0.5
+        fi
     fi
 
     "$RAIZ/arrancar" --no-duplicate -d >/dev/null 2>&1 &
